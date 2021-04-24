@@ -9,6 +9,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
+        //TODO: load user with the repository
         return null;
     }
 }
