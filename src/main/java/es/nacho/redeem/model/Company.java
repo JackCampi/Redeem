@@ -21,8 +21,8 @@ public class Company {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="company")
     private Collection<Product> products;
 
-
-
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="company")
+    private Collection<Area> areas;
 
 
     public Company(String name, Long budget) {
@@ -30,7 +30,6 @@ public class Company {
         this.name = name;
         this.budget = budget;
     }
-
 
 
     public Long getId() {
