@@ -25,12 +25,13 @@ public class Company {
     private Collection<Area> areas;
 
 
-    public Company(String name, Long budget) {
+    public Company(String name, Long budget, Collection<Product> products, Collection<Area> areas) {
         super();
         this.name = name;
         this.budget = budget;
+        this.products = products;
+        this.areas = areas;
     }
-
 
     public Long getId() {
         return id;
@@ -54,5 +55,21 @@ public class Company {
 
     public void setBudget(Long budget) {
         this.budget = budget;
+    }
+
+    public Collection<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
+    }
+
+    public Collection<Area> getAreas() {
+        return areas;
+    }
+
+    public void setAreas(Collection<Area> areas) {
+        this.areas = areas;
     }
 }

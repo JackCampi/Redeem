@@ -20,9 +20,11 @@ public class Area {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Allocation> allocations;
 
-    public Area(String name) {
+    public Area(String name, Collection<Employee> employees, Collection<Allocation> allocations) {
         super();
         this.name = name;
+        this.employees = employees;
+        this.allocations = allocations;
     }
 
     public Area() {
@@ -42,5 +44,21 @@ public class Area {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Collection<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Collection<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public Collection<Allocation> getAllocations() {
+        return allocations;
+    }
+
+    public void setAllocations(Collection<Allocation> allocations) {
+        this.allocations = allocations;
     }
 }

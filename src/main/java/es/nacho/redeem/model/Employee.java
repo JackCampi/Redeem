@@ -24,7 +24,7 @@ public class Employee {
     private String password;
 
     @Column(name="emp_cel", nullable = false)
-    private String celphone;
+    private String cellphone;
 
     @Column(name="emp_birthday", nullable = false)
     private Calendar birthday;
@@ -47,17 +47,20 @@ public class Employee {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
     private Collection<Allocation> allocations;
 
-    public Employee(String name, String lastName, String email, String password, String celphone, Calendar birthday, Long balance, Boolean active, String rol) {
+    public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Collection<Purchase> purchases, Collection<Transfer> tranfers, Collection<Allocation> allocations) {
         super();
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.celphone = celphone;
+        this.cellphone = cellphone;
         this.birthday = birthday;
         this.balance = balance;
         this.active = active;
         this.rol = rol;
+        this.purchases = purchases;
+        this.tranfers = tranfers;
+        this.allocations = allocations;
     }
 
     public Employee() {
@@ -104,12 +107,12 @@ public class Employee {
         this.password = password;
     }
 
-    public String getCelphone() {
-        return celphone;
+    public String getCellphone() {
+        return cellphone;
     }
 
-    public void setCelphone(String celphone) {
-        this.celphone = celphone;
+    public void setCellphone(String cellphone) {
+        this.cellphone = cellphone;
     }
 
     public Calendar getBirthday() {
@@ -142,5 +145,29 @@ public class Employee {
 
     public void setRol(String rol) {
         this.rol = rol;
+    }
+
+    public Collection<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Collection<Purchase> purchases) {
+        this.purchases = purchases;
+    }
+
+    public Collection<Transfer> getTranfers() {
+        return tranfers;
+    }
+
+    public void setTranfers(Collection<Transfer> tranfers) {
+        this.tranfers = tranfers;
+    }
+
+    public Collection<Allocation> getAllocations() {
+        return allocations;
+    }
+
+    public void setAllocations(Collection<Allocation> allocations) {
+        this.allocations = allocations;
     }
 }

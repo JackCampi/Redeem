@@ -21,7 +21,8 @@ public class Allocation {
     @Column(name="al_description")
     private String description;
 
-    public Allocation(LocalDateTime datetime, Integer amount, String description, Collection<Allocation> allocations) {
+    public Allocation(LocalDateTime datetime, Integer amount, String description) {
+        super();
         this.datetime = datetime;
         this.amount = amount;
         this.description = description;

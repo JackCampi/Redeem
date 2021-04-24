@@ -17,9 +17,10 @@ public class Transfer {
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Employee employee;
 
-    public Transfer(LocalDateTime datetime) {
+    public Transfer(LocalDateTime datetime, Employee employee) {
         super();
         this.datetime = datetime;
+        this.employee = employee;
     }
 
     public Transfer() {
@@ -39,5 +40,13 @@ public class Transfer {
 
     public void setDatetime(LocalDateTime datetime) {
         this.datetime = datetime;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 }
