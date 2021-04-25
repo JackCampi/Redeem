@@ -33,6 +33,13 @@ public class Company {
         this.areas = areas;
     }
 
+    public Company(Long id, String name, Long budget, Collection<Area> areas) {
+        this.id = id;
+        this.name = name;
+        this.budget = budget;
+        this.areas = areas;
+    }
+
     public Company() {
 
     }
