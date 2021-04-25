@@ -8,7 +8,6 @@ import java.util.Collection;
 public class Company {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "comp_id", nullable = false)
     private Long id;
 
@@ -25,12 +24,13 @@ public class Company {
     private Collection<Area> areas;
 
 
-    public Company(String name, Long budget, Collection<Product> products, Collection<Area> areas) {
+    public Company(Long id, String name, Long budget, Collection<Product> products, Collection<Area> areas) {
         super();
+        this.id = id;
         this.name = name;
         this.budget = budget;
-//        this.products = products;
-//        this.areas = areas;
+        this.products = products;
+        this.areas = areas;
     }
 
     public Company() {
@@ -61,19 +61,19 @@ public class Company {
         this.budget = budget;
     }
 
-//    public Collection<Product> getProducts() {
-//        return products;
-//    }
-//
-//    public void setProducts(Collection<Product> products) {
-//        this.products = products;
-//    }
+    public Collection<Product> getProducts() {
+        return products;
+    }
 
-//    public Collection<Area> getAreas() {
-//        return areas;
-//    }
-//
-//    public void setAreas(Collection<Area> areas) {
-//        this.areas = areas;
-//    }
+    public void setProducts(Collection<Product> products) {
+        this.products = products;
+    }
+
+    public Collection<Area> getAreas() {
+        return areas;
+    }
+
+    public void setAreas(Collection<Area> areas) {
+        this.areas = areas;
+    }
 }
