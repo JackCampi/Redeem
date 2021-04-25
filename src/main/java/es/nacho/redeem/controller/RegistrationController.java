@@ -14,34 +14,34 @@ import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/reg")
-public class UserRegistrationController {
+public class RegistrationController {
 
     @Autowired
     private UserService userService;
 
     @GetMapping(value = "/admin")
     public String showRegistrationForm(){
-        return "adminRegistrationForm";
+        return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
 
     @GetMapping(value = "/comp")
     public String showCompanyForm(){
 
-        return "companyRegistrationForm";
+        return WebPageNames.COMPANY_REGISTRATION_FORM;
     }
 
     @PostMapping(value = "/admin")
     public String registerAdminAccount(@ModelAttribute("employee") EmployeeRegistrationDto employeeRegistrationDto, HttpSession session){
 
-        String companyName = (String) session.getAttribute("companyName");
+        Long nit = (Long) session.getAttribute("nit");
 
-        return "adminDashboard";
+        return WebPageNames.ADMIN_DASHBOARD;
     }
 
     @PostMapping(value = "/comp")
     public String registerAdminAccount(@ModelAttribute("company") CompanyRegistrationDto companyRegistrationDto, HttpSession session){
-        session.setAttribute("companyName", companyRegistrationDto.getName());
-        return "adminRegistrationForm";
+        session.setAttribute("nit", companyRegistrationDto.getId());
+        return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
 
     @ModelAttribute("employee")
