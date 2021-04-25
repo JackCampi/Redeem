@@ -1,7 +1,11 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -9,20 +13,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/reg")
 public class UserRegistrationController {
 
+    @Autowired
+    private UserService userService;
 
-
-    public UserRegistrationController() {
-        super();
-    }
-
-    @GetMapping
+    @GetMapping(value = "/admin")
     public String showRegistrationForm(){
-        return "registration";
+        return "adminRegistrationForm";
     }
 
-    @PostMapping
-    public String registerUserAccount(){
-        return "redirect:/registration?success";
+    @GetMapping(value = "/comp")
+    public String showCompanyForm(){
+        return "companyRegistrationForm";
+    }
+
+    @PostMapping(value = "/admin")
+    public String registerAdminAccount(@ModelAttribute("employee") EmployeeRegistrationDto employeeRegistrationDto){
+
+        return "companyRegistrationForm";
+    }
+
+    @ModelAttribute("employee")
+    public EmployeeRegistrationDto employeeRegistrationDto(){
+        return new EmployeeRegistrationDto();
     }
 
 }
