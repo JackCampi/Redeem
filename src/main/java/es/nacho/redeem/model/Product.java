@@ -24,7 +24,7 @@ public class Product {
     @Column(name = "prod_stock", nullable = false)
     private Long stock;
 
-    @Column(name = "prod_image_url", nullable = false)
+    @Column(name = "prod_image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "product")

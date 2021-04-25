@@ -18,7 +18,7 @@ public class Allocation {
     @Column(name="al_amount", nullable = false)
     private Integer amount;
 
-    @Column(name="al_description", nullable = false)
+    @Column(name="al_description", nullable = false, columnDefinition = "TEXt")
     private String description;
 
     @ManyToOne
