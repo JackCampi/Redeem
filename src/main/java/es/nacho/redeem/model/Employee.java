@@ -5,7 +5,7 @@ import java.util.Collection;
 import java.util.Calendar;
 
 @Entity
-@Table(name = "employee", uniqueConstraints = @UniqueConstraint(columnNames = "emp_id"))
+@Table(name = "employee", uniqueConstraints = @UniqueConstraint(columnNames = "emp_email"))
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
