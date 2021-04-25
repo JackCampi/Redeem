@@ -43,7 +43,11 @@ public class Employee {
     private Collection<Purchase> purchases;
 
     @ManyToOne
-    @JoinColumn(name = "area_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "area_area_id",referencedColumnName = "area_id", nullable = false),
+            @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
+    })
+
     private Area area;
 
 //    @ManyToOne

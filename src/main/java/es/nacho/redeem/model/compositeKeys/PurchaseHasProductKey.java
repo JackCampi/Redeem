@@ -1,4 +1,4 @@
-package es.nacho.redeem.model;
+package es.nacho.redeem.model.compositeKeys;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;

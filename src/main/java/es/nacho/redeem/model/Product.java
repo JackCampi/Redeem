@@ -31,7 +31,7 @@ public class Product {
     private Collection<PurchaseHasProduct> purchaseHasProducts;
 
     @ManyToOne
-    @JoinColumn(name = "comp_id", nullable = false)
+    @JoinColumn(name = "company_comp_id", nullable = false)
     private Company company;
 
     public Product(String name, String price, String type, Long stock, String imageUrl) {

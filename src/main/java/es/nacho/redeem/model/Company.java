@@ -21,7 +21,7 @@ public class Company {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="company")
     private Collection<Product> products;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="company")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Collection<Area> areas;
 
 

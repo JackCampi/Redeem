@@ -12,17 +12,20 @@ public class Allocation {
     @Column(name = "al_id")
     private Long id;
 
-    @Column(name="al_datetime")
+    @Column(name="al_datetime", nullable = false)
     private LocalDateTime datetime;
 
-    @Column(name="al_amount")
+    @Column(name="al_amount", nullable = false)
     private Integer amount;
 
-    @Column(name="al_description")
+    @Column(name="al_description", nullable = false)
     private String description;
 
     @ManyToOne
-    @JoinColumn(name = "area_id", nullable = false)
+    @JoinColumns({
+            @JoinColumn(name = "area_area_id",referencedColumnName = "area_id", nullable = false),
+            @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
+    })
     private Area area;
 
     @ManyToOne

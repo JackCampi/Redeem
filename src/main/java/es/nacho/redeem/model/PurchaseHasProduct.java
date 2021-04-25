@@ -1,5 +1,7 @@
 package es.nacho.redeem.model;
 
+import es.nacho.redeem.model.compositeKeys.PurchaseHasProductKey;
+
 import javax.persistence.*;
 
 @Entity

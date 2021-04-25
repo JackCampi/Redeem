@@ -1,23 +1,28 @@
 package es.nacho.redeem.model;
 
+import es.nacho.redeem.model.compositeKeys.AreaKey;
+
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Table(name="area")
+@IdClass(AreaKey.class)
 public class Area {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "area_id")
-    private Long id;
+    private Long areaId;
 
-    @Column(name="area_name")
+    @Column(name="area_name", nullable = false)
     private String name;
 
+    @Id
     @ManyToOne
     @MapsId("comp_id")
     @JoinColumn(name = "company_comp_id", nullable = false)
-    private Company company;
+    private Company companyId;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Employee> employees;
@@ -36,11 +41,11 @@ public class Area {
     }
 
     public Long getId() {
-        return id;
+        return areaId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long areaId) {
+        this.areaId = areaId;
     }
 
     public String getName() {
