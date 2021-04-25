@@ -14,13 +14,18 @@ public class Transfer {
     @Column(name = "tr_datetime", nullable = false)
     private LocalDateTime datetime;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private Employee employee;
+    @ManyToOne
+    @JoinColumn(name = "emp_from_id", nullable = false)
+    private Employee employee_from;
 
-    public Transfer(LocalDateTime datetime, Employee employee) {
+    @ManyToOne
+    @JoinColumn(name = "emp_to_id", nullable = false)
+    private Employee employee_to;
+
+    public Transfer(LocalDateTime datetime/*, Employee employee*/) {
         super();
         this.datetime = datetime;
-        this.employee = employee;
+//        this.employee = employee;
     }
 
     public Transfer() {
@@ -42,11 +47,11 @@ public class Transfer {
         this.datetime = datetime;
     }
 
-    public Employee getEmployee() {
-        return employee;
-    }
-
-    public void setEmployee(Employee employee) {
-        this.employee = employee;
-    }
+//    public Employee getEmployee() {
+//        return employee;
+//    }
+//
+//    public void setEmployee(Employee employee) {
+//        this.employee = employee;
+//    }
 }

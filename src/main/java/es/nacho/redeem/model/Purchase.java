@@ -20,9 +20,17 @@ public class Purchase {
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "purchase")
     private Collection<PurchaseHasProduct> purchaseHasProducts;
 
+    @ManyToOne
+    @JoinColumn(name = "emp_id", nullable = false)
+    private Employee employee;
+
     public Purchase(Calendar dateTime) {
         super();
         this.dateTime = dateTime;
+    }
+
+    public Purchase() {
+
     }
 
     public Long getId() {

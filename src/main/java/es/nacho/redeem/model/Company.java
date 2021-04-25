@@ -18,10 +18,10 @@ public class Company {
     @Column(name = "comp_budget", nullable = false)
     private Long budget;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="company")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="company")
     private Collection<Product> products;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="company")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy="company")
     private Collection<Area> areas;
 
 
@@ -29,8 +29,12 @@ public class Company {
         super();
         this.name = name;
         this.budget = budget;
-        this.products = products;
-        this.areas = areas;
+//        this.products = products;
+//        this.areas = areas;
+    }
+
+    public Company() {
+
     }
 
     public Long getId() {
@@ -57,19 +61,19 @@ public class Company {
         this.budget = budget;
     }
 
-    public Collection<Product> getProducts() {
-        return products;
-    }
+//    public Collection<Product> getProducts() {
+//        return products;
+//    }
+//
+//    public void setProducts(Collection<Product> products) {
+//        this.products = products;
+//    }
 
-    public void setProducts(Collection<Product> products) {
-        this.products = products;
-    }
-
-    public Collection<Area> getAreas() {
-        return areas;
-    }
-
-    public void setAreas(Collection<Area> areas) {
-        this.areas = areas;
-    }
+//    public Collection<Area> getAreas() {
+//        return areas;
+//    }
+//
+//    public void setAreas(Collection<Area> areas) {
+//        this.areas = areas;
+//    }
 }

@@ -21,6 +21,14 @@ public class Allocation {
     @Column(name="al_description")
     private String description;
 
+    @ManyToOne
+    @JoinColumn(name = "area_id", nullable = false)
+    private Area area;
+
+    @ManyToOne
+    @JoinColumn(name = "emp_id", nullable = false)
+    private Employee employee;
+
     public Allocation(LocalDateTime datetime, Integer amount, String description) {
         super();
         this.datetime = datetime;

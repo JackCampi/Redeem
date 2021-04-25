@@ -9,6 +9,7 @@ import java.util.Calendar;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="emp_id")
     private Long id;
 
     @Column(name="emp_name", nullable = false)
@@ -38,16 +39,28 @@ public class Employee {
     @Column(name="emp_rol", nullable = false)
     private String rol;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private Collection<Purchase> purchases;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
-    private Collection<Transfer> tranfers;
+    @ManyToOne
+    @JoinColumn(name = "area_id", nullable = false)
+    private Area area;
 
-    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "employee")
+//    @ManyToOne
+//    @MapsId("company_comp_id")
+//    @JoinColumn(name = "area_company_comp_id", nullable = false)
+//    private Area area_company;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_from")
+    private Collection<Transfer> transfers_from;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_to")
+    private Collection<Transfer> transfers_to;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private Collection<Allocation> allocations;
 
-    public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Collection<Purchase> purchases, Collection<Transfer> tranfers, Collection<Allocation> allocations) {
+    public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Collection<Purchase> purchases, Collection<Transfer> transfers/*, Collection<Allocation> allocations*/) {
         super();
         this.name = name;
         this.lastName = lastName;
@@ -58,9 +71,9 @@ public class Employee {
         this.balance = balance;
         this.active = active;
         this.rol = rol;
-        this.purchases = purchases;
-        this.tranfers = tranfers;
-        this.allocations = allocations;
+//        this.purchases = purchases;
+//        this.transfers = transfers;
+//        this.allocations = allocations;
     }
 
     public Employee() {
@@ -147,27 +160,27 @@ public class Employee {
         this.rol = rol;
     }
 
-    public Collection<Purchase> getPurchases() {
-        return purchases;
-    }
+//    public Collection<Purchase> getPurchases() {
+//        return purchases;
+//    }
+//
+//    public void setPurchases(Collection<Purchase> purchases) {
+//        this.purchases = purchases;
+//    }
+//
+//    public Collection<Transfer> getTranfers() {
+//        return tranfers;
+//    }
+//
+//    public void setTranfers(Collection<Transfer> tranfers) {
+//        this.tranfers = tranfers;
+//    }
 
-    public void setPurchases(Collection<Purchase> purchases) {
-        this.purchases = purchases;
-    }
-
-    public Collection<Transfer> getTranfers() {
-        return tranfers;
-    }
-
-    public void setTranfers(Collection<Transfer> tranfers) {
-        this.tranfers = tranfers;
-    }
-
-    public Collection<Allocation> getAllocations() {
-        return allocations;
-    }
-
-    public void setAllocations(Collection<Allocation> allocations) {
-        this.allocations = allocations;
-    }
+//    public Collection<Allocation> getAllocations() {
+//        return allocations;
+//    }
+//
+//    public void setAllocations(Collection<Allocation> allocations) {
+//        this.allocations = allocations;
+//    }
 }
