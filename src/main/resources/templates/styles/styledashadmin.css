@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
+
+:root{
+    --main-color: #8E44AD;
+    --text-color: #424242;
+    
+}
+html, body{
+    font-family: 'Nunito Sans', sans-serif;
+    font-size: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+/* side bar */
+
+hr.solid {
+    border-top: 3px solid #C496D7;
+  }
+
+.mini-logo{
+    width: 5%;
+}
+
+.material-icons.sidebar{
+    color: #C496D7;
+}
+
+.material-icons.header{
+    color: #434343;
+}
