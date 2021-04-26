@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Dashboard - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="styles/styledashboard.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="sidebar">
+        <div class="sidebar-brand">
+            <img src="img/redeem_mini_icon.svg" alt="logo" class="mini-logo">
+            <!--h2 class="redeem-name">Redeem</h2--><img src="img/redeem_logo_white.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="sidebar-menu">
+            <div>
+                <ul>
+                    <li>
+                        <a href="" class="selected"><span class="material-icons sidebar-icon selected">
+                            analytics
+                            </span> <p>Dashboard</p> </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a href="/error.html">
+                            <span class="material-icons sidebar-icon">
+                                person_add_alt
+                                </span>
+                            <span> <p>Añadir empleado</p> </span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <hr class="space-menu">
+            <div>
+                <a href=""><span class="material-icons">
+                    power_settings_new
+                    </span> <p>Cerrar sesión</p> </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h2>Dashboard</h2></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h3>Nombre Cualquiera</h3>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+        <main>
+            <div class="cards">
+                <div class="card company">
+                    <h1>Nombre de empresa S.A.S.</h1>
+                    <span>N.I.T. 1293094929</span>
+                </div>
+                <div class="card budget">
+                    <span>Presupuesto</span>
+                    <h1>$1 000 000</h1>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+</body>
+</html>
