@@ -5,6 +5,6 @@ import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 
 public interface CompanyService {
 
-    Company save(CompanyRegistrationDto companyRegistrationDto);
+    Company registerCompany(CompanyRegistrationDto companyRegistrationDto);
 
 }

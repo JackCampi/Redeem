@@ -44,14 +44,19 @@ public class RegistrationController {
             userService.registerAdmin(adminRegistrationDto, nit);
             return WebPageNames.ADMIN_DASHBOARD;
         }catch (Exception e){
-            return null;
+            return WebPageNames.ERROR_PAGE;
         }
     }
 
     @PostMapping("/comp")
     public String registerCompany(@ModelAttribute("company") CompanyRegistrationDto companyRegistrationDto, HttpSession session){
         session.setAttribute("nit", companyRegistrationDto.getId());
-        return WebPageNames.ADMIN_REGISTRATION_FORM;
+        try{
+            companyService.registerCompany(companyRegistrationDto);
+            return WebPageNames.ADMIN_REGISTRATION_FORM;
+        }catch (Exception e){
+            return WebPageNames.ERROR_PAGE;
+        }
     }
 
     @ModelAttribute("admin")
