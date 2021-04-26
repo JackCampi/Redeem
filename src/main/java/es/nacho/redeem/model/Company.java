@@ -1,6 +1,7 @@
 package es.nacho.redeem.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -38,6 +39,13 @@ public class Company {
         this.name = name;
         this.budget = budget;
         this.areas = areas;
+    }
+
+    public Company(Long id, String name, Long budget) {
+        this.id = id;
+        this.name = name;
+        this.budget = budget;
+        this.areas = new ArrayList<>();
     }
 
     public Company() {
