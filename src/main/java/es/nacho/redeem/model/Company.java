@@ -24,13 +24,12 @@ public class Company {
     private Collection<Area> areas;
 
 
-    public Company(Long id, String name, Long budget, Collection<Product> products, Collection<Area> areas) {
+    public Company(Long id, String name, Long budget) {
         super();
         this.id = id;
         this.name = name;
         this.budget = budget;
-        this.products = products;
-        this.areas = areas;
+
     }
 
     public Company(Long id, String name, Long budget, Collection<Area> areas) {
@@ -42,6 +41,14 @@ public class Company {
 
     public Company() {
 
+    }
+
+    public void addAreas(Area newArea){
+        areas.add(newArea);
+    }
+
+    public void removeArea(Area area){
+        areas.remove(area);
     }
 
     public Long getId() {

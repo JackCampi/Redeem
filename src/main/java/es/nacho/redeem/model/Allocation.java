@@ -7,6 +7,7 @@ import java.util.Collection;
 @Entity
 @Table(name="allocation")
 public class Allocation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "al_id")

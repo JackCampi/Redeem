@@ -1,23 +1,22 @@
 package es.nacho.redeem.model;
 
 import es.nacho.redeem.model.compositeKeys.AreaKey;
+import es.nacho.redeem.model.compositeKeys.PurchaseHasProductKey;
 
 import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
 @Table(name="area")
-@IdClass(AreaKey.class)
 public class Area {
 
-    @Id
-    @Column(name="area_name", nullable = false)
-    private String name;
+    @EmbeddedId
+    private AreaKey id;
 
-    @Id
+
     @ManyToOne
-    @MapsId("comp_id")
-    @JoinColumn(name = "company_comp_id", nullable = false)
+    @MapsId("companyId")
+    @JoinColumn(name = "company_comp_id", referencedColumnName = "comp_id", nullable = false)
     private Company companyId;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
@@ -26,25 +25,31 @@ public class Area {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Allocation> allocations;
 
-    public Area(String name, Collection<Employee> employees, Collection<Allocation> allocations) {
+    public Area(String name, Long companyId) {
         super();
-        this.name = name;
-//        this.employees = employees;
-//        this.allocations = allocations;
+        this.id = new AreaKey(name, companyId);
     }
 
     public Area() {
     }
 
-    public String getName() {
-        return name;
+    public AreaKey getId() {
+        return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setId(AreaKey id) {
+        this.id = id;
     }
 
-//    public Collection<Employee> getEmployees() {
+    public Company getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(Company companyId) {
+        this.companyId = companyId;
+    }
+
+    //    public Collection<Employee> getEmployees() {
 //        return employees;
 //    }
 //
