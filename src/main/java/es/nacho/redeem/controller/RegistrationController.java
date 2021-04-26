@@ -24,6 +24,11 @@ public class RegistrationController {
     private CompanyService companyService;
 
     @GetMapping
+    public String redirectToRegistrationCompanyForm(){
+        return "redirect:/reg/comp";
+    }
+
+    @GetMapping
     @RequestMapping("/admin")
     public String showRegistrationForm(){
         return WebPageNames.ADMIN_REGISTRATION_FORM;
