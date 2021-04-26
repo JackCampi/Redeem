@@ -6,7 +6,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
+@RequestMapping("/")
 public class UserLoginController {
+    
+    @GetMapping
+    public String redirectToLogin(){
+        return "redirect:/login";
+    }
 
     @GetMapping
     @RequestMapping("/login")

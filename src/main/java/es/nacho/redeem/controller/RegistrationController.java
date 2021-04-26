@@ -1,5 +1,6 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
@@ -19,19 +20,22 @@ public class RegistrationController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CompanyService companyService;
 
-    @GetMapping(value = "/admin")
+    @GetMapping
+    @RequestMapping("/admin")
     public String showRegistrationForm(){
         return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
 
-    @GetMapping(value = "/comp")
+    @GetMapping
+    @RequestMapping("/comp")
     public String showCompanyForm(){
-
         return WebPageNames.COMPANY_REGISTRATION_FORM;
     }
 
-    @PostMapping(value = "/admin")
+    @PostMapping("/admin")
     public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
         //TODO: web page for exception
         Long nit = (Long) session.getAttribute("nit");
@@ -44,8 +48,8 @@ public class RegistrationController {
         }
     }
 
-    @PostMapping(value = "/comp")
-    public String registerAdminAccount(@ModelAttribute("company") CompanyRegistrationDto companyRegistrationDto, HttpSession session){
+    @PostMapping("/comp")
+    public String registerCompany(@ModelAttribute("company") CompanyRegistrationDto companyRegistrationDto, HttpSession session){
         session.setAttribute("nit", companyRegistrationDto.getId());
         return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
