@@ -11,10 +11,6 @@ import java.util.Collection;
 public class Area {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "area_id")
-    private Long areaId;
-
     @Column(name="area_name", nullable = false)
     private String name;
 
@@ -38,14 +34,6 @@ public class Area {
     }
 
     public Area() {
-    }
-
-    public Long getId() {
-        return areaId;
-    }
-
-    public void setId(Long areaId) {
-        this.areaId = areaId;
     }
 
     public String getName() {

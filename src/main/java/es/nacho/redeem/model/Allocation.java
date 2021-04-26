@@ -23,7 +23,7 @@ public class Allocation {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "area_area_id",referencedColumnName = "area_id", nullable = false),
+            @JoinColumn(name = "area_area_id",referencedColumnName = "area_name", nullable = false),
             @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
     })
     private Area area;

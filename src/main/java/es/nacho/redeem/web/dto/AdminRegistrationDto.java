@@ -2,7 +2,7 @@ package es.nacho.redeem.web.dto;
 
 import java.util.Calendar;
 
-public class EmployeeRegistrationDto {
+public class AdminRegistrationDto {
 
     private String name;
     private String lastName;
@@ -13,9 +13,9 @@ public class EmployeeRegistrationDto {
     private Long balance;
     private Boolean active;
     private String rol;
-    private String area;
 
-    public EmployeeRegistrationDto(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, String area) {
+    public AdminRegistrationDto(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol) {
+
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -25,10 +25,10 @@ public class EmployeeRegistrationDto {
         this.balance = balance;
         this.active = active;
         this.rol = rol;
-        this.area = area;
     }
 
-    public EmployeeRegistrationDto() {
+    public AdminRegistrationDto(){
+
     }
 
     public String getName() {

@@ -44,7 +44,7 @@ public class Employee {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "area_area_id",referencedColumnName = "area_id", nullable = false),
+            @JoinColumn(name = "area_area_id",referencedColumnName = "area_name", nullable = false),
             @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
     })
 
@@ -64,7 +64,7 @@ public class Employee {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private Collection<Allocation> allocations;
 
-    public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Collection<Purchase> purchases, Collection<Transfer> transfers/*, Collection<Allocation> allocations*/) {
+    public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Area area/*, Collection<Purchase> purchases, Collection<Transfer> transfers/*, Collection<Allocation> allocations*/) {
         super();
         this.name = name;
         this.lastName = lastName;
@@ -75,6 +75,7 @@ public class Employee {
         this.balance = balance;
         this.active = active;
         this.rol = rol;
+        this.area = area;
 //        this.purchases = purchases;
 //        this.transfers = transfers;
 //        this.allocations = allocations;

@@ -1,6 +1,7 @@
 package es.nacho.redeem.controller;
 
 import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,16 @@ public class RegistrationController {
     }
 
     @PostMapping(value = "/admin")
-    public String registerAdminAccount(@ModelAttribute("employee") EmployeeRegistrationDto employeeRegistrationDto, HttpSession session){
-
+    public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
+        //TODO: web page for exception
         Long nit = (Long) session.getAttribute("nit");
 
-        return WebPageNames.ADMIN_DASHBOARD;
+        try{
+            userService.registerAdmin(adminRegistrationDto, nit);
+            return WebPageNames.ADMIN_DASHBOARD;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @PostMapping(value = "/comp")
@@ -44,9 +50,9 @@ public class RegistrationController {
         return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
 
-    @ModelAttribute("employee")
-    public EmployeeRegistrationDto employeeRegistrationDto(){
-        return new EmployeeRegistrationDto();
+    @ModelAttribute("admin")
+    public AdminRegistrationDto employeeRegistrationDto(){
+        return new AdminRegistrationDto();
     }
 
     @ModelAttribute("company")
