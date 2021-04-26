@@ -16,7 +16,7 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public Company save(CompanyRegistrationDto companyRegistrationDto) {
+    public Company registerCompany(CompanyRegistrationDto companyRegistrationDto) {
         Company company = new Company(
                 companyRegistrationDto.getId(),
                 companyRegistrationDto.getName(),
