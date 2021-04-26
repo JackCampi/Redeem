@@ -14,6 +14,12 @@ public class CompanyRegistrationDto {
         this.areas = areas;
     }
 
+    public CompanyRegistrationDto(Long id, String name, String areas) {
+        this.id = id;
+        this.name = name;
+        this.areas = areas;
+    }
+
     public CompanyRegistrationDto() {
     }
 
