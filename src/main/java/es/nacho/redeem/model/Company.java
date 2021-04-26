@@ -40,13 +40,6 @@ public class Company {
         this.areas = areas;
     }
 
-    public Company(Long id, String name, Long budget) {
-        this.id = id;
-        this.name = name;
-        this.budget = budget;
-        this.areas = new ArrayList<>();
-    }
-
     public Company() {
 
     }
