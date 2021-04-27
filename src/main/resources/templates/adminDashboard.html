@@ -68,7 +68,7 @@
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h3 th:text="${name}"></h3>
+                    <h3 th:text="${adminDashboardInfo.name}"></h3>
                     <small>Administrador</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
@@ -77,12 +77,12 @@
         <main>
             <div class="cards">
                 <div class="card company">
-                    <h1>Nombre de empresa super special dinamita lobo ya me quedé sin ideas xd S.A.S.</h1>
-                    <span>N.I.T. 1293094929</span>
+                    <h1 th:text="${adminDashboardInfo.companyName}"></h1>
+                    <span>N.I.T. <span th:text="${adminDashboardInfo.companyNit}"></span></span>
                 </div>
                 <div class="card budget">
                     <span>Presupuesto</span>
-                    <h1>$1 000 000</h1>
+                    <h1>$ <h1 th:text="${adminDashboardInfo.companyBudget}"></h1></h1>
                 </div>
             </div>
         </main>

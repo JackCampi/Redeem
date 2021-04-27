@@ -58,7 +58,7 @@
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h3>Nombre Cualquiera</h3>
+                    <h3 th:text="${employeeDashboardInfo.name}"></h3>
                     <small>Empleado</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
@@ -67,12 +67,12 @@
         <main>
             <div class="cards">
                 <div class="card company">
-                    <h1>Nombre de empresa S.A.S.</h1>
-                    <span>N.I.T. 1293094929</span>
+                    <h1 th:text="${employeeDashboardInfo.companyName}"></h1>
+                    <span>N.I.T. <span th:text="${employeeDashboardInfo.companyNit}"></span></span>
                 </div>
                 <div class="card budget">
                     <h2>Balance</h2>
-                    <h1>$10 000</h1>
+                    <h1>$<span th:text="${employeeDashboardInfo.balance}"></span></h1>
                 </div>
             </div>
         </main>
