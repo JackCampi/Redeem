@@ -113,3 +113,11 @@ a{
 .submit-button:hover{
     background-color: #7c3b97;
 }
+
+/* Validation errors*/
+.validation-error{
+    width: 18rem;
+    margin-left: 1rem;
+    color: firebrick;
+    display: none;
+}
