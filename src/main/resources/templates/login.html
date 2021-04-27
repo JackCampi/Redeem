@@ -14,7 +14,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <!--<link th:href="@{/static/styles/styleLogin.css}" rel="stylesheet" />-->
 
-    <link rel="icon" th:href="@{/img/RedeemIcon.ico}">
+    <link rel="icon" href="/img/RedeemIcon.ico">
     <title>Login</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
@@ -238,7 +238,7 @@
                     <div class="form-group">
                         <label class="input-label" for="username">Correo</label>
                         <input type="text" class="form-control field" name="username" id="username"
-                            placeholder="Ingrese su correo" autofocus="autofocus">
+                            placeholder="Ingrese su correo" autofocus="autofocus" required>
                         <div class="valid-error" id="email_error1"> Por favor, introduzca un correo </div>
                         <div class="valid-error" id="email_error2"> Por favor, introduzca un correo válido</div>
                     </div>
@@ -249,7 +249,7 @@
                     <div class="form-group">
                         <label class="input-label" for="password">   Contraseña</label>
                         <input type="password" class="form-control field" name="password" id="password"
-                            placeholder="Ingrese su contraseña">
+                            placeholder="Ingrese su contraseña" required>
                             <div class="valid-error" id="pass_id"> Por favor, introduzca una contraseña </div>
                     </div>
 

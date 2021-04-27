@@ -11,8 +11,9 @@ public class EmployeeRegistrationDto {
     private String cellphone;
     private String birthday;
     private String area;
+    private String passwordConfirm;
 
-    public EmployeeRegistrationDto(String name, String lastName, String email, String password, String cellphone, String birthday, String area) {
+    public EmployeeRegistrationDto(String name, String lastName, String email, String password, String cellphone, String birthday, String area, String passwordConfirm) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
@@ -20,6 +21,7 @@ public class EmployeeRegistrationDto {
         this.cellphone = cellphone;
         this.birthday = birthday;
         this.area = area;
+        this.passwordConfirm = passwordConfirm;
     }
 
     public EmployeeRegistrationDto() {
@@ -79,5 +81,13 @@ public class EmployeeRegistrationDto {
 
     public void setArea(String area) {
         this.area = area;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
     }
 }

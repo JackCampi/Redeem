@@ -14,4 +14,6 @@ public interface CompanyService {
 
     Collection<String> getAreasNames(Long companyNIT) throws Exception;
 
+    Long getCompanyNitByUser(String userEmail) throws Exception;
+
 }

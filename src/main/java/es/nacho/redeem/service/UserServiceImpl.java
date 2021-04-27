@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService{
 
         Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
         roles.add(new SimpleGrantedAuthority(employee.getRol()));
-        User user = new User(employee.getName(), employee.getPassword(), roles);
+        User user = new User(employee.getEmail(), employee.getPassword(), roles);
 
         return user;
     }
@@ -106,6 +106,15 @@ public class UserServiceImpl implements UserService{
         );
 
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public String getCompleteUserName(String email) throws Exception {
+
+        Employee employee = employeeRepository.findByEmail(email);
+        if(employee == null) throw new Exception("Employee not found");
+
+        return employee.getName() + " " + employee.getLastName();
     }
 
     private Calendar getCalendarFromString(String string){

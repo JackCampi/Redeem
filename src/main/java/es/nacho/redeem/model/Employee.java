@@ -165,6 +165,13 @@ public class Employee {
         this.rol = rol;
     }
 
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
 //    public Collection<Purchase> getPurchases() {
 //        return purchases;
 //    }

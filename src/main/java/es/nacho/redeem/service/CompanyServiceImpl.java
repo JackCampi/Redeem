@@ -2,8 +2,10 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
+import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
+import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,6 +21,8 @@ public class CompanyServiceImpl implements CompanyService{
     private CompanyRepository companyRepository;
     @Autowired
     private AreaRepository areaRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Override
     public Company registerCompany(CompanyRegistrationDto companyRegistrationDto) {
@@ -61,15 +65,25 @@ public class CompanyServiceImpl implements CompanyService{
         Optional<Company> company =  companyRepository.findById(companyNIT);
         if( !company.isPresent()) throw new Exception("Company not found");
 
-        Collection<String> areaNames = new ArrayList<String>();
+        Collection<Area> area = areaRepository.findByCompany(company.get());
 
-        for(Area area: company.get().getAreas()){
-
-            areaNames.add(area.getId().getName());
-
-        }
-
+        Collection<String> areaNames = new ArrayList<>();
+        area.forEach(areaObject -> areaNames.add(areaObject.getId().getName()));
 
         return areaNames;
+    }
+
+    @Override
+    public Long getCompanyNitByUser(String userEmail) throws Exception {
+
+        Employee employee = employeeRepository.findByEmail(userEmail);
+
+        if(employee == null) throw new Exception("Employee not found");
+
+        Company company = employee.getArea().getCompany();
+
+        long nit = company.getId();
+
+        return nit;
     }
 }

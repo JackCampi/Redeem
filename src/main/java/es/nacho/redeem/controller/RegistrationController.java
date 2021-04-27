@@ -72,7 +72,7 @@ public class RegistrationController {
     }
 
     @ModelAttribute("admin")
-    public AdminRegistrationDto employeeRegistrationDto(){
+    public AdminRegistrationDto adminRegistrationDto(){
         return new AdminRegistrationDto();
     }
 
