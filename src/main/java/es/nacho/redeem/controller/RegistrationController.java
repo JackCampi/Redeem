@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 
 @Controller
-@RequestMapping("/reg")
 public class RegistrationController {
 
     @Autowired
@@ -24,18 +23,19 @@ public class RegistrationController {
     private CompanyService companyService;
 
     @GetMapping
+    @RequestMapping("/reg")
     public String redirectToRegistrationCompanyForm(){
         return "redirect:/reg/comp";
     }
 
     @GetMapping
-    @RequestMapping("/admin")
+    @RequestMapping("/reg/admin")
     public String showRegistrationForm(){
         return WebPageNames.ADMIN_REGISTRATION_FORM;
     }
 
     @GetMapping
-    @RequestMapping("/comp")
+    @RequestMapping("/reg/comp")
     public String showCompanyForm(){
         return WebPageNames.COMPANY_REGISTRATION_FORM;
     }

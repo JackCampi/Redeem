@@ -23,29 +23,31 @@ public class CompanyServiceImpl implements CompanyService{
                 companyRegistrationDto.getName(),
                 10000000000L
         );
-        processAllAreas(companyRegistrationDto.getAreas(), companyRegistrationDto.getId());
-        return companyRepository.save(company);
+        companyRepository.save(company);
+        processAllAreas(companyRegistrationDto.getAreas(), company);
+        return company;
     }
 
     /**
      * receives the text string with the areas of the company and processes this information by sending the data of
-     * all areas to {@link #registerArea(String, Long)}
+     * all areas to {@link #registerArea(String, Company)}
      *
      * @param allAreas  a text string with all the areas of the company that it receives from the frontend separated
      *                  by commas.
-     * @param companyId id Long type of the company that owns this area
+     * @param company id Long type of the company that owns this area
      */
-    public void processAllAreas(String allAreas, Long companyId){
+    public void processAllAreas(String allAreas, Company company){
         String[] areas = allAreas.split(",");
-        Area defaultArea = new Area("gerencia", companyId);
+        Area defaultArea = new Area("gerencia", company);
         areaRepository.save(defaultArea);
         for (String areaName : areas) {
-            registerArea(areaName, companyId);
+            registerArea(areaName, company);
         }
     }
 
     @Override
-    public Area registerArea(String areaName, Long companyId) {
-        return areaRepository.save(new Area(areaName, companyId));
+    public Area registerArea(String areaName, Company company) {
+        Area a = new Area(areaName, company);
+        return areaRepository.save(a);
     }
 }

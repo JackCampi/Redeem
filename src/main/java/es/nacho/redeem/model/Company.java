@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
-@Table(name = "company", uniqueConstraints = @UniqueConstraint(columnNames = "comp_name"))
+@Table(name = "company", uniqueConstraints = @UniqueConstraint(columnNames = "comp_id"))
 public class Company {
 
     @Id

@@ -1,7 +1,6 @@
 package es.nacho.redeem.model;
 
 import es.nacho.redeem.model.compositeKeys.AreaKey;
-import es.nacho.redeem.model.compositeKeys.PurchaseHasProductKey;
 
 import javax.persistence.*;
 import java.util.Collection;
@@ -17,7 +16,7 @@ public class Area {
     @ManyToOne
     @MapsId("companyId")
     @JoinColumn(name = "company_comp_id", referencedColumnName = "comp_id", nullable = false)
-    private Company companyId;
+    private Company company;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Employee> employees;
@@ -25,9 +24,10 @@ public class Area {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Allocation> allocations;
 
-    public Area(String name, Long companyId) {
+    public Area(String name, Company company) {
         super();
-        this.id = new AreaKey(name, companyId);
+        this.id = new AreaKey(name, company.getId());
+        this.company = company;
     }
 
     public Area() {
@@ -41,12 +41,12 @@ public class Area {
         this.id = id;
     }
 
-    public Company getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
-    public void setCompanyId(Company companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company companyId) {
+        this.company = companyId;
     }
 
     //    public Collection<Employee> getEmployees() {

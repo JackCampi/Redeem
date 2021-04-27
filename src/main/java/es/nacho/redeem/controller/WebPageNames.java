@@ -5,5 +5,5 @@ public interface WebPageNames {
     String COMPANY_REGISTRATION_FORM = "companyRegistrationForm";
     String ADMIN_DASHBOARD = "adminDashboard";
     String EMPLOYEE_REGISTRATION_FORM = "employeeRegistrationConfig";
-    String ERROR_PAGE = "errorPage";
+    String ERROR_PAGE = "error";
 }

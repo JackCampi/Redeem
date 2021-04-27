@@ -7,6 +7,6 @@ import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 public interface CompanyService {
 
     Company registerCompany(CompanyRegistrationDto companyRegistrationDto);
-    Area registerArea(String areaName, Long companyId);
+    Area registerArea(String areaName, Company company);
 
 }
