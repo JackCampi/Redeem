@@ -1,7 +1,6 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.model.Area;
-import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
 import es.nacho.redeem.repository.AreaRepository;
@@ -108,14 +107,6 @@ public class UserServiceImpl implements UserService{
         return employeeRepository.save(employee);
     }
 
-    @Override
-    public String getCompleteUserName(String email) throws Exception {
-
-        Employee employee = employeeRepository.findByEmail(email);
-        if(employee == null) throw new Exception("Employee not found");
-
-        return employee.getName() + " " + employee.getLastName();
-    }
 
     private Calendar getCalendarFromString(String string){
 

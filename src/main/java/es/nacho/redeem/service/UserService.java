@@ -11,6 +11,4 @@ public interface UserService extends UserDetailsService {
 
     Employee registerEmployee(EmployeeRegistrationDto employeeRegistrationDto, Long companyNIT) throws Exception;
 
-    String getCompleteUserName(String email) throws Exception;
-
 }
