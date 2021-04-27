@@ -2,6 +2,7 @@ package es.nacho.redeem.controller;
 
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,32 +30,24 @@ public class AdminController {
     private CompanyService companyService;
 
     @GetMapping
-    public String dashboard(Model model){
+    public String dashboard(Model model, HttpSession session){
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        String name = "welcome";
+        long nit = (long)  session.getAttribute("nit");
+
+        AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
+
         try{
-             name = userService.getCompleteUserName(email);
+             adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
+             adminDashboardInfoDto = companyService.fillAdminDashboardInfoDto(nit, adminDashboardInfoDto);
+
         }catch (Exception e){
             e.printStackTrace();
             return WebPageNames.ERROR_PAGE;
         }
 
-        model.addAttribute("name", name);
+        model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
 
-        /*User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String currentUserEmail = currentUser.getUsername();
-        String email = userDetails.getUsername();
-
-        try{
-            Long nit = companyService.getCompanyNitByUser(currentUserEmail);
-            session.setAttribute("nit", nit);
-
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return WebPageNames.ERROR_PAGE;
-        }*/
 
 
         return WebPageNames.ADMIN_DASHBOARD;

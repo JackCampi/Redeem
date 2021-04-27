@@ -6,7 +6,9 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
+import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -85,5 +87,35 @@ public class CompanyServiceImpl implements CompanyService{
         long nit = company.getId();
 
         return nit;
+    }
+
+    @Override
+    public AdminDashboardInfoDto fillAdminDashboardInfoDto(long nit, AdminDashboardInfoDto adminDashboardInfoDto) throws Exception {
+
+        Optional<Company> optionalCompany = companyRepository.findById(nit);
+        if(!optionalCompany.isPresent()) throw new Exception("Company not registered");
+
+        Company company = optionalCompany.get();
+
+        adminDashboardInfoDto.setCompanyName(company.getName());
+        adminDashboardInfoDto.setCompanyNit(company.getId());
+        adminDashboardInfoDto.setCompanyBudget(company.getBudget());
+
+
+        return adminDashboardInfoDto;
+    }
+
+    @Override
+    public EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(long nit, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception {
+
+        Optional<Company> optionalCompany = companyRepository.findById(nit);
+        if(!optionalCompany.isPresent()) throw new Exception("Company not registered");
+
+        Company company = optionalCompany.get();
+
+        employeeDashboardInfoDto.setCompanyName(company.getName());
+        employeeDashboardInfoDto.setCompanyNit(company.getId());
+
+        return employeeDashboardInfoDto;
     }
 }

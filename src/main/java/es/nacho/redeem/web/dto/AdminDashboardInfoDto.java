@@ -14,6 +14,9 @@ public class AdminDashboardInfoDto {
         this.companyBudget = companyBudget;
     }
 
+    public AdminDashboardInfoDto() {
+    }
+
     public String getName() {
         return name;
     }

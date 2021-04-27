@@ -6,7 +6,9 @@ import es.nacho.redeem.model.compositeKeys.AreaKey;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
+import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -107,6 +109,28 @@ public class UserServiceImpl implements UserService{
         return employeeRepository.save(employee);
     }
 
+    @Override
+    public AdminDashboardInfoDto fillAdminDashboardInfoDto(String email, AdminDashboardInfoDto adminDashboardInfoDto) throws Exception {
+
+        Employee employee = employeeRepository.findByEmail(email);
+        if(employee == null) throw new Exception("User not found");
+
+        adminDashboardInfoDto.setName(employee.getName());
+
+        return adminDashboardInfoDto;
+    }
+
+    @Override
+    public EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(String email, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception {
+
+        Employee employee = employeeRepository.findByEmail(email);
+        if(employee == null) throw new Exception("User not found");
+
+        employeeDashboardInfoDto.setName(employee.getName());
+        employeeDashboardInfoDto.setBalance(employee.getBalance());
+
+        return employeeDashboardInfoDto;
+    }
 
     private Calendar getCalendarFromString(String string){
 

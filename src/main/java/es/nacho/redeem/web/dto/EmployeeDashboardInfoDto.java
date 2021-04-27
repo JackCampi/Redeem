@@ -14,6 +14,9 @@ public class EmployeeDashboardInfoDto {
         this.companyNit = companyNit;
     }
 
+    public EmployeeDashboardInfoDto() {
+    }
+
     public String getName() {
         return name;
     }
