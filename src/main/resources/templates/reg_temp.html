@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>reg company</title>
+</head>
+<body>
+<div>
+    <div>
+        <form th:action="@{/reg/comp}" method="post" th:object="${company}">
+            <div>
+                <label for="name">Nombre</label>
+                <input type="text" th:field="*{name}" id="name">
+            </div>
+            <div>
+                <label for="nit">NIT</label>
+                <input type="text" th:field="*{id}" id="nit">
+            </div>
+            <div>
+                <label for="areas">Areas</label>
+                <input type="text" th:field="*{areas}" id="areas">
+            </div>
+            <button type="submit" class="btn btn-success">Registrar</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>

@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
@@ -16,9 +17,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class UserServiceImpl implements UserService{
@@ -49,35 +48,49 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public Employee registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception {
-        //TODO: set default area to the employee
-        Optional<Company> company =  companyRepository.findById(companyNIT);
-        if( !company.isPresent()) throw new Exception("Company not found");
+    public void registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception {
+        //TODO: test
+        //Optional<Company> company =  companyRepository.findById(companyNIT);
+        //if( !company.isPresent()) throw new Exception("Company not found");
 
-        //AreaKey key = new AreaKey(company.get().getId(), )
+        AreaKey key = new AreaKey("gerencia",companyNIT);
+        Optional<Area> area = areaRepository.findById(key);
+
+        if( !area.isPresent()) throw new Exception("Area not found");
+
+        //company.get().getAreas().stream().findAny()
 
         Employee employee = new Employee(
                 adminRegistrationDto.getName(),
                 adminRegistrationDto.getLastName(),
                 adminRegistrationDto.getEmail(),
                 passwordEncoder.encode(adminRegistrationDto.getPassword()),
+                //adminRegistrationDto.getPassword(),
                 adminRegistrationDto.getCellphone(),
-                adminRegistrationDto.getBirthday(),
-                adminRegistrationDto.getBalance(),
-                adminRegistrationDto.getActive(),
+                getCalendarFromString(adminRegistrationDto.getBirthday()),
+                0L,
+                true,
                 "administrador",
-                null
+                area.get()
         );
-
-        return employeeRepository.save(employee);
+        try {
+            employeeRepository.save(employee);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        int x = 1;
+        x++;
     }
 
     @Override
     public Employee registerEmployee(EmployeeRegistrationDto employeeRegistrationDto, Long companyNIT) throws Exception {
 
-        //TODO: search area
-        Optional<Company> company =  companyRepository.findById(companyNIT);
-        if( !company.isPresent()) throw new Exception("Company not found");
+        //TODO: test
+        AreaKey key = new AreaKey(employeeRegistrationDto.getArea(),companyNIT);
+        Optional<Area> area = areaRepository.findById(key);
+
+        if( !area.isPresent()) throw new Exception("Area not found");
 
         Employee employee = new Employee(
                 employeeRegistrationDto.getName(),
@@ -85,15 +98,33 @@ public class UserServiceImpl implements UserService{
                 employeeRegistrationDto.getEmail(),
                 passwordEncoder.encode(employeeRegistrationDto.getPassword()),
                 employeeRegistrationDto.getCellphone(),
-                employeeRegistrationDto.getBirthday(),
-                employeeRegistrationDto.getBalance(),
-                employeeRegistrationDto.getActive(),
+                getCalendarFromString(employeeRegistrationDto.getBirthday()),
+                0L,
+                true,
                 "empleado",
                 null
         );
 
         return employeeRepository.save(employee);
     }
+
+    private Calendar getCalendarFromString(String string){
+
+        /*
+        * Only works for date string with the format "yyyy-mm-dd"
+         */
+
+        String[] dateArray = string.split("-");
+
+        int year = Integer.valueOf(dateArray[0]);
+        int month = Integer.valueOf(dateArray[1]) - 1;
+        int day = Integer.valueOf(dateArray[2]);
+
+        Calendar calendar = new GregorianCalendar(year, month, day);
+        return  calendar;
+
+    }
+
 
 
 }

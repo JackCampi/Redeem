@@ -10,7 +10,7 @@ public class EmployeeController {
 
     @GetMapping
     public String dashboard(){
-        return "employeeDashboard";
+        return WebPageNames.EMPLOYEE_DASHBOARD;
     }
 
 }

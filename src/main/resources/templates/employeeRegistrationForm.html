@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Registrar empleado</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="styles/styleemp_register.css">
+
+</head>
+<body>
+    <div class="main-container">
+        <div class="form-container">
+            <img src="img/RedeemIcon.png" alt="redeem_logo" class="redeem-logo">
+            <h3>Nuevo empleado</h3>
+
+            <form th:action="@{/admin/addemp}" class="reg-form" method="post" th:object="${employee}">
+                <div class="fields">
+
+                    <!-- Name field -->
+                    <div class="field">
+                        <label for="name">Nombres</label>
+                        <input type="text" class="field-box" name="name" id="name" th:field="*{name}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="name_error"> Por favor, introduzca un nombre. </div>
+                    </div>
+
+                    <!-- LastName field -->
+                    <div class="field">
+                        <label for="lastName">Apellidos</label>
+                        <input type="text" class="field-box" name="lastName" id="lastName" th:field="*{lastName}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="lastName_error"> Por favor, introduzca un apellido. </div>
+                    </div>
+
+                    <!-- Cellphone field -->
+                    <div class="field">
+                        <label for="cellphone">Teléfono</label>
+                        <input type="number" class="field-box" name="cellphone" id="cellphone" th:field="*{cellphone}">
+
+                        <!-- error msg-->
+                        <div class="validation-error" id="cellphone_error"> Por favor, introduzca un teléfono. </div>
+                    </div>
+
+                    <!-- Birthday field -->
+                    <div class="field">
+                        <label for="birthday">Fecha de nacimiento</label>
+                        <input type="date" class="field-box" name="birthday" id="birthday" th:field="*{birthday}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="birthday_error"> Por favor, introduzca una fecha de nacimiento. </div>
+                    </div>
+
+                    <!-- Email field -->
+                    <div class="field">
+                        <label for="email">Correo</label>
+                        <input type="text" class="field-box" name="email" id="email" th:field="*{email}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="email_error1"> Por favor, introduzca un correo. </div>
+                        <div class="validation-error" id="email_error2"> Por favor, introduzca un correo válido. </div>
+                    </div>
+
+                    <!-- Area field -->
+                    <div class="field">
+                        <label for="area">Área</label>
+                        <input type="text" class="field-box" name="area" id="area" th:field="*{area}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="area_error"> Por favor, introduzca un area. </div>
+                    </div>
+
+                    <!-- Password field -->
+                    <div class="field">
+                        <label for="password">Contraseña</label>
+                        <input type="password" class="field-box" name="password" id="password" th:field="*{password}">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="pass_error1"> Por favor, introduzca una contraseña. </div>
+                        <div class="validation-error" id="pass_error2"> La contraseña debe contener al menos una letra minúscula,
+                                                                        una letra mayúscula, un número y un caracter especial
+                                                                        (Ej. #$%&).</div>
+                    </div>
+
+                    <!-- Password confirmation field -->
+                    <div class="field">
+                        <label for="password_confirm">Confirmar la contraseña</label>
+                        <input type="password" class="field-box" name="password_confirm" id="password_confirm">
+
+                        <!-- error msg -->
+                        <div class="validation-error" id="password_confirm_error1"> Por favor, confirme su contraseña. </div>
+                        <div class="validation-error" id="password_confirm_error2"> Las contraseñas no coinciden. </div>
+                    </div>
+                </div>
+                <div class="options">
+                    <input type="submit" class="submit-button" name="reg-submit" id="reg-submit" value="Registrar">
+                    <button type="button" class="cancel-button"><a href="/dashboard_admin.html">Cancelar</a></button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        var name = document.forms['reg-form']['name'];
+        var lastName = document.forms['reg-form']['lastName'];
+        var cellphone = document.forms['reg-form']['cellphone'];
+        var birthday = document.forms['reg-form']['birthday'];
+        var email = document.forms['reg-form']['email'];
+        var area = document.forms['reg-form']['area'];
+        var password = document.forms['reg-form']['password'];
+        var password_confirm = document.forms['reg-form']['password_confirm'];
+
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+        var pass_error = document.getElementById('pass_id');
+
+        function validation(){
+            if(name.value.length <= 0){
+                name.style.border = '1px solid firebrick';
+                name_error.style.display = "block";
+                name.focus();
+                return false;
+            }
+        }
+    </script>
+</body>
+</html>

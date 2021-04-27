@@ -8,6 +8,10 @@ import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Optional;
+
 @Service
 public class CompanyServiceImpl implements CompanyService{
 
@@ -49,5 +53,23 @@ public class CompanyServiceImpl implements CompanyService{
     public Area registerArea(String areaName, Company company) {
         Area a = new Area(areaName, company);
         return areaRepository.save(a);
+    }
+
+    @Override
+    public Collection<String> getAreasNames(Long companyNIT) throws Exception {
+
+        Optional<Company> company =  companyRepository.findById(companyNIT);
+        if( !company.isPresent()) throw new Exception("Company not found");
+
+        Collection<String> areaNames = new ArrayList<String>();
+
+        for(Area area: company.get().getAreas()){
+
+            areaNames.add(area.getId().getName());
+
+        }
+
+
+        return areaNames;
     }
 }

@@ -11,6 +11,11 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfiguration;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
 @EnableWebSecurity
@@ -19,16 +24,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
-        http.authorizeRequests().antMatchers("/admin**").hasRole("administrador")
-                .antMatchers("/emp**").hasAnyRole("administrador","empleado")
-                .antMatchers("/login", "/reg**").permitAll()
+        http.authorizeRequests().antMatchers("/admin**", "/admin/**").hasAuthority("administrador")
+                .antMatchers("/emp**", "/emp/**").hasAnyAuthority("administrador","empleado")
+                .antMatchers("/login", "/reg/**", "/scripts/**", "/styles/**", "/img/**", "/css/**").permitAll().anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login").permitAll()
+                .formLogin().loginPage("/login").successHandler(authenticationSuccessHandler)
                 .and()
-                .logout().permitAll();
+                .logout().invalidateHttpSession(true).clearAuthentication(true)
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll();
 
     }
 
@@ -53,3 +63,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
+
+
+/*@Configuration
+class WebConfigurer extends WebMvcConfigurerAdapter {
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("/scripts/**", "/styles/**", "/img/**", "/css/**");
+    }
+}*/
