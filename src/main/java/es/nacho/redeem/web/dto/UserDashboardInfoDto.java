@@ -2,20 +2,20 @@ package es.nacho.redeem.web.dto;
 
 public class UserDashboardInfoDto {
 
-    private String completeName;
+    private String name;
     private long balance;
 
     public UserDashboardInfoDto(String completeName, long balance) {
-        this.completeName = completeName;
+        this.name = completeName;
         this.balance = balance;
     }
 
     public String getCompleteName() {
-        return completeName;
+        return name;
     }
 
     public void setCompleteName(String completeName) {
-        this.completeName = completeName;
+        this.name = completeName;
     }
 
     public long getBalance() {
