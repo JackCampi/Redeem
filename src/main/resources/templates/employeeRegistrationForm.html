@@ -60,7 +60,7 @@
                 <div class="field">
                     <label for="area">Área</label>
                     <select class="field-box" name="area" id="area" th:field="*{area}" required>
-                        <option th:each="area : ${areaNames}" th:text="${area}"></option>
+                        <option th:each="area : ${areaNames}" th:text="${area}" th:value="${area}"></option>
                     </select>
                 </div>
 
