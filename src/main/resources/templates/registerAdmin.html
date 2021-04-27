@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+
+    <!-- Custom style -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
+    <!-- <link rel="stylesheet" href="styles/styleadmin_register.css"> -->
+
+    <link rel="icon" th:href="@{/img/RedeemIcon.ico}">
+
+    <title>Registrar Administrador</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
+
+
+        html, body{
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* General */
+
+        .container1 {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .page-order {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            padding: 0;
+            justify-content: space-between;
+        }
+
+        .row {
+            --bs-gutter-x: 10rem;
+            margin-bottom: 1rem;
+            margin-right: 0;
+            margin-left: 0;
+            display: flex;
+
+        }
+
+        /* Right side */
+
+        .redeem-logo{
+            margin-top: 1%;
+            margin-bottom: 2%;
+            width: 20%;
+            height: auto;
+        }
+
+
+        .form-control.field{
+            font-family: 'Nunito Sans', sans-serif;
+            width: 100%;
+            height: 60%;
+            border-radius: 15px;
+            box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
+            margin-top: 5px;
+            margin-bottom: 5px;
+        }
+
+        .panel.login-form-container{
+            width: 65%;
+        }
+
+        .login-form{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .input-label{
+            margin-left: 15px;
+        }
+
+        .input-label2{
+            margin-left: 0px;
+            font-style: italic;
+        }
+        .form-control.btn.btn-primary{
+            width: 45%;
+            background-color: #8E44AD;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .form-control.btn.btn-primary:hover{
+            background-color: #693380;
+        }
+
+        .form-group{
+            width: 50%;
+        }
+
+        .form-group.button{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* right side */
+        .right-panel {
+            width: 35%;
+
+        }
+        .panel.right-panel.content {
+            position: revert;
+            height: 100%;
+            display: flex;
+            background-color: #8E44AD;
+            box-shadow: 0 7px 32px 13px rgba(0, 0, 0, 0.24);
+            border-radius: 0 0 0 100px;
+            flex-direction: column;
+            flex-flow: column;
+            padding: 7% 5%;
+        }
+
+        .panel.right-panel{
+            height: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+
+        h1 {
+            color: rgba(255, 255, 255, 0.863);
+            text-align: center;
+            font-size: 220%;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight:400;
+        }
+
+        h3 {
+            color: rgba(255, 255, 255, 0.705);
+            text-align: center;
+            font-size: 100%;
+            font-weight: 300;
+            font-family:'Nunito Sans', sans-serif;
+            padding: 10% 10%;
+        }
+
+        .register-button{
+            background-color: #8E44AD;
+            border-radius: 18px;
+            margin: 0 25%;
+            border: 1px solid rgba(255, 255, 255, 0.705);
+        }
+
+        .register-button:hover{
+            background-color: #793c94;
+            margin: 0 24%;
+        }
+
+        a{
+            color:  rgba(255, 255, 255, 0.705);
+            text-decoration: none;
+        }
+        a:hover{
+            color:  rgba(255, 255, 255, 0.705);
+            text-decoration: none;
+        }
+
+
+        /* Responsive font config */
+
+        @media (max-width: 700px){
+            html{
+                font-size: 70%;
+            }
+        }
+
+        @media (max-width: 800px){
+            html{
+                font-size: 80%;
+            }
+        }
+
+        @media (max-width: 600px){
+            html{
+                font-size: 60%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container1">
+
+    <div class="page-order">
+        <div class="panel login-form-container">
+            <form action="" class="login-form">
+                <img src="img/RedeemTextAdmin.png" alt="redeem-logo" class="redeem-logo">
+
+
+
+                <label style="text-align: left;" class="input-label">Diligencia tu información personal</label>
+                <!-- Name input -->
+                <div class="form-group">
+                    <label class="input-label" for="adminName">Nombres</label>
+                    <input type="text" class="form-control field" name="adminName" id="adminName"
+                           placeholder="Ingrese su nombre" autofocus="autofocus">
+                </div>
+
+
+
+                <!-- Last Name input -->
+                <div class="form-group">
+                    <label class="input-label" for="adminLastName">Apellidos</label>
+                    <input type="text" class="form-control field" name="adminLastName" id="adminLastName"
+                           placeholder="Ingrese sus apellidos">
+                </div>
+
+
+
+                <!-- Phone input -->
+                <div class="form-group">
+                    <label class="input-label" for="adminPhone">Teléfono</label>
+                    <input type="number" class="form-control field" name="adminPhone" id="adminPhone"
+                           placeholder="Ingrese su número de teléfono">
+                </div>
+
+
+                <!-- Birthday input -->
+                <div class="form-group">
+                    <label class="input-label" for="adminBirthday">Fecha de Nacimiento</label>
+                    <input type="datetime-local" class="form-control field" name="adminBirthday" id="adminBirthday"
+                           placeholder="Ingrese su fecha de nacimiento">
+                </div>
+
+                <!-- Email input -->
+                <div class="form-group">
+                    <label class="input-label" for="adminEmail">Correo</label>
+                    <input type="text" class="form-control field" name="adminEmail" id="adminEmail"
+                           placeholder="Ingrese su correo electrónico">
+                </div>
+
+                <!-- Password input -->
+                <div class="form-group">
+                    <label class="input-label" for="password">Contraseña</label>
+                    <input type="password" class="form-control field" name="password" id="password"
+                           placeholder="Ingrese su contraseña">
+                </div>
+
+                <!-- PasswordCheck input -->
+                <div class="form-group">
+                    <label class="input-label" for="PasswordCheck">Confirmar Contraseña</label>
+                    <input type="password" class="form-control field" name="PasswordCheck" id="PasswordCheck"
+                           placeholder="Ingrese nuevamente su contraseña">
+                </div>
+
+                <br/>
+
+                <!-- Submit button -->
+                <div class="form-group button">
+                    <input type="submit" name="login-submit" id="login-submit"
+                           class="form-control btn btn-primary" value="Comenzar ahora">
+                </div>
+
+            </form>
+        </div>
+        <div class="panel right-panel content">
+
+            <!-- redirect: registerCompany.html -->
+            <button type="button" class="register-button"><a th:href="@{/reg/comp}">Volver atrás</a></button>
+            <br/><br/>
+            <br/><br/>
+            <img style="width: 110%" src="img/registerAdminImage.png">
+
+        </div>
+    </div>
+</div>
+</body>
+</html>
