@@ -12,10 +12,193 @@
     <!-- Custom style -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="styles/styleLogin.css">
+    <!--<link th:href="@{/static/styles/styleLogin.css}" rel="stylesheet" />-->
 
-    <link rel="icon" href="img/RedeemIcon.ico">
+    <link rel="icon" th:href="@{/img/RedeemIcon.ico}">
     <title>Login</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
+
+
+        html, body{
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        /* General */
+
+        .container1 {
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        .page-order {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            margin: auto;
+            padding: 0;
+            justify-content: space-between;
+        }
+
+        /* Right side */
+
+        .redeem-logo{
+            margin-top: 5%;
+            margin-bottom: 5%;
+            width: 27%;
+        }
+
+
+        .form-control.field{
+            font-family: 'Nunito Sans', sans-serif;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
+        }
+
+        .panel.login-form-container{
+            width: 60%;
+        }
+
+        .login-form{
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+            align-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .input-label{
+            margin-left: 15px;
+        }
+
+        .form-control.btn.btn-primary{
+            width: 45%;
+            background-color: #8E44AD;
+            border-radius: 15px;
+            border: none;
+        }
+
+        .form-control.btn.btn-primary:hover{
+            background-color: #693380;
+        }
+
+        .form-group{
+            width: 50%;
+        }
+
+        .form-group.button{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+
+        /* left side */
+        .left-panel {
+
+            width: 40%;
+
+        }
+        .panel.left-panel.content {
+            position: fixed;
+            height: 100%;
+            display: flex;
+            background-color: #8E44AD;
+            box-shadow: 0 7px 32px 13px rgba(0, 0, 0, 0.24);
+            border-radius: 0 0 100px 0;
+            flex-direction: column;
+            flex-flow: column;
+            padding: 7% 5%;
+        }
+
+        .panel.left-panel{
+            height: 100%;
+        }
+
+        label {
+            font-size: 1rem;
+        }
+
+        h1 {
+            color: rgba(255, 255, 255, 0.863);
+            text-align: center;
+            font-size: 220%;
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight:400;
+        }
+
+        h3 {
+            color: rgba(255, 255, 255, 0.705);
+            text-align: center;
+            font-size: 100%;
+            font-weight: 300;
+            font-family:'Nunito Sans', sans-serif;
+            padding: 10% 10%;
+        }
+
+        .register-button{
+            background-color: #8E44AD;
+            border-radius: 18px;
+            margin: 0 25%;
+            border: 1px solid rgba(255, 255, 255, 0.705);
+        }
+
+        .register-button:hover{
+            background-color: #793c94;
+            margin: 0 24%;
+        }
+
+        a{
+            color:  rgba(255, 255, 255, 0.705);
+            text-decoration: none;
+        }
+        a:hover{
+            color:  rgba(255, 255, 255, 0.705);
+            text-decoration: none;
+        }
+
+        /* Validation errors*/
+        .valid-error{
+            margin-left: 1rem;
+            color: firebrick;
+            display: none;
+        }
+
+        .error, .material-icons{
+            font-size: 1rem;
+            color: firebrick;
+            margin-bottom: 4%;
+        }
+
+
+        /* Responsive font config */
+
+        @media (max-width: 700px){
+            html{
+                font-size: 70%;
+            }
+        }
+
+        @media (max-width: 800px){
+            html{
+                font-size: 80%;
+            }
+        }
+
+        @media (max-width: 600px){
+            html{
+                font-size: 60%;
+            }
+        }
+    </style>
+
 </head>
 
 <body>
@@ -38,12 +221,13 @@
                 <button type="button" class="register-button"><a href="/" th:href="@{/reg}">Registra tu empresa</a></button>
 
                 <br>
+                <!--<img th:src="@{https://lh3.googleusercontent.com/5ebiIRgeR8yD7Qvw9gPwPC6XG3k0poYxURurTZB_8_SP-KJaYx5fOePBk6mqbhLB1Jws3awJMUcXuXRV-YaCeeb_Q-PDVysTteupSqb7ycsVNgGYBQhG_nxvJImqkZPO2mEda46piYJcY6W3Mz8bAFwHZXpPQOVbbvYlU_8llSUeEDosoWo0BgEPHXiPHSQF6CWwitekVdFR97tStAWOzLpH-i4tE6K0_zyIL44NjesDKF8bdyaePw77nePkURRIi3sq1fQ782BbymAAzHT_EB6DeCfzszYzzCjshm7VqOJ1xc19jUJAih8k6C_2tTa8OZjc1FmZs7hzLE7NmNQ3bjLTW1RQsKNPWPfaMi6DmPqQm1kDFEoHvaoJsPWBpodFlj4lyB4nXw7Pv5xe5aUWGYhAbPDoQYfWdkuzmECGu7XEzIC9IV3IHTQOAjqkXx40OiBQGQ7Y_1nA_h2J0WsVHgbVa42iAlnl48Y-PH03PdppAmKCbSAlSQFMOKK5EvRcN0rFlhAOoCh8PBI04PETEaQ7xWObeztPy9WIale7X0evsSLdiOkBWwJI0vA3DF50XYzuQC006_bN8w1IiQ2c1oy4y6MTOUb_yvPCwez8tcRxr8Q5lws9Sn2DFrg45VUFMi1naXemf6jhfE7Yw4B3qH9CkZMalOV3iyqmFQsYA4P9OrbwS_Ph8qmarOQuOh6Z9_ipPVZEHeDaODBqT8IIihE=w604-h584-no?authuser=1}" alt="login_image">-->
                 <img src="img/loginImage.png" alt="login_image">
             </div>
             <div class="panel login-form-container">
                 <form th:action="@{/login}" method="post" class="login-form" name="login-form" onsubmit="return validation()">
                     <br/>
-                    <img src="img/RedeemLogo.png" alt="redeem-logo" class="redeem-logo">
+                    <img src="img/RedeemLogo.png" alt="redeem_logo" class="redeem-logo">
 
                     <!-- error message -->
                     <div th:if="${param.error}">
@@ -83,6 +267,59 @@
     </div>
 
     <!-- Validations script     -->
-    <script src="scripts/loginValidation.js"></script>
+    <script >
+        var email = document.forms['login-form']['username'];
+        var password = document.forms['login-form']['password'];
+
+        var email_error1 = document.getElementById('email_error1');
+        var email_error2 = document.getElementById('email_error2');
+        var pass_error = document.getElementById('pass_id');
+
+        email.addEventListener('textInput', email_verify());
+        password.addEventListener('textInput', pass_verify());
+
+        function validation(){
+            if (email.value.length <= 0){
+                email.style.border = '1px solid firebrick';
+                email_error1.style.display = "block";
+                email.focus();
+                return false;
+            }
+            if (password.value.length <= 0){
+                password.style.border = '1px solid firebrick';
+                pass_error.style.display = "block";
+                password.focus();
+                return false;
+            }
+
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)){
+                return true;
+            } else{
+                email.style.border = '1px solid firebrick';
+                email_error2.style.display = "block";
+                email.focus();
+                return false;
+            }
+
+            //Pasword Regex: (?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*
+        }
+
+        function email_verify(){
+            if (email.value.length > 0){
+                email.style.border = '1px solid grey';
+                email_error1.style.display = "none";
+                email_error2.style.display = "none";
+                return true;
+            }
+        }
+
+        function pass_verify(){
+            if (password.value.length > 0){
+                password.style.border = '1px solid grey';
+                pass_error.style.display = "none";
+                return true;
+            }
+        }
+    </script>
 </body>
 </html>

@@ -9,22 +9,16 @@ public class EmployeeRegistrationDto {
     private String email;
     private String password;
     private String cellphone;
-    private Calendar birthday;
-    private Long balance;
-    private Boolean active;
-    private String rol;
+    private String birthday;
     private String area;
 
-    public EmployeeRegistrationDto(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, String area) {
+    public EmployeeRegistrationDto(String name, String lastName, String email, String password, String cellphone, String birthday, String area) {
         this.name = name;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.cellphone = cellphone;
         this.birthday = birthday;
-        this.balance = balance;
-        this.active = active;
-        this.rol = rol;
         this.area = area;
     }
 
@@ -71,35 +65,19 @@ public class EmployeeRegistrationDto {
         this.cellphone = cellphone;
     }
 
-    public Calendar getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Calendar birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
-    public Long getBalance() {
-        return balance;
+    public String getArea() {
+        return area;
     }
 
-    public void setBalance(Long balance) {
-        this.balance = balance;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setArea(String area) {
+        this.area = area;
     }
 }

@@ -3,6 +3,7 @@ package es.nacho.redeem.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
@@ -20,7 +21,13 @@ public class UserLoginController {
         return "login";
     }
 
-    @GetMapping
+    /*@PostMapping
+    @RequestMapping("/login")
+    public String dashboard(){
+        return WebPageNames.EMPLOYEE_DASHBOARD;
+    }
+
+    /*@GetMapping
     @RequestMapping("/admin")
     public String homeAdmin(){
         return "index";
@@ -30,6 +37,7 @@ public class UserLoginController {
     @RequestMapping("/emp")
     public String homeEmployee(){
         return "index";
-    }
+    }*/
+
 
 }
