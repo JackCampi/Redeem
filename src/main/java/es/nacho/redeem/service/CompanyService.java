@@ -10,7 +10,7 @@ import java.util.Collection;
 
 public interface CompanyService {
 
-    Company registerCompany(CompanyRegistrationDto companyRegistrationDto);
+    Company registerCompany(CompanyRegistrationDto companyRegistrationDto) throws Exception;
     Area registerArea(String areaName, Company company);
 
     Collection<String> getAreasNames(Long companyNIT) throws Exception;
