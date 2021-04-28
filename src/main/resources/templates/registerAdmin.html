@@ -210,7 +210,7 @@
     <div class="page-order">
         <div class="panel login-form-container">
             <form th:action="@{/reg/admin}" method="post" class="login-form" th:object="${admin}">
-                <img src="img/RedeemTextAdmin.png" alt="redeem-logo" class="redeem-logo">
+                <img src="https://i.ibb.co/VjgSF2Z/Redeem-Text-Admin.png" alt="redeem-logo" class="redeem-logo">
 
 
 
@@ -236,7 +236,7 @@
                 <!-- Phone input -->
                 <div class="form-group">
                     <label class="input-label" for="adminPhone">Teléfono</label>
-                    <input type="number" maxlength="10" class="form-control field" name="adminPhone" id="adminPhone"
+                    <input type="number" max="9999999999" class="form-control field" name="adminPhone" id="adminPhone"
                            placeholder="Ingrese su número de teléfono" th:field="*{cellphone}">
                 </div>
 
@@ -286,7 +286,7 @@
             <button type="button" class="register-button"><a th:href="@{/reg/comp}">Volver atrás</a></button>
             <br/><br/>
             <br/><br/>
-            <img style="width: 110%" src="img/registerAdminImage.png">
+            <img style="width: 110%" src="https://i.ibb.co/n3jyDck/register-Admin-Image.png">
 
         </div>
     </div>
