@@ -57,7 +57,7 @@ public class RegistrationController {
 
         try{
             userService.registerAdmin(adminRegistrationDto, nit);
-            return "redirect:/admin";
+            return "redirect:/admin?success";
         }catch (Exception e){
             return  WebPageNames.ERROR_PAGE;
         }

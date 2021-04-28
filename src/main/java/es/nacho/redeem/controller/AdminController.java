@@ -87,7 +87,7 @@ public class AdminController {
 
         try {
             userService.registerEmployee(employeeRegistrationDto, nit);
-            return "redirect:/admin/addemp";
+            return "redirect:/admin/addemp?success";
         }catch (Exception e){
             return WebPageNames.ERROR_PAGE;
         }
