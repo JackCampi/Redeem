@@ -50,6 +50,9 @@ public class RegistrationController {
     @PostMapping("/reg/admin")
     public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
 
+        boolean checkEmail = userService.checkIfEmailExists(adminRegistrationDto.getEmail());
+        if(checkEmail) return "redirect:/reg/admin?error";
+
         Long nit = (Long) session.getAttribute("nit");
 
         try{

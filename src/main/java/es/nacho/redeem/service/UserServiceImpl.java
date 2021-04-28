@@ -134,6 +134,14 @@ public class UserServiceImpl implements UserService{
         return employeeDashboardInfoDto;
     }
 
+    @Override
+    public Boolean checkIfEmailExists(String email) {
+
+        Employee employee = employeeRepository.findByEmail(email);
+
+        return !(employee==null);
+    }
+
     private Calendar getCalendarFromString(String string){
 
         /*

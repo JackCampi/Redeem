@@ -17,4 +17,6 @@ public interface UserService extends UserDetailsService {
 
     EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(String email, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception;
 
+    Boolean checkIfEmailExists(String email);
+
 }

@@ -77,11 +77,17 @@ public class AdminController {
     @PostMapping(value = "/addemp")
     public String registerEmployee(@ModelAttribute("employee") EmployeeRegistrationDto employeeRegistrationDto, HttpSession session){
 
+        boolean checkPass = !employeeRegistrationDto.getPassword().equals(employeeRegistrationDto.getPasswordConfirm());
+
+        if(checkPass) return WebPageNames.ERROR_PAGE;
+
+        if(userService.checkIfEmailExists(employeeRegistrationDto.getEmail())) return "redirect:/admin/addemp?error";
+
         Long nit = (Long) session.getAttribute("nit");
 
         try {
             userService.registerEmployee(employeeRegistrationDto, nit);
-            return WebPageNames.EMPLOYEE_REGISTRATION_FORM;
+            return "redirect:/admin/addemp";
         }catch (Exception e){
             return WebPageNames.ERROR_PAGE;
         }
