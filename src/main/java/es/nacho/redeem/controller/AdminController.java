@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -57,20 +58,23 @@ public class AdminController {
     public String addEmployee(HttpSession session, Model model){
 
         Long nit = (long) session.getAttribute("nit");
+
+        Collection<String> areaNames = new ArrayList<>();
+
         try{
-            Collection<String> areaNames = companyService.getAreasNames(nit);
-
-            model.addAttribute("areaNames", areaNames);
-
+            areaNames = companyService.getAreasNames(nit);
 
         }catch (Exception e){
+            areaNames.add("areas not found");
             return WebPageNames.ERROR_PAGE;
         }
+
+        model.addAttribute("areaNames", areaNames);
 
         return WebPageNames.EMPLOYEE_REGISTRATION_FORM;
     }
 
-    /*@PostMapping(value = "/addemp")
+    @PostMapping(value = "/addemp")
     public String registerEmployee(@ModelAttribute("employee") EmployeeRegistrationDto employeeRegistrationDto, HttpSession session){
 
         Long nit = (Long) session.getAttribute("nit");
@@ -81,7 +85,7 @@ public class AdminController {
         }catch (Exception e){
             return WebPageNames.ERROR_PAGE;
         }
-    }*/
+    }
 
     @ModelAttribute("employee")
     public EmployeeRegistrationDto employeeRegistrationDto() {return new EmployeeRegistrationDto();}

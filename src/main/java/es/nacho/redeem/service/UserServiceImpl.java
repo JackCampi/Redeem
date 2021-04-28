@@ -93,6 +93,8 @@ public class UserServiceImpl implements UserService{
 
         if( !area.isPresent()) throw new Exception("Area not found");
 
+        Area areaObject = area.get();
+
         Employee employee = new Employee(
                 employeeRegistrationDto.getName(),
                 employeeRegistrationDto.getLastName(),
@@ -103,7 +105,7 @@ public class UserServiceImpl implements UserService{
                 0L,
                 true,
                 "empleado",
-                null
+                areaObject
         );
 
         return employeeRepository.save(employee);
