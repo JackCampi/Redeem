@@ -218,6 +218,7 @@
           <label class="input-label" for="nit">NIT</label>
           <input type="number" maxlength="18" class="form-control field" name="nit" id="nit"
                  placeholder="Ingrese el número de registro NIT de su empresa" th:field="*{id}">
+          <div class="validation-error" style="color: firebrick" th:if="${param.error}"  id="nit_error"> El NIT ingresado ya está registrado en Redeem. </div>
         </div>
 
         <br/>
