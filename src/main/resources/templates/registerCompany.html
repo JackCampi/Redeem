@@ -195,7 +195,7 @@
 
   <div class="page-order">
     <div class="panel login-form-container">
-      <form action="" class="login-form">
+      <form th:action="@{/reg/comp}" method="post" class="login-form" th:object="${company}">
         <br/>
 
         <img src="img/RedeemLogo.png" alt="redeem_logo" class="redeem-logo">
@@ -207,8 +207,8 @@
         <!-- Company name input -->
         <div class="form-group">
           <label class="input-label" for="companyName">¿Cómo se llama tu empresa?</label>
-          <input type="text" class="form-control field" name="companyName" id="companyName"
-                 placeholder="Ingrese el nombre de su empresa" autofocus="autofocus">
+          <input type="text" maxlength="250" class="form-control field" name="companyName" id="companyName"
+                 placeholder="Ingrese el nombre de su empresa" autofocus="autofocus" th:field="*{name}">
         </div>
 
         <br/>
@@ -216,8 +216,8 @@
         <!-- NIT inpuy -->
         <div class="form-group">
           <label class="input-label" for="nit">NIT</label>
-          <input type="number" class="form-control field" name="nit" id="nit"
-                 placeholder="Ingrese el número de registro NIT de su empresa">
+          <input type="number" maxlength="18" class="form-control field" name="nit" id="nit"
+                 placeholder="Ingrese el número de registro NIT de su empresa" th:field="*{id}">
         </div>
 
         <br/>
@@ -226,15 +226,15 @@
         <div class="form-group">
           <label class="input-label" for="companyAreas">Áreas</label>
           <input type="text" class="form-control field" name="companyAreas" id="companyAreas"
-                 placeholder="Ingrese las áreas separadas por comas">
+                 placeholder="Ingrese las áreas separadas por comas" th:field="*{areas}">
         </div>
 
         <br/><br/>
 
         <!-- Submit button -->
         <div class="form-group button">
-          <input href="registerAdmin.html" type="submit" name="login-submit" id="login-submit"
-                 class="form-control btn btn-primary" value="Siguiente">
+          <input type="submit" name="login-submit" id="login-submit"
+                 class="form-control btn btn-primary" value="Siguiente" >
         </div>
 
       </form>
