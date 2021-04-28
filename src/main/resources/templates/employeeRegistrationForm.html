@@ -142,6 +142,8 @@
         <img src="https://i.ibb.co/vPm9q1h/Redeem-Icon.png" alt="redeem_logo" class="redeem-logo">
         <h3>Nuevo empleado</h3>
 
+        <div style="color:darkblue;" th:if="${param.success}"  id="reg_success"> Empleado registrado correctamente. </div>
+
         <form th:action="@{/admin/addemp}" class="reg-form" method="post" th:object="${employee}"
               name="reg-form" id="reg-form" onsubmit="return validation();">
             <div class="fields">
@@ -179,7 +181,7 @@
                     <input type="text" class="field-box" name="email" id="email" th:field="*{email}" required
                            maxlength="250">
                     <div class="validation-error" style="display: none" id="email_error"> Por favor, introduzca un correo válido. </div>
-                    <div class="validation-error" th:if="${param.error}"  id="email_error2"> Este correo ya existe. </div>
+                    <div style="color:firebrick;" th:if="${param.error}"  id="email_error2"> Este correo ya existe. </div>
                 </div>
 
                 <!-- Area field -->
