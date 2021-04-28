@@ -8,8 +8,133 @@
     <title>Registrar empleado</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="../static/styles/styleemp_register.css">
+    <!--link rel="stylesheet" href="../static/styles/styleemp_register.css"-->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
 
+        :root{
+            --main-color: #8d44ad;
+            --text-color: #424242;
+            --second-color: #C496D7;
+            --main-background-color: rgba(246, 246, 246, 1);
+        }
+
+
+        html, body{
+            background-color: var(--main-color);
+            color: var(--text-color);
+            list-style-type: none;
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 100%;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        .main-container{
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        .form-container{
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+            width: 60%;
+            background-color: white;
+            border-radius: 60px;
+            padding: 1rem 10%;
+            margin: 2%;
+        }
+
+        .redeem-logo{
+            width: 10%;
+            margin: 12px 0;
+        }
+
+        .reg-form{
+            display: flex;
+            flex-flow: column;
+            align-items: center;
+        }
+
+        .fields{
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+        }
+
+        .field{
+            display: flex;
+            flex-flow: column;
+            align-items: flex-start;
+            margin-bottom: 2.5%;
+        }
+
+        .fields label{
+            padding-left: 10px;
+        }
+
+        .field-box{
+            width: 20rem;
+            background-color: rgb(243, 243, 243);
+            height: 35px;
+            border-radius: 10px;
+            border: none/*1px solid gray*/;
+            box-shadow: inset 0 4px 4px 0 rgba(167, 167, 167, 0.589);
+            padding: 0 1rem;
+        }
+
+        .options{
+            display: flex;
+            flex-flow: column;
+            margin: 3% 0;
+        }
+
+        .cancel-button{
+            margin: 15px 0 0 0;
+            font-family: 'Nunito Sans', sans-serif;
+            background-color: white;
+            border-radius: 18px;
+            border: none;
+            width: 150px;
+        }
+
+        .cancel-button:hover {
+            background-color: rgb(241, 241, 241);
+        }
+
+        a{
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 600;
+            color:  #8E44AD;
+            text-decoration: none;
+        }
+
+        .submit-button{
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 600;
+            height: 40px;
+            width: 150px;
+            background-color: #8E44AD;
+            color: white;
+            border-radius: 18px;
+            border: none;
+        }
+
+        .submit-button:hover{
+            background-color: #7c3b97;
+        }
+
+        /* Validation errors*/
+        .validation-error{
+            width: 18rem;
+            margin-left: 1rem;
+            color: firebrick;
+            display: none;
+        }
+    </style>
 </head>
 <body>
 <div class="main-container">
@@ -39,7 +164,7 @@
                 <div class="field">
                     <label for="cellphone">Teléfono</label>
                     <input type="number" class="field-box" name="cellphone" id="cellphone" th:field="*{cellphone}" required
-                           maxlength="10">
+                           max="999999999">
                 </div>
 
                 <!-- Birthday field -->
@@ -53,7 +178,8 @@
                     <label for="email">Correo</label>
                     <input type="text" class="field-box" name="email" id="email" th:field="*{email}" required
                            maxlength="250">
-                    <div class="validation-error" id="email_error"> Por favor, introduzca un correo válido. </div>
+                    <div class="validation-error" style="display: none" id="email_error"> Por favor, introduzca un correo válido. </div>
+                    <div class="validation-error" th:if="${param.error}"  id="email_error2"> Este correo ya existe. </div>
                 </div>
 
                 <!-- Area field -->
@@ -69,7 +195,7 @@
                     <label for="password">Contraseña</label>
                     <input type="password" class="field-box" name="password" id="password" th:field="*{password}" required
                            maxlength="250">
-                    <div class="validation-error" id="pass_error"> La contraseña debe contener al menos una letra minúscula,
+                    <div class="validation-error" style="display: none" id="pass_error"> La contraseña debe contener al menos una letra minúscula,
                         una letra mayúscula, un número y un caracter especial
                         (Ej. #$%&).</div>
                 </div>
@@ -79,7 +205,7 @@
                     <label for="password_confirm">Confirmar la contraseña</label>
                     <input type="password" class="field-box" name="password_confirm" id="password_confirm"
                            th:field="*{passwordConfirm}" required maxlength="250">
-                    <div class="validation-error" id="password_confirm_error"> Las contraseñas no coinciden. </div>
+                    <div class="validation-error" style="display: none" id="password_confirm_error"> Las contraseñas no coinciden. </div>
                 </div>
             </div>
             <div class="options">
@@ -89,6 +215,47 @@
         </form>
     </div>
 </div>
-<script src="../static/scripts/employeeRegistrationValidation.js"></script>
+<!--script src="../static/scripts/employeeRegistrationValidation.js"></script-->
+<script>
+    var email = document.forms['reg-form']['email'];
+    var password = document.forms['reg-form']['password'];
+    var password_confirm = document.forms['reg-form']['password_confirm'];
+
+
+    var email_error = document.getElementById('email_error');
+    var password_error = document.getElementById('pass_error');
+    var password_confirm_error = document.getElementById('password_confirm_error');
+
+
+    function validation(){
+        password_confirm.style.border = 'none';
+        password.style.border = 'none';
+        email.style.border = 'none';
+        password_confirm_error.style.display = "none";
+        email_error.style.display = "none";
+        password_error.style.display = "none";
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)){
+            if (/(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*/.test(password.value)){
+                if(password.value == password_confirm.value){
+                } else {
+                    password_confirm.style.border = '1px solid firebrick';
+                    password_confirm_error.style.display = "block";
+                    password_confirm.focus();
+                    return false;
+                }
+            } else {
+                password.style.border = '1px solid firebrick';
+                password_error.style.display = "block";
+                password.focus();
+                return false;
+            }
+        } else{
+            email.style.border = '1px solid firebrick';
+            email_error.style.display = "block";
+            email.focus();
+            return false;
+        }
+    }
+</script>
 </body>
 </html>

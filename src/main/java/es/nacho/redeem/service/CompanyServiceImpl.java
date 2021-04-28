@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -27,15 +28,21 @@ public class CompanyServiceImpl implements CompanyService{
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Company registerCompany(CompanyRegistrationDto companyRegistrationDto) {
+    public Company registerCompany(CompanyRegistrationDto companyRegistrationDto) throws Exception {
         Company company = new Company(
                 companyRegistrationDto.getId(),
                 companyRegistrationDto.getName(),
                 10000000000L
         );
+        checkIfNitExists(company);
         companyRepository.save(company);
         processAllAreas(companyRegistrationDto.getAreas(), company);
         return company;
+    }
+
+    public void checkIfNitExists(Company company) throws Exception{
+        Optional<Company> savedCompany =  companyRepository.findById(company.getId());
+        if(savedCompany.isPresent()) throw new Exception();
     }
 
     /**

@@ -67,7 +67,7 @@ public class RegistrationController {
             companyService.registerCompany(companyRegistrationDto);
             return WebPageNames.ADMIN_REGISTRATION_FORM;
         }catch (Exception e){
-            return WebPageNames.ERROR_PAGE;
+            return "redirect:/reg/comp?error";
         }
     }
 

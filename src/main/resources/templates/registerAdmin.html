@@ -253,6 +253,7 @@
                     <label class="input-label" for="adminEmail">Correo</label>
                     <input type="text" class="form-control field" name="adminEmail" id="adminEmail"
                            placeholder="Ingrese su correo electrónico" th:field="*{email}">
+                    <div class="validation-error" style="color: firebrick" th:if="${param.error}"  id="email_error"> Este correo ya existe. </div>
                 </div>
 
                 <!-- Password input -->
