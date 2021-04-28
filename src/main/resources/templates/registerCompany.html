@@ -102,6 +102,18 @@
       align-items: center;
     }
 
+    /* Validation errors*/
+    .valid-error{
+      margin-left: 1rem;
+      color: firebrick;
+    }
+
+    .error, .material-icons{
+      font-size: 1rem;
+      color: firebrick;
+      margin-bottom: 4%;
+    }
+
 
     /* right side */
     .right-panel {
@@ -195,12 +207,14 @@
 
   <div class="page-order">
     <div class="panel login-form-container">
-      <form th:action="@{/reg/comp}" method="post" class="login-form" th:object="${company}">
+
+      <form th:action="@{/reg/comp}" method="post" class="login-form" th:object="${company}" id="login-form">
         <br/>
 
         <img src="https://i.ibb.co/bvvvyxv/Redeem-Logo.png" alt="redeem_logo" class="redeem-logo">
         <div class="form-group">
           <label class="input-label2" for="companyName">Información sobre tu empresa</label>
+          <div id="error" class="valid-error"></div>
         </div>
         <br/>
 
@@ -208,16 +222,16 @@
         <div class="form-group">
           <label class="input-label" for="companyName">¿Cómo se llama tu empresa?</label>
           <input type="text" maxlength="250" class="form-control field" name="companyName" id="companyName"
-                 placeholder="Ingrese el nombre de su empresa" autofocus="autofocus" th:field="*{name}">
+                 placeholder="Ingrese el nombre de su empresa" autofocus="autofocus" th:field="*{name}" required>
         </div>
 
         <br/>
 
-        <!-- NIT inpuy -->
+        <!-- NIT input -->
         <div class="form-group">
           <label class="input-label" for="nit">NIT</label>
-          <input type="number" maxlength="18" class="form-control field" name="nit" id="nit"
-                 placeholder="Ingrese el número de registro NIT de su empresa" th:field="*{id}">
+          <input type="number" max="9999999999" class="form-control field" name="nit" id="nit"
+                 placeholder="Ingrese el número de registro NIT de su empresa" th:field="*{id}" required>
           <div class="validation-error" style="color: firebrick" th:if="${param.error}"  id="nit_error"> El NIT ingresado ya está registrado en Redeem. </div>
         </div>
 
@@ -227,7 +241,7 @@
         <div class="form-group">
           <label class="input-label" for="companyAreas">Áreas</label>
           <input type="text" class="form-control field" name="companyAreas" id="companyAreas"
-                 placeholder="Ingrese las áreas separadas por comas" th:field="*{areas}">
+                 placeholder="Ingrese las áreas separadas por comas" th:field="*{areas}" required>
         </div>
 
         <br/><br/>
@@ -235,7 +249,7 @@
         <!-- Submit button -->
         <div class="form-group button">
           <input type="submit" name="login-submit" id="login-submit"
-                 class="form-control btn btn-primary" value="Siguiente" >
+                 class="form-control btn btn-primary" value="Siguiente" required>
         </div>
 
       </form>
@@ -253,5 +267,27 @@
     </div>
   </div>
 </div>
+<!-- Validations script -->
+<script>
+  const companyName = document.getElementById('companyName')
+  const nit = document.getElementById('nit')
+  const companyAreas = document.getElementById('companyAreas')
+  const form = document.getElementById('login-form')
+  const errorElement = document.getElementById('error')
+
+  form.addEventListener('submit', (e) => {
+    let messages = []
+    if (companyName.value === 'loco') {
+      messages.push('loco no puede ser el nombre de tu empresa')
+    }
+
+    if (messages.length > 0){
+       e.preventDefault()
+      errorElement.innerText = messages.join(',')
+
+    }
+  })
+
+</script>
 </body>
 </html>

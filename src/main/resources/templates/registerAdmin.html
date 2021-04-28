@@ -117,6 +117,17 @@
             align-items: center;
         }
 
+        /* Validation errors*/
+        .valid-error{
+            margin-left: 1rem;
+            color: firebrick;
+        }
+
+        .error, .material-icons{
+            font-size: 1rem;
+            color: firebrick;
+            margin-bottom: 4%;
+        }
 
         /* right side */
         .right-panel {
@@ -162,6 +173,7 @@
 
         .register-button{
             background-color: #8E44AD;
+            color: white;
             border-radius: 18px;
             margin: 0 25%;
             border: 1px solid rgba(255, 255, 255, 0.705);
@@ -209,7 +221,7 @@
 
     <div class="page-order">
         <div class="panel login-form-container">
-            <form th:action="@{/reg/admin}" method="post" class="login-form" th:object="${admin}">
+            <form th:action="@{/reg/admin}" method="post" class="login-form" th:object="${admin}" id="login-form">
                 <img src="https://i.ibb.co/VjgSF2Z/Redeem-Text-Admin.png" alt="redeem-logo" class="redeem-logo">
 
 
@@ -219,7 +231,7 @@
                 <div class="form-group">
                     <label class="input-label" for="adminName">Nombres</label>
                     <input type="text" maxlength="250" class="form-control field" name="adminName" id="adminName"
-                           placeholder="Ingrese su nombre" autofocus="autofocus" th:field="*{name}">
+                           placeholder="Ingrese su nombre" autofocus="autofocus" th:field="*{name}" required>
                 </div>
 
 
@@ -228,7 +240,7 @@
                 <div class="form-group">
                     <label class="input-label" for="adminLastName">Apellidos</label>
                     <input type="text" maxlength="250" class="form-control field" name="adminLastName" id="adminLastName"
-                           placeholder="Ingrese sus apellidos" th:field="*{lastName}">
+                           placeholder="Ingrese sus apellidos" th:field="*{lastName}" required>
                 </div>
 
 
@@ -237,7 +249,7 @@
                 <div class="form-group">
                     <label class="input-label" for="adminPhone">Teléfono</label>
                     <input type="number" max="9999999999" class="form-control field" name="adminPhone" id="adminPhone"
-                           placeholder="Ingrese su número de teléfono" th:field="*{cellphone}">
+                           placeholder="Ingrese su número de teléfono" th:field="*{cellphone}" required>
                 </div>
 
 
@@ -245,14 +257,14 @@
                 <div class="form-group">
                     <label class="input-label" for="adminBirthday">Fecha de Nacimiento</label>
                     <input type="date" class="form-control field" name="adminBirthday" id="adminBirthday"
-                           placeholder="Ingrese su fecha de nacimiento" th:field="*{birthday}">
+                           placeholder="Ingrese su fecha de nacimiento" th:field="*{birthday}" required>
                 </div>
 
                 <!-- Email input -->
                 <div class="form-group">
                     <label class="input-label" for="adminEmail">Correo</label>
                     <input type="text" class="form-control field" name="adminEmail" id="adminEmail"
-                           placeholder="Ingrese su correo electrónico" th:field="*{email}">
+                           placeholder="Ingrese su correo electrónico" th:field="*{email}" required>
                     <div class="validation-error" style="color: firebrick" th:if="${param.error}"  id="email_error"> Este correo ya existe. </div>
                 </div>
 
@@ -260,18 +272,19 @@
                 <div class="form-group">
                     <label class="input-label" for="password">Contraseña</label>
                     <input type="password" class="form-control field" name="password" id="password"
-                           placeholder="Ingrese su contraseña" th:field="*{password}">
+                           placeholder="Ingrese su contraseña" th:field="*{password}" required>
                 </div>
 
                 <!-- PasswordCheck input -->
                 <div class="form-group">
                     <label class="input-label" for="PasswordCheck">Confirmar Contraseña</label>
                     <input type="password" class="form-control field" name="PasswordCheck" id="PasswordCheck"
-                           placeholder="Ingrese nuevamente su contraseña">
+                           placeholder="Ingrese nuevamente su contraseña" required>
                 </div>
 
-                <br/>
+                <div id="error" class="valid-error"></div>
 
+                <br/>
                 <!-- Submit button -->
                 <div class="form-group button">
                     <input type="submit" name="login-submit" id="login-submit"
@@ -291,5 +304,33 @@
         </div>
     </div>
 </div>
+<script>
+    const email = document.getElementById('adminEmail')
+    const password = document.getElementById('password')
+    const password2 = document.getElementById('PasswordCheck')
+    const form = document.getElementById('login-form')
+    const errorElement = document.getElementById('error')
+
+    form.addEventListener('submit', (e) => {
+        let messages = []
+        if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value) === false) {
+            messages.push('Introduzca un correo válido')
+        }
+
+        if (/(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*/.test(password.value) === false) {
+            messages.push('La contraseña debe por lo menos un símbolo, mayúscula y número de 8 carácteres')
+        }
+
+        if (password2.value !== password.value) {
+            messages.push('Las contraseñas no son iguales')
+        }
+
+        if (messages.length > 0){
+            e.preventDefault()
+            errorElement.innerText = messages.join('/')
+
+        }
+    })
+</script>
 </body>
 </html>

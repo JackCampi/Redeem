@@ -1,5 +1,5 @@
 package es.nacho.redeem.repository;
-
+/*
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Employee;
 import org.junit.jupiter.api.Test;
@@ -169,6 +169,7 @@ class RepositoriesTest {
         initTest();
         Long id = companyExample.getId();
 
-    }*/
+    }
 
 }
+*/

@@ -83,6 +83,18 @@ html, body{
     align-items: center;
 }
 
+/* Validation errors*/
+.valid-error{
+    margin-left: 1rem;
+    color: firebrick;
+    display: none;
+}
+
+.error, .material-icons{
+    font-size: 1rem;
+    color: firebrick;
+    margin-bottom: 4%;
+}
 
 /* right side */
 .right-panel {
