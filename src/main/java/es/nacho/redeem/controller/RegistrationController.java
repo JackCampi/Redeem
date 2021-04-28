@@ -47,20 +47,20 @@ public class RegistrationController {
         return WebPageNames.COMPANY_REGISTRATION_FORM;
     }
 
-    @PostMapping("/admin")
+    @PostMapping("/reg/admin")
     public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
 
         Long nit = (Long) session.getAttribute("nit");
 
         try{
             userService.registerAdmin(adminRegistrationDto, nit);
-            return WebPageNames.ADMIN_DASHBOARD;
+            return "redirect:/admin";
         }catch (Exception e){
             return  WebPageNames.ERROR_PAGE;
         }
     }
 
-    @PostMapping("/comp")
+    @PostMapping("/reg/comp")
     public String registerCompany(@ModelAttribute("company") CompanyRegistrationDto companyRegistrationDto, HttpSession session){
         session.setAttribute("nit", companyRegistrationDto.getId());
         try{

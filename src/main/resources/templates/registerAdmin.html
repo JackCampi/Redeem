@@ -209,7 +209,7 @@
 
     <div class="page-order">
         <div class="panel login-form-container">
-            <form action="" class="login-form">
+            <form th:action="@{/reg/admin}" method="post" class="login-form" th:object="${admin}">
                 <img src="img/RedeemTextAdmin.png" alt="redeem-logo" class="redeem-logo">
 
 
@@ -218,8 +218,8 @@
                 <!-- Name input -->
                 <div class="form-group">
                     <label class="input-label" for="adminName">Nombres</label>
-                    <input type="text" class="form-control field" name="adminName" id="adminName"
-                           placeholder="Ingrese su nombre" autofocus="autofocus">
+                    <input type="text" maxlength="250" class="form-control field" name="adminName" id="adminName"
+                           placeholder="Ingrese su nombre" autofocus="autofocus" th:field="*{name}">
                 </div>
 
 
@@ -227,8 +227,8 @@
                 <!-- Last Name input -->
                 <div class="form-group">
                     <label class="input-label" for="adminLastName">Apellidos</label>
-                    <input type="text" class="form-control field" name="adminLastName" id="adminLastName"
-                           placeholder="Ingrese sus apellidos">
+                    <input type="text" maxlength="250" class="form-control field" name="adminLastName" id="adminLastName"
+                           placeholder="Ingrese sus apellidos" th:field="*{lastName}">
                 </div>
 
 
@@ -236,30 +236,30 @@
                 <!-- Phone input -->
                 <div class="form-group">
                     <label class="input-label" for="adminPhone">Teléfono</label>
-                    <input type="number" class="form-control field" name="adminPhone" id="adminPhone"
-                           placeholder="Ingrese su número de teléfono">
+                    <input type="number" maxlength="10" class="form-control field" name="adminPhone" id="adminPhone"
+                           placeholder="Ingrese su número de teléfono" th:field="*{cellphone}">
                 </div>
 
 
                 <!-- Birthday input -->
                 <div class="form-group">
                     <label class="input-label" for="adminBirthday">Fecha de Nacimiento</label>
-                    <input type="datetime-local" class="form-control field" name="adminBirthday" id="adminBirthday"
-                           placeholder="Ingrese su fecha de nacimiento">
+                    <input type="date" class="form-control field" name="adminBirthday" id="adminBirthday"
+                           placeholder="Ingrese su fecha de nacimiento" th:field="*{birthday}">
                 </div>
 
                 <!-- Email input -->
                 <div class="form-group">
                     <label class="input-label" for="adminEmail">Correo</label>
                     <input type="text" class="form-control field" name="adminEmail" id="adminEmail"
-                           placeholder="Ingrese su correo electrónico">
+                           placeholder="Ingrese su correo electrónico" th:field="*{email}">
                 </div>
 
                 <!-- Password input -->
                 <div class="form-group">
                     <label class="input-label" for="password">Contraseña</label>
                     <input type="password" class="form-control field" name="password" id="password"
-                           placeholder="Ingrese su contraseña">
+                           placeholder="Ingrese su contraseña" th:field="*{password}">
                 </div>
 
                 <!-- PasswordCheck input -->
