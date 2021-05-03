@@ -9,34 +9,34 @@ import java.util.Calendar;
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="emp_id")
+    @Column(name = "emp_id")
     private Long id;
 
-    @Column(name="emp_name", nullable = false)
+    @Column(name = "emp_name", nullable = false)
     private String name;
 
-    @Column(name="emp_last_name", nullable = false)
+    @Column(name = "emp_last_name", nullable = false)
     private String lastName;
 
-    @Column(name="emp_email", nullable = false)
+    @Column(name = "emp_email", nullable = false)
     private String email;
 
-    @Column(name="emp_password", nullable = false)
+    @Column(name = "emp_password", nullable = false)
     private String password;
 
-    @Column(name="emp_cel", nullable = false)
+    @Column(name = "emp_cel", nullable = false)
     private String cellphone;
 
-    @Column(name="emp_birthday", nullable = false)
+    @Column(name = "emp_birthday", nullable = false)
     private Calendar birthday;
 
-    @Column(name="emp_balance", nullable = false)
+    @Column(name = "emp_balance", nullable = false)
     private Long balance;
 
-    @Column(name="emp_active", nullable = false)
+    @Column(name = "emp_active", nullable = false)
     private Boolean active;
 
-    @Column(name="emp_rol", nullable = false)
+    @Column(name = "emp_rol", nullable = false)
     private String rol;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
@@ -44,10 +44,9 @@ public class Employee {
 
     @ManyToOne
     @JoinColumns({
-            @JoinColumn(name = "area_area_id",referencedColumnName = "area_name", nullable = false),
-            @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
+            @JoinColumn(name = "area_area_id", referencedColumnName = "area_name", nullable = false),
+            @JoinColumn(name = "area_company_comp_id", referencedColumnName = "company_comp_id", nullable = false)
     })
-
     private Area area;
 
 //    @ManyToOne
@@ -56,10 +55,10 @@ public class Employee {
 //    private Area area_company;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_from")
-    private Collection<Transfer> transfers_from;
+    private Collection<Transfer> transfersFrom;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_to")
-    private Collection<Transfer> transfers_to;
+    private Collection<Transfer> transfersTo;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
     private Collection<Allocation> allocations;
