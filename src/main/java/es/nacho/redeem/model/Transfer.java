@@ -16,11 +16,11 @@ public class Transfer {
 
     @ManyToOne
     @JoinColumn(name = "emp_from_id", nullable = false)
-    private Employee employee_from;
+    private Employee employeeFrom;
 
     @ManyToOne
     @JoinColumn(name = "emp_to_id", nullable = false)
-    private Employee employee_to;
+    private Employee employeeTo;
 
     public Transfer(LocalDateTime datetime/*, Employee employee*/) {
         super();
