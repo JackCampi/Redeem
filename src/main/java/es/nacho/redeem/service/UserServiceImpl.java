@@ -35,38 +35,33 @@ public class UserServiceImpl implements UserService{
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
+    @Autowired
+    private AreaService areaService;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Employee employee = employeeRepository.findByEmail(email);
 
         if (employee == null) throw new UsernameNotFoundException("Usuario y/o contraseña incorrecta");
 
-        Collection<SimpleGrantedAuthority> roles = new ArrayList<SimpleGrantedAuthority>();
+        Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(employee.getRol()));
-        User user = new User(employee.getEmail(), employee.getPassword(), roles);
 
-        return user;
+        return new User(employee.getEmail(), employee.getPassword(), roles);
     }
 
     @Override
-    public void registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception {
-        //TODO: test
-        //Optional<Company> company =  companyRepository.findById(companyNIT);
-        //if( !company.isPresent()) throw new Exception("Company not found");
+    public Employee registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception {
 
         AreaKey key = new AreaKey("gerencia",companyNIT);
         Optional<Area> area = areaRepository.findById(key);
 
         if( !area.isPresent()) throw new Exception("Area not found");
-
-        //company.get().getAreas().stream().findAny()
-
         Employee employee = new Employee(
                 adminRegistrationDto.getName(),
                 adminRegistrationDto.getLastName(),
                 adminRegistrationDto.getEmail(),
                 passwordEncoder.encode(adminRegistrationDto.getPassword()),
-                //adminRegistrationDto.getPassword(),
                 adminRegistrationDto.getCellphone(),
                 getCalendarFromString(adminRegistrationDto.getBirthday()),
                 0L,
@@ -74,21 +69,28 @@ public class UserServiceImpl implements UserService{
                 "administrador",
                 area.get()
         );
-        try {
-            employeeRepository.save(employee);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        int x = 1;
-        x++;
+        return  employeeRepository.save(employee);
+
     }
 
     @Override
     public Employee registerEmployee(EmployeeRegistrationDto employeeRegistrationDto, Long companyNIT) throws Exception {
 
-        //TODO: test
-        AreaKey key = new AreaKey(employeeRegistrationDto.getArea(),companyNIT);
+        String areaName = areaService.lowercaseAreaName(employeeRegistrationDto.getArea());
+
+        if(areaName.equals("gerencia")){
+            return registerAdmin(new AdminRegistrationDto(
+                    employeeRegistrationDto.getName(),
+                    employeeRegistrationDto.getLastName(),
+                    employeeRegistrationDto.getEmail(),
+                    employeeRegistrationDto.getPassword(),
+                    employeeRegistrationDto.getCellphone(),
+                    employeeRegistrationDto.getBirthday()
+            ), companyNIT);
+
+        }
+
+        AreaKey key = new AreaKey(areaName, companyNIT);
         Optional<Area> area = areaRepository.findById(key);
 
         if( !area.isPresent()) throw new Exception("Area not found");
@@ -150,12 +152,11 @@ public class UserServiceImpl implements UserService{
 
         String[] dateArray = string.split("-");
 
-        int year = Integer.valueOf(dateArray[0]);
-        int month = Integer.valueOf(dateArray[1]) - 1;
-        int day = Integer.valueOf(dateArray[2]);
+        int year = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]) - 1;
+        int day = Integer.parseInt(dateArray[2]);
 
-        Calendar calendar = new GregorianCalendar(year, month, day);
-        return  calendar;
+        return new GregorianCalendar(year, month, day);
 
     }
 

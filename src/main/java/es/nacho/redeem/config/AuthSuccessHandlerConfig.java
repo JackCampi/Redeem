@@ -17,7 +17,7 @@ import java.security.Principal;
 import java.util.Set;
 
 @Configuration
-public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
+public class AuthSuccessHandlerConfig implements AuthenticationSuccessHandler {
 
     @Autowired
     private CompanyService companyService;
@@ -25,7 +25,7 @@ public class CustomAuthSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
 
-        String email = "";
+        String email;
         if(authentication.getPrincipal() instanceof Principal){
             email = ((Principal) authentication.getPrincipal()).getName();
         }else {

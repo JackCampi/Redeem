@@ -18,7 +18,7 @@ public class UserLoginController {
     @GetMapping
     @RequestMapping("/login")
     public String login(){
-        return "login";
+        return WebPageNames.LOGIN;
     }
 
     /*@PostMapping
