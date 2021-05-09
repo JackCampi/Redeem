@@ -47,6 +47,12 @@ public class RegistrationController {
         return WebPageNames.COMPANY_REGISTRATION_FORM;
     }
 
+    @GetMapping
+    @RequestMapping("/reg/success")
+    public String redirectToLoginAfterRegistration(){
+        return WebPageNames.LOGIN;
+    }
+
     @PostMapping("/reg/admin")
     public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
 
@@ -57,7 +63,7 @@ public class RegistrationController {
 
         try{
             userService.registerAdmin(adminRegistrationDto, nit);
-            return "redirect:/admin?success";
+            return "redirect:/reg/success";
         }catch (Exception e){
             return  WebPageNames.ERROR_PAGE;
         }
@@ -68,7 +74,7 @@ public class RegistrationController {
         session.setAttribute("nit", companyRegistrationDto.getId());
         try{
             companyService.registerCompany(companyRegistrationDto);
-            return WebPageNames.ADMIN_REGISTRATION_FORM;
+            return "redirect:/reg/admin";
         }catch (Exception e){
             return "redirect:/reg/comp?error";
         }
