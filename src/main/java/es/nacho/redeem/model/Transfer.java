@@ -22,10 +22,11 @@ public class Transfer {
     @JoinColumn(name = "emp_to_id", nullable = false)
     private Employee employeeTo;
 
-    public Transfer(LocalDateTime datetime/*, Employee employee*/) {
+    public Transfer(LocalDateTime datetime/*, Employee employeeFrom, Employee employeeTo*/) {
         super();
         this.datetime = datetime;
-//        this.employee = employee;
+//        this.employeeFrom = employeeFrom;
+//        this.employeeTo = employeeTo;
     }
 
     public Transfer() {
@@ -47,11 +48,19 @@ public class Transfer {
         this.datetime = datetime;
     }
 
-//    public Employee getEmployee() {
-//        return employee;
-//    }
-//
-//    public void setEmployee(Employee employee) {
-//        this.employee = employee;
-//    }
+    public Employee getEmployeeFrom() {
+        return employeeFrom;
+    }
+
+    public void setEmployeeFrom(Employee employeeFrom) {
+        this.employeeFrom = employeeFrom;
+    }
+
+    public Employee getEmployeeTo() {
+        return employeeTo;
+    }
+
+    public void setEmployeeTo(Employee employeeTo) {
+        this.employeeTo = employeeTo;
+    }
 }

@@ -54,10 +54,10 @@ public class Employee {
 //    @JoinColumn(name = "area_company_comp_id", nullable = false)
 //    private Area area_company;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_from")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeFrom")
     private Collection<Transfer> transfersFrom;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee_to")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeTo")
     private Collection<Transfer> transfersTo;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
@@ -179,13 +179,22 @@ public class Employee {
 //        this.purchases = purchases;
 //    }
 //
-//    public Collection<Transfer> getTranfers() {
-//        return tranfers;
-//    }
-//
-//    public void setTranfers(Collection<Transfer> tranfers) {
-//        this.tranfers = tranfers;
-//    }
+
+    public Collection<Transfer> getTransfersFrom() {
+        return transfersFrom;
+    }
+
+    public void setTransfersFrom(Collection<Transfer> transfersFrom) {
+        this.transfersFrom = transfersFrom;
+    }
+
+    public Collection<Transfer> getTransfersTo() {
+        return transfersTo;
+    }
+
+    public void setTransfersTo(Collection<Transfer> transfersTo) {
+        this.transfersTo = transfersTo;
+    }
 
 //    public Collection<Allocation> getAllocations() {
 //        return allocations;
