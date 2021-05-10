@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- Custom style -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
     <!--<link th:href="@{/static/styles/styleLogin.css}" rel="stylesheet" />-->
 
     <link rel="icon" href="/img/RedeemIcon.ico">
@@ -20,106 +18,44 @@
         @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
 
 
-        html, body{
+        html,
+        body {
             font-family: 'Nunito Sans', sans-serif;
             font-size: 100%;
-            width: 100%;
-            padding: 0;
             margin: 0;
+            overflow: hidden;
         }
 
         /* General */
 
-        .container1 {
-            min-height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
-        }
-
-        .page-order {
+        .container {
             display: flex;
             width: 100%;
-            height: 100%;
-            margin: auto;
-            padding: 0;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            align-items: flex-start;
             justify-content: space-between;
         }
 
-        /* Right side */
-
-        .redeem-logo{
-            margin-top: 5%;
-            margin-bottom: 5%;
-            width: 27%;
-        }
-
-
-        .form-control.field{
-            font-family: 'Nunito Sans', sans-serif;
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
-        }
-
-        .panel.login-form-container{
-            width: 60%;
-        }
-
-        .login-form{
-            align-items: center;
-            display: flex;
-            flex-direction: column;
-            align-content: space-around;
-            flex-wrap: wrap;
-        }
-
-        .input-label{
-            margin-left: 15px;
-        }
-
-        .form-control.btn.btn-primary{
-            width: 45%;
-            background-color: #8E44AD;
-            border-radius: 15px;
-            border: none;
-        }
-
-        .form-control.btn.btn-primary:hover{
-            background-color: #693380;
-        }
-
-        .form-group{
-            width: 50%;
-        }
-
-        .form-group.button{
+        .panel {
             display: flex;
             flex-direction: column;
             align-items: center;
+            height: 78vh;
+            max-height: 79vh;
+            min-height: 78vh;
+            margin-bottom: 50px;
         }
+
 
 
         /* left side */
-        .left-panel {
-
-            width: 40%;
-
-        }
-        .panel.left-panel.content {
-            position: fixed;
-            height: 100%;
-            display: flex;
+        .panel.left-panel {
+            width: 35%;
             background-color: #8E44AD;
-            box-shadow: 0 7px 32px 13px rgba(0, 0, 0, 0.24);
+            box-shadow: 0 7px 32px 13px rgb(0, 0, 0);
             border-radius: 0 0 100px 0;
-            flex-direction: column;
-            flex-flow: column;
             padding: 7% 5%;
-        }
-
-        .panel.left-panel{
-            height: 100%;
         }
 
         label {
@@ -129,72 +65,190 @@
         h1 {
             color: rgba(255, 255, 255, 0.863);
             text-align: center;
-            font-size: 220%;
-            font-family: 'Nunito Sans', sans-serif;
-            font-weight:400;
+            font-size: 2rem;
+            font-weight: 400;
         }
 
         h3 {
             color: rgba(255, 255, 255, 0.705);
             text-align: center;
-            font-size: 100%;
+            font-size: 1.1rem;
             font-weight: 300;
-            font-family:'Nunito Sans', sans-serif;
-            padding: 10% 10%;
         }
 
-        .register-button{
+        .register-button {
             background-color: #8E44AD;
             border-radius: 18px;
-            margin: 0 25%;
             border: 1px solid rgba(255, 255, 255, 0.705);
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1rem;
+            padding: 3px 50px;
+            margin: 5% 0;
         }
 
-        .register-button:hover{
+        .register-button:hover {
             background-color: #793c94;
-            margin: 0 24%;
         }
 
-        a{
-            color:  rgba(255, 255, 255, 0.705);
+        a {
+            color: rgba(255, 255, 255, 0.705);
             text-decoration: none;
         }
-        a:hover{
-            color:  rgba(255, 255, 255, 0.705);
+
+        a:hover {
+            color: rgba(255, 255, 255, 0.705);
             text-decoration: none;
         }
+
+        .login-image {
+            width: 100%;
+        }
+
+
+        /* Right side */
+        .panel.login-form {
+            width: 65%;
+        }
+
+        .redeem-logo {
+            margin-top: 5%;
+            margin-bottom: 5%;
+            width: 27%;
+        }
+
+        .form-control.field {
+            font-family: 'Nunito Sans', sans-serif;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
+        }
+
+        .input-label {
+            margin-left: 15px;
+        }
+
+        .form-control.btn {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1rem;
+            color: white;
+            background-color: #8E44AD;
+            border-radius: 15px;
+            border: none;
+            padding: 5px 0;
+            width: 60%;
+        }
+
+        .form-control.btn:hover {
+            background-color: #693380;
+        }
+
+        .form-group {
+            width: 50%;
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .form-control.field {
+            height: 30px;
+            padding: 1px 20px;
+            border: none;
+            background-color: rgba(243, 243, 243, 0.164);
+            width: 90%;
+        }
+
+        input {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
 
         /* Validation errors*/
-        .valid-error{
+        .valid-error {
             margin-left: 1rem;
             color: firebrick;
             display: none;
         }
 
-        .error, .material-icons{
+        .error,
+        .material-icons {
             font-size: 1rem;
             color: firebrick;
             margin-bottom: 4%;
+            text-align: center;
+        }
+
+        /* Registration success */
+        .success{
+            font-size: 1rem;
+            color:#8E44AD;
+            margin-bottom: 4%;
+            text-align: center;
         }
 
 
         /* Responsive font config */
 
-        @media (max-width: 700px){
-            html{
+        @media (max-width: 700px) {
+            html {
                 font-size: 70%;
             }
         }
 
-        @media (max-width: 800px){
-            html{
+        @media (max-width: 800px) {
+            html {
                 font-size: 80%;
             }
         }
 
-        @media (max-width: 600px){
-            html{
+        @media (max-width: 600px) {
+            html {
                 font-size: 60%;
+            }
+
+            .panel.login-form {
+                width: 100%;
+            }
+
+            .container {
+                justify-content: center;
+            }
+
+            .panel {
+                height: 78vh;
+                max-height: none;
+            }
+
+            .panel.left-panel {
+                position: fixed;
+                top: 400px;
+                width: 100%;
+                border-bottom-right-radius: 0;
+                padding: 7% 30px;
+            }
+
+            h3 {
+                font-size: 1.5rem;
+            }
+
+            .login-image {
+                display: none;
+            }
+
+            .redeem-logo {
+                width: 75px;
+            }
+
+            .form-control.field {
+                height: 20px;
             }
         }
     </style>
@@ -202,83 +256,86 @@
 </head>
 
 <body>
-    <div class="container1">
+    <div class="container">
 
-        <div class="page-order">
+        <!-- ignore >
+            <div class="panel left-panel"></div-->
 
-            <!-- ignore -->
-            <div class="panel left-panel"></div>
+        <!-- left panel -->
+        <div class="panel left-panel">
+            <h1 class="text title">¿Nuevo en Redeem?</h1>
 
-            <!-- left panel -->
-            <div class="panel left-panel content">
-                <h1 class="text title">¿Nuevo en Redeem?</h1>
-                
-                <h3 class="text desc">Regístrate como administrador de tu
-                    empresa y empieza a redimir productos
-                     desde ahora.</h3>
-                
-                <!-- Redirect: registerCompany.html -->
-                <button type="button" class="register-button"><a href="/" th:href="@{/reg/comp}">Registra tu empresa</a></button>
+            <h3 class="text desc">Regístrate como administrador de tu
+                empresa y empieza a redimir productos
+                desde ahora.</h3>
 
-                <br>
-                <!--<img th:src="@{https://lh3.googleusercontent.com/5ebiIRgeR8yD7Qvw9gPwPC6XG3k0poYxURurTZB_8_SP-KJaYx5fOePBk6mqbhLB1Jws3awJMUcXuXRV-YaCeeb_Q-PDVysTteupSqb7ycsVNgGYBQhG_nxvJImqkZPO2mEda46piYJcY6W3Mz8bAFwHZXpPQOVbbvYlU_8llSUeEDosoWo0BgEPHXiPHSQF6CWwitekVdFR97tStAWOzLpH-i4tE6K0_zyIL44NjesDKF8bdyaePw77nePkURRIi3sq1fQ782BbymAAzHT_EB6DeCfzszYzzCjshm7VqOJ1xc19jUJAih8k6C_2tTa8OZjc1FmZs7hzLE7NmNQ3bjLTW1RQsKNPWPfaMi6DmPqQm1kDFEoHvaoJsPWBpodFlj4lyB4nXw7Pv5xe5aUWGYhAbPDoQYfWdkuzmECGu7XEzIC9IV3IHTQOAjqkXx40OiBQGQ7Y_1nA_h2J0WsVHgbVa42iAlnl48Y-PH03PdppAmKCbSAlSQFMOKK5EvRcN0rFlhAOoCh8PBI04PETEaQ7xWObeztPy9WIale7X0evsSLdiOkBWwJI0vA3DF50XYzuQC006_bN8w1IiQ2c1oy4y6MTOUb_yvPCwez8tcRxr8Q5lws9Sn2DFrg45VUFMi1naXemf6jhfE7Yw4B3qH9CkZMalOV3iyqmFQsYA4P9OrbwS_Ph8qmarOQuOh6Z9_ipPVZEHeDaODBqT8IIihE=w604-h584-no?authuser=1}" alt="login_image">-->
-                <img src="img/loginImage.png" alt="login_image">
-            </div>
-            <div class="panel login-form-container">
-                <form th:action="@{/login}" method="post" class="login-form" name="login-form" onsubmit="return validation()">
-                    <br/>
-                    <img src="img/RedeemLogo.png" alt="redeem_logo" class="redeem-logo">
+            <!-- Redirect: registerCompany.html -->
+            <button type="button" class="register-button"><a href="/" th:href="@{/reg/comp}">Registra tu
+                    empresa</a></button>
 
-                    <!-- error message -->
-                    <div th:if="${param.error}">
-                        <div class="error"><span class="material-icons">error_outline</span> Correo y/o contraseña incorrectos</div>
-                    </div>
-
-                    <!-- Email input -->
-                    <div class="form-group">
-                        <label class="input-label" for="username">Correo</label>
-                        <input type="text" class="form-control field" name="username" id="username"
-                            placeholder="Ingrese su correo" autofocus="autofocus" required>
-                        <div class="valid-error" id="email_error1"> Por favor, introduzca un correo </div>
-                        <div class="valid-error" id="email_error2"> Por favor, introduzca un correo válido</div>
-                    </div>
-
-                    <br/>
-
-                    <!-- Password input -->
-                    <div class="form-group">
-                        <label class="input-label" for="password">   Contraseña</label>
-                        <input type="password" class="form-control field" name="password" id="password"
-                            placeholder="Ingrese su contraseña" required>
-                            <div class="valid-error" style="display: none" id="pass_id"> Por favor, introduzca una contraseña </div>
-                    </div>
-
-                    <br/><br/>
-
-                    <!-- Submit button -->
-                    <div class="form-group button">
-                            <input type="submit" name="login-submit" id="login-submit"
-                                class="form-control btn btn-primary" value="Iniciar sesión">
-                    </div>
-
-                </form>
-            </div>
+            <br>
+            <!--<img th:src="@{https://lh3.googleusercontent.com/5ebiIRgeR8yD7Qvw9gPwPC6XG3k0poYxURurTZB_8_SP-KJaYx5fOePBk6mqbhLB1Jws3awJMUcXuXRV-YaCeeb_Q-PDVysTteupSqb7ycsVNgGYBQhG_nxvJImqkZPO2mEda46piYJcY6W3Mz8bAFwHZXpPQOVbbvYlU_8llSUeEDosoWo0BgEPHXiPHSQF6CWwitekVdFR97tStAWOzLpH-i4tE6K0_zyIL44NjesDKF8bdyaePw77nePkURRIi3sq1fQ782BbymAAzHT_EB6DeCfzszYzzCjshm7VqOJ1xc19jUJAih8k6C_2tTa8OZjc1FmZs7hzLE7NmNQ3bjLTW1RQsKNPWPfaMi6DmPqQm1kDFEoHvaoJsPWBpodFlj4lyB4nXw7Pv5xe5aUWGYhAbPDoQYfWdkuzmECGu7XEzIC9IV3IHTQOAjqkXx40OiBQGQ7Y_1nA_h2J0WsVHgbVa42iAlnl48Y-PH03PdppAmKCbSAlSQFMOKK5EvRcN0rFlhAOoCh8PBI04PETEaQ7xWObeztPy9WIale7X0evsSLdiOkBWwJI0vA3DF50XYzuQC006_bN8w1IiQ2c1oy4y6MTOUb_yvPCwez8tcRxr8Q5lws9Sn2DFrg45VUFMi1naXemf6jhfE7Yw4B3qH9CkZMalOV3iyqmFQsYA4P9OrbwS_Ph8qmarOQuOh6Z9_ipPVZEHeDaODBqT8IIihE=w604-h584-no?authuser=1}" alt="login_image">-->
+            <img class="login-image" src="img/loginImage.png" alt="login_image">
         </div>
+        <form th:action="@{/login}" method="post" class="panel login-form" name="login-form"
+            onsubmit="return validation()">
+            <br />
+            <img src="img/RedeemLogo.png" alt="redeem_logo" class="redeem-logo">
+
+            <!-- error message -->
+            <div th:if="${param.error}">
+                <div class="error"><span class="material-icons">error_outline</span> Correo y/o
+                    contraseña incorrectos
+                </div>
+            </div>
+
+            <!-- success message -->
+            <div th:if="${param.success}">
+                <div class="success">Registro exitoso, por favor, inicie sesión.</div>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-group">
+                <label class="input-label" for="username">Correo</label>
+                <input type="text" class="form-control field" name="username" id="username"
+                    placeholder="Ingrese su correo" autofocus="autofocus" required>
+                <div class="valid-error" id="email_error"> Por favor, introduzca un correo válido</div>
+            </div>
+
+            <br />
+
+            <!-- Password input -->
+            <div class="form-group">
+                <label class="input-label" for="password"> Contraseña</label>
+                <input type="password" class="form-control field" name="password" id="password"
+                    placeholder="Ingrese su contraseña" required>
+            </div>
+
+            <br /><br />
+
+            <!-- Submit button -->
+            <div class="form-group button">
+                <input type="submit" name="login-submit" id="login-submit" class="form-control btn"
+                    value="Iniciar sesión">
+            </div>
+
+        </form>
+
     </div>
 
     <!-- Validations script     -->
-    <script >
+    <script>
         var email = document.forms['login-form']['email'];
 
-        var email_error2 = document.getElementById('email_error2');
+        var email_error = document.getElementById('email_error');
 
-        function validation(){
+        function validation() {
 
-            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)){
+            if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)) {
                 return true;
-            } else{
+            } else {
                 email.style.border = '1px solid firebrick';
-                email_error2.style.display = "block";
+                email_error.style.display = "block";
                 email.focus();
                 return false;
             }
@@ -286,4 +343,5 @@
         }
     </script>
 </body>
+
 </html>
