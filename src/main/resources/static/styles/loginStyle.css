@@ -36,7 +36,7 @@ body {
 .panel.left-panel {
     width: 35%;
     background-color: #8E44AD;
-    box-shadow: 0 7px 32px 13px rgb(0, 0, 0);
+    box-shadow: 0 7px 32px 13px rgba(0, 0, 0, 0.24);
     border-radius: 0 0 100px 0;
     padding: 7% 5%;
 }
@@ -166,6 +166,7 @@ input {
     font-size: 1rem;
     color: firebrick;
     margin-bottom: 4%;
+    text-align: center;
 }
 
 /* Registration success */
@@ -173,7 +174,9 @@ input {
     font-size: 1rem;
     color:#8E44AD;
     margin-bottom: 4%;
+    text-align: center;
 }
+
 
 /* Responsive font config */
 

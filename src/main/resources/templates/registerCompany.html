@@ -12,194 +12,10 @@
   <!-- Custom style -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js" integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf" crossorigin="anonymous"></script>
-  <!-- <link rel="stylesheet" href="styles/stylecomp_register.css"> -->
+  <link rel="stylesheet" href="/css/stylecomp_register.css">
 
   <link rel="icon" th:href="@{/img/RedeemIcon.ico}">
   <title>Registrar empresa</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
-
-
-    html, body{
-      font-family: 'Nunito Sans', sans-serif;
-      font-size: 100%;
-      width: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    /* General */
-
-    .container1 {
-      min-height: 100vh;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-    }
-
-    .page-order {
-      display: flex;
-      width: 100%;
-      height: 100%;
-      margin: auto;
-      padding: 0;
-      justify-content: space-between;
-    }
-
-    /* Right side */
-
-    .redeem-logo{
-      margin-top: 5%;
-      margin-bottom: 5%;
-      width: 20%;
-    }
-
-
-    .form-control.field{
-      font-family: 'Nunito Sans', sans-serif;
-      width: 100%;
-      border-radius: 15px;
-      box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
-    }
-
-    .panel.login-form-container{
-      width: 60%;
-    }
-
-    .login-form{
-      align-items: center;
-      display: flex;
-      flex-direction: column;
-      align-content: space-around;
-      flex-wrap: wrap;
-    }
-
-    .input-label{
-      margin-left: 15px;
-    }
-
-    .input-label2{
-      margin-left: 0px;
-    }
-    .form-control.btn.btn-primary{
-      width: 45%;
-      background-color: #8E44AD;
-      border-radius: 15px;
-      border: none;
-    }
-
-    .form-control.btn.btn-primary:hover{
-      background-color: #693380;
-    }
-
-    .form-group{
-      width: 50%;
-    }
-
-    .form-group.button{
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    /* Validation errors*/
-    .valid-error{
-      margin-left: 1rem;
-      color: firebrick;
-    }
-
-    .error, .material-icons{
-      font-size: 1rem;
-      color: firebrick;
-      margin-bottom: 4%;
-    }
-
-
-    /* right side */
-    .right-panel {
-
-      width: 40%;
-
-    }
-    .panel.right-panel.content {
-      position: revert;
-      height: 100%;
-      display: flex;
-      background-color: #8E44AD;
-      box-shadow: 0 7px 32px 13px rgba(0, 0, 0, 0.24);
-      border-radius: 0 0 0 100px;
-      flex-direction: column;
-      flex-flow: column;
-      padding: 7% 5%;
-    }
-
-    .panel.right-panel{
-      height: 100%;
-    }
-
-    label {
-      font-size: 1rem;
-    }
-
-    h1 {
-      color: rgba(255, 255, 255, 0.863);
-      text-align: center;
-      font-size: 220%;
-      font-family: 'Nunito Sans', sans-serif;
-      font-weight:400;
-    }
-
-    h3 {
-      color: rgba(255, 255, 255, 0.705);
-      text-align: center;
-      font-size: 100%;
-      font-weight: 300;
-      font-family:'Nunito Sans', sans-serif;
-      padding: 10% 10%;
-    }
-
-    .register-button{
-      background-color: #8E44AD;
-      border-radius: 18px;
-      margin: 0 25%;
-      border: 1px solid rgba(255, 255, 255, 0.705);
-    }
-
-    .register-button:hover{
-      background-color: #793c94;
-      margin: 0 24%;
-    }
-
-    a{
-      color:  rgba(255, 255, 255, 0.705);
-      text-decoration: none;
-    }
-    a:hover{
-      color:  rgba(255, 255, 255, 0.705);
-      text-decoration: none;
-    }
-
-
-    /* Responsive font config */
-
-    @media (max-width: 700px){
-      html{
-        font-size: 70%;
-      }
-    }
-
-    @media (max-width: 800px){
-      html{
-        font-size: 80%;
-      }
-    }
-
-    @media (max-width: 600px){
-      html{
-        font-size: 60%;
-      }
-    }
-  </style>
 </head>
 
 <body>
@@ -211,7 +27,7 @@
       <form th:action="@{/reg/comp}" method="post" class="login-form" th:object="${company}" id="login-form">
         <br/>
 
-        <img src="https://i.ibb.co/bvvvyxv/Redeem-Logo.png" alt="redeem_logo" class="redeem-logo">
+        <img src="/img/Redeemlogo.png" alt="redeem_logo" class="redeem-logo">
         <div class="form-group">
           <label class="input-label2" for="companyName">Información sobre tu empresa</label>
           <div id="error" class="valid-error"></div>
@@ -256,7 +72,7 @@
     </div>
     <div class="panel right-panel content">
       <!-- Right-panel image-->
-      <img src="https://i.ibb.co/L90bYNy/register-Comp-Image.png">
+      <img src="/img/registerCompImage.png">
 
       <!-- Spacing -->
       <br/><br/>
@@ -268,26 +84,6 @@
   </div>
 </div>
 <!-- Validations script -->
-<script>
-  const companyName = document.getElementById('companyName')
-  const nit = document.getElementById('nit')
-  const companyAreas = document.getElementById('companyAreas')
-  const form = document.getElementById('login-form')
-  const errorElement = document.getElementById('error')
-
-  form.addEventListener('submit', (e) => {
-    let messages = []
-    if (companyName.value === 'loco') {
-      messages.push('loco no puede ser el nombre de tu empresa')
-    }
-
-    if (messages.length > 0){
-       e.preventDefault()
-      errorElement.innerText = messages.join(',')
-
-    }
-  })
-
-</script>
+<script src="/js/registerCompanyValidation.js"></script>
 </body>
 </html>
