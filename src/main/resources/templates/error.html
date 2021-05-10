@@ -4,64 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="img/RedeemIcon.ico">
+    <link rel="icon" href="img/redeemIcon.ico">
     <title>Error :(</title>
 
     <!-- Style -->
-    <!--link rel="stylesheet" href="styles/errorStyle.css"-->
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600&display=swap');
+    <link rel="stylesheet" href="/css/errorStyle.css"/>
 
-        :root{
-            --main-color: #8d44ad;
-            --main-background-color: rgba(246, 246, 246, 1);
-        }
-
-
-        html, body{
-            background-color: var(--main-color);
-            color: white;
-            list-style-type: none;
-            font-family: 'Nunito Sans', sans-serif;
-            font-size: 100%;
-            width: 100%;
-            padding: 0;
-            margin: 0;
-        }
-
-        .main-container{
-            display: flex;
-            flex-flow: column;
-            align-items: center;
-        }
-
-        .error-image{
-            width: 25%;
-        }
-
-        h3 {
-            font-weight: 400;
-        }
-
-        .button{
-            background-color: #8E44AD;
-            border-radius: 18px;
-            margin: 0 25%;
-            padding: .5rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.705);
-        }
-
-        .button:hover{
-            background-color: #793c94;
-            margin: 0 24%;
-        }
-
-        a {
-            color: white;
-            font-family: 'Nunito Sans', sans-serif;
-            text-decoration: none;
-        }
-    </style>
 </head>
 <body>
     <div class="main-container">
@@ -69,7 +17,7 @@
         <h1>¡Ups!... Tuvimos un error :(</h1>
         <h3>Vuelve a intentarlo más tarde.</h3>
         <br>
-        <img src="https://i.ibb.co/BqnsdMZ/error.png" alt="error" class="error-image">
+        <img src="/img/error.png" alt="error" class="error-image">
         <br><br>
         <button type="button" class="button"><a th:href="@{/login}">Volver atrás</a></button>
     </div>

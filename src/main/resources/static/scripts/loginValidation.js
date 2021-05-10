@@ -1,5 +1,5 @@
-var email = document.forms['login-form']['email'];
-
+//var email = document.forms['login-form']['username'];
+var email = document.getElementById("username")
 var email_error2 = document.getElementById('email_error2');
 
 function validation(){

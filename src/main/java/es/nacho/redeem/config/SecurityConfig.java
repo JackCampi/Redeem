@@ -32,7 +32,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         http.authorizeRequests().antMatchers("/admin", "/admin/addemp").hasAuthority("administrador")
                 .antMatchers("/emp**", "/emp/**").hasAnyAuthority("administrador","empleado")
-                .antMatchers("/login", "/reg/**", "/scripts/**", "/styles/**", "/img/**", "/css/**", "/reg/comp")
+                .antMatchers("/login", "/reg/**", "/scripts/**", "/styles/**", "/img/**", "/css/**", "/error")
                 .permitAll().anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login").successHandler(authenticationSuccessHandler)
@@ -64,13 +64,3 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 }
-
-
-/*@Configuration
-class WebConfigurer extends WebMvcConfigurerAdapter {
-
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/static/**").addResourceLocations("/scripts/**", "/styles/**", "/img/**", "/css/**");
-    }
-}*/
