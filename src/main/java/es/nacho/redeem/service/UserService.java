@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
 
-    void registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception;
+    Employee registerAdmin(AdminRegistrationDto adminRegistrationDto, Long companyNIT) throws Exception;
 
     Employee registerEmployee(EmployeeRegistrationDto employeeRegistrationDto, Long companyNIT) throws Exception;
 

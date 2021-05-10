@@ -12,10 +12,7 @@ import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
@@ -26,6 +23,8 @@ public class CompanyServiceImpl implements CompanyService{
     private AreaRepository areaRepository;
     @Autowired
     private EmployeeRepository employeeRepository;
+    @Autowired
+    private AreaService areaService;
 
     @Override
     public Company registerCompany(CompanyRegistrationDto companyRegistrationDto) throws Exception {
@@ -54,7 +53,7 @@ public class CompanyServiceImpl implements CompanyService{
      * @param company id Long type of the company that owns this area
      */
     public void processAllAreas(String allAreas, Company company){
-        String[] areas = allAreas.split(",");
+        String[] areas = areaService.lowercaseAreaNames(allAreas.split(","));
         Area defaultArea = new Area("gerencia", company);
         areaRepository.save(defaultArea);
         for (String areaName : areas) {
@@ -77,7 +76,7 @@ public class CompanyServiceImpl implements CompanyService{
         Collection<Area> area = areaRepository.findByCompany(company.get());
 
         Collection<String> areaNames = new ArrayList<>();
-        area.forEach(areaObject -> areaNames.add(areaObject.getId().getName()));
+        area.forEach(areaObject -> areaNames.add(areaService.capitalizeAreaName(areaObject.getId().getName())));
 
         return areaNames;
     }
@@ -91,9 +90,7 @@ public class CompanyServiceImpl implements CompanyService{
 
         Company company = employee.getArea().getCompany();
 
-        long nit = company.getId();
-
-        return nit;
+        return company.getId();
     }
 
     @Override
