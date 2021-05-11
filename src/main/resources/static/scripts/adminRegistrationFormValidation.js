@@ -5,7 +5,6 @@ const form = document.getElementById('login-form')
 const errorElement = document.getElementById('error')
 
 form.addEventListener('submit', (e) => {
-    alert('tons k')
     let messages = []
     if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value) === false) {
         messages.push('Introduzca un correo válido')

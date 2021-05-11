@@ -1,6 +1,6 @@
 //var email = document.forms['login-form']['username'];
-var email = document.getElementById("username")
-var email_error2 = document.getElementById('email_error2');
+//const email = document.getElementById('username')
+//const email_error2 = document.getElementById('email_error2');
 
 function validation(){
     

@@ -92,7 +92,7 @@
         </form>
     </div>
 </div>
-<!--script src="../static/scripts/employeeRegistrationFormValidation.js"></script-->
+<script src="/scripts/employeeRegistrationFormValidation.js"></script>
 <script>
     var email = document.forms['reg-form']['email'];
     var password = document.forms['reg-form']['password'];
@@ -104,7 +104,7 @@
     var password_confirm_error = document.getElementById('password_confirm_error');
 
 
-    function validation(){
+    /*function validation(){
         password_confirm.style.border = 'none';
         password.style.border = 'none';
         email.style.border = 'none';
@@ -112,7 +112,7 @@
         email_error.style.display = "none";
         password_error.style.display = "none";
         if (/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value)){
-            if (/(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*/.test(password.value)){
+            if (/(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*//*.test(password.value)){
                 if(password.value == password_confirm.value){
                 } else {
                     password_confirm.style.border = '1px solid firebrick';
@@ -132,7 +132,7 @@
             email.focus();
             return false;
         }
-    }
+    }*/
 </script>
 </body>
 </html>
