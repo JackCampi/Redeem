@@ -8,7 +8,9 @@
     <title>Dashboard - Admin</title>
 
     <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,7 +18,7 @@
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-    <div class="sidebar">
+    <div class="custom-sidebar">
         <div class="sidebar-brand">
             <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
             <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
@@ -24,22 +26,42 @@
 
         <hr class="solid">
 
-        <div class="sidebar-menu">
+        <div class="principal-sidebar-menu">
             <div>
                 <ul>
                     <li>
-                        <a href="" class="selected"><span class="material-icons sidebar-icon selected">
-                            analytics
-                            </span> <p>Dashboard</p> </a>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a href="" class="selected" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p> 
+                        </a>
                     </li>
+                    <li>
+                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a onclick="return transferButton()" id="transfer-button">
+                            <span class="material-icons">connect_without_contact</span>
+                            <p>Transferir</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
                 </ul>
-            </div>
-            <hr class="space-menu">
-            <br><br><br>
-            <div>
-                <a th:href="@{/logout}"><span class="material-icons">
-                    power_settings_new
-                    </span> <p>Cerrar sesión</p> </a>
             </div>
         </div>
     </div>
@@ -52,31 +74,35 @@
                         menu
                     </span>
                 </label>
-                <div class="current-page"><h2>Dashboard</h2></div>
+                <div class="current-page"><h4>Dashboard</h4></div>
                 
             </div>
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h3 th:text="${employeeDashboardInfo.name}"></h3>
+                    <h5 th:text="${employeeDashboardInfo.name}"></h5>
                     <small>Empleado</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
             </div>
         </header>
-        <main>
-            <div class="cards">
-                <div class="card company">
-                    <h1 th:text="${employeeDashboardInfo.companyName}"></h1>
+
+        <main id="main-content">
+            <div class="custom-cards">
+                <div class="custom-card company">
+                    <h3 th:text="${employeeDashboardInfo.companyName}"></h3>
                     <span>N.I.T. <span th:text="${employeeDashboardInfo.companyNit}"></span></span>
                 </div>
-                <div class="card budget">
-                    <h2>Balance</h2>
-                    <h1>$<span th:text="${employeeDashboardInfo.balance}"></span></h1>
+                <div class="custom-card budget">
+                    <h4>Balance</h4>
+                    <h3>$<span th:text="${employeeDashboardInfo.balance}"></span></h3>
                 </div>
             </div>
         </main>
     </div>
+
+    <script src="../static/scripts/employeeDashboardLogic.js"></script>
+    <script src="/scripts/employeeDashboardLogic.js"></script>
     
 </body>
 </html>
