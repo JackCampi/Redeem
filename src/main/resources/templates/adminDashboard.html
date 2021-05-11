@@ -9,6 +9,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <!--link rel="stylesheet" href="../static/styles/dashboardStyle.css"-->
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -28,12 +29,27 @@
             <div>
                 <ul>
                     <li>
-                        <a href="" class="selected"><span class="material-icons sidebar-icon selected">
-                            analytics
-                            </span> <p>Dashboard</p> </a>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a href="" class="selected" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p> 
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p> 
+                        </a>
                     </li>
 
                     <hr class="solid">
+
+                    <li>
+                        <a onclick="return allocateButton()" id="allocate-button">
+                            <span class="material-icons">attach_money</span>
+                            <p>Consignar a empleados</p> 
+                        </a>
+                    </li>
 
                     <li>
                         <a th:href="@{/admin/addemp}">
@@ -43,13 +59,25 @@
                             <span> <p>Añadir empleado</p> </span>
                         </a>
                     </li>
+
+                    <li>
+                        <a onclick="return empListButton()" id="empl-list-button">
+                            <span class="material-icons">groups</span>
+                            <p>Ver empleados</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
+
                 </ul>
-            </div>
-            <hr class="space-menu">
-            <div>
-                <a th:href="@{/logout}"><span class="material-icons">
-                    power_settings_new
-                    </span> <p>Cerrar sesión</p> </a>
             </div>
         </div>
     </div>
@@ -62,7 +90,7 @@
                         menu
                     </span>
                 </label>
-                <div class="current-page"><h2>Dashboard</h2></div>
+                <div class="current-page"><h2 id="title">Dashboard</h2></div>
                 
             </div>
             
@@ -74,7 +102,8 @@
                 <div><span class="material-icons">account_circle</span></div>
             </div>
         </header>
-        <main>
+
+        <main id="main-content">
             <div class="cards">
                 <div class="card company">
                     <h1 th:text="${adminDashboardInfo.companyName}"></h1>
@@ -87,6 +116,7 @@
             </div>
         </main>
     </div>
-    
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/adminDashboardLogic.js"></script>
 </body>
 </html>

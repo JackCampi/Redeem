@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<body>
+    <!-- Poner contenido aquí -->
+    <h1>
+        Lista de empleados
+    </h1>
+    <span sec:authentication="principal.username"></span>
+    <div class="name-rol">
+        <h3 th:text="${adminDashboardInfo.name}"></h3>
+        <h3 th:text="asdf"></h3>
+        <div th:if="${param.success}">
+            <div class="success">Registro exitoso, por favor, inicie sesión.</div>
+        </div>
+        <small>Administrador</small>
+    </div>
+</body>
+</html>
