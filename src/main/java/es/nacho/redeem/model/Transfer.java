@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "transfer")
 public class Transfer {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tr_id", nullable = false)
@@ -13,6 +14,9 @@ public class Transfer {
 
     @Column(name = "tr_datetime", nullable = false)
     private LocalDateTime datetime;
+
+    @Column(name="amount", nullable = false)
+    private Long amount;
 
     @ManyToOne
     @JoinColumn(name = "emp_from_id", nullable = false)
