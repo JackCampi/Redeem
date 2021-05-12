@@ -99,7 +99,7 @@ class RegistrationControllerTest {
         AdminRegistrationDto adminRegistrationDto = new AdminRegistrationDto("Juan", "Ramiro", "nuevo@n.n", "Holahola#", "3123232345", "07-07-2000");
         String page = registrationController.registerAdminAccount(adminRegistrationDto, session);
 
-        assertEquals("redirect:/admin?success", page);
+        assertEquals("redirect:/login?success", page);
 
     }
 
