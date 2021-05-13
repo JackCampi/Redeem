@@ -109,15 +109,39 @@ class CompanyServiceImplTest {
 
     @AfterAll
     void afterAll() {
-        Employee employee2 = employeeRepository.findByEmail("brian@gmail.com");
-        Employee employee3 = employeeRepository.findByEmail("jorgeveloza@gmail.com");
-        Employee employee4 = employeeRepository.findByEmail("rveloza@gmail.com");
-        employeeRepository.delete(employee2);
-        employeeRepository.delete(employee3);
-        employeeRepository.delete(employee4);
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            employeeRepository.delete(employee);
+        });
         Collection<Area> areas = areaRepository.findByCompany(company);
         areas.forEach(area -> areaRepository.delete(area));
         companyRepository.delete(company);
+    }
+
+    @Test
+    @Rollback
+    void disableEmployee() {
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            assertTrue(employee.getActive());
+            companyService.disableEmployee(mail);
+            assertFalse(employee.getActive());
+        });
+    }
+
+    @Test
+    @Rollback
+    void enableEmployee() {
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            companyService.disableEmployee(mail);
+            assertFalse(employee.getActive());
+            companyService.enableEmployee(mail);
+            assertTrue(employee.getActive());
+        });
     }
 
     @Test
