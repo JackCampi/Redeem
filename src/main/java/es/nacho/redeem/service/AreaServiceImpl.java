@@ -4,37 +4,30 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import org.springframework.util.StringUtils;
 
 @Service
 public class AreaServiceImpl implements AreaService{
     @Override
     public Collection<String> capitalizeAreaNames(Collection<String> areaNames) {
-
         Collection<String> newAreaNames = new ArrayList<>();
-
-        areaNames.forEach(areaName -> {
-
-            if(areaName.equals("gerencia")) newAreaNames.add("Gerencia (Admin)");
-            else newAreaNames.add(capitalizeAreaName(areaName));
-        });
-
-
+        areaNames.forEach(areaName -> newAreaNames.add(capitalizeAreaName(areaName)));
         return newAreaNames;
     }
 
     @Override
     public String capitalizeAreaName(String areaName) {
-
-        if(areaName.equals("gerencia")) return "Gerencia (Admin)";
-        else return capitalizeWord(areaName);
+        return areaName.equals("gerencia") ? "Gerencia (Admin)" : capitalizeWord(areaName);
     }
 
     private String capitalizeWord(String word){
 
         String[] singleWords = word.split(" ");
+
         for (int i = 0; i < singleWords.length; i++) {
-            singleWords[i] = singleWords[i].substring(0, 1).toUpperCase() + singleWords[i].substring(1);
+            singleWords[i] = StringUtils.capitalize(singleWords[i]);
         }
+
         return String.join(" ", singleWords);
     }
 

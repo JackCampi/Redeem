@@ -8,8 +8,9 @@
     <title>Dashboard - Admin</title>
 
     <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardStyle.css">
-    <!--link rel="stylesheet" href="../static/styles/dashboardStyle.css"-->
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -17,16 +18,15 @@
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-    <div class="sidebar">
+    <div class="custom-sidebar">
         <div class="sidebar-brand">
             <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
-            <!--h2 class="redeem-name">Redeem</h2--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
         </div>
 
         <hr class="solid">
 
-        <div class="sidebar-menu">
-            <div>
+        <div class="principal-sidebar-menu">
                 <ul>
                     <li>
                         <!-- El href vacío hace que se redireccione al dashboard -->
@@ -78,7 +78,6 @@
 
 
                 </ul>
-            </div>
         </div>
     </div>
 
@@ -90,13 +89,13 @@
                         menu
                     </span>
                 </label>
-                <div class="current-page"><h2 id="title">Dashboard</h2></div>
+                <div class="current-page"><h4 id="title">Dashboard</h4></div>
                 
             </div>
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h3 th:text="${adminDashboardInfo.name}"></h3>
+                    <h4 th:text="${adminDashboardInfo.name}"></h4>
                     <small>Administrador</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
@@ -104,14 +103,14 @@
         </header>
 
         <main id="main-content">
-            <div class="cards">
-                <div class="card company">
-                    <h1 th:text="${adminDashboardInfo.companyName}"></h1>
+            <div class="custom-cards">
+                <div class="custom-card company">
+                    <h3 th:text="${adminDashboardInfo.companyName}"></h3>
                     <span>N.I.T. <span th:text="${adminDashboardInfo.companyNit}"></span></span>
                 </div>
-                <div class="card budget">
+                <div class="custom-card budget">
                     <span>Presupuesto</span>
-                    <h1>$ <span th:text="${adminDashboardInfo.companyBudget}"></span></h1>
+                    <h3>$ <span th:text="${adminDashboardInfo.companyBudget}"></span></h3>
                 </div>
             </div>
         </main>

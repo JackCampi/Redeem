@@ -47,12 +47,6 @@ public class RegistrationController {
         return WebPageNames.COMPANY_REGISTRATION_FORM;
     }
 
-    @GetMapping
-    @RequestMapping("/reg/success")
-    public String redirectToLoginAfterRegistration(){
-        return WebPageNames.LOGIN;
-    }
-
     @PostMapping("/reg/admin")
     public String registerAdminAccount(@ModelAttribute("admin") AdminRegistrationDto adminRegistrationDto, HttpSession session){
 
@@ -63,7 +57,7 @@ public class RegistrationController {
 
         try{
             userService.registerAdmin(adminRegistrationDto, nit);
-            return "redirect:/reg/success";
+            return "redirect:/login?success";
         }catch (Exception e){
             return  WebPageNames.ERROR_PAGE;
         }
