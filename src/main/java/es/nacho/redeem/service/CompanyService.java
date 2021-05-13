@@ -2,6 +2,7 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
+import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
@@ -20,5 +21,7 @@ public interface CompanyService {
     AdminDashboardInfoDto fillAdminDashboardInfoDto(long nit, AdminDashboardInfoDto adminDashboardInfoDto) throws Exception;
 
     EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(long nit, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception;
+
+    Collection<Employee> getEmployees(Long companyNIT) throws Exception;
 
 }
