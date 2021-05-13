@@ -132,4 +132,18 @@ public class CompanyServiceImpl implements CompanyService{
         areas.forEach(area -> employees.addAll(employeeRepository.findAllByArea(area)));
         return employees;
     }
+
+    @Override
+    public void disableEmployee(String mail) {
+        Employee employee = employeeRepository.findByEmail(mail);
+        employee.setActive(false);
+        employeeRepository.save(employee);
+    }
+
+    @Override
+    public void enableEmployee(String mail) {
+        Employee employee = employeeRepository.findByEmail(mail);
+        employee.setActive(true);
+        employeeRepository.save(employee);
+    }
 }

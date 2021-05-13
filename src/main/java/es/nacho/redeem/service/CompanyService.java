@@ -24,4 +24,8 @@ public interface CompanyService {
 
     Collection<Employee> getEmployees(Long companyNIT) throws Exception;
 
+    void disableEmployee(String mail);
+
+    void enableEmployee(String mail);
+
 }
