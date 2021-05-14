@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void discountToUserBalance(long id, long amount) throws InsufficientBalanceException {
+    public Employee discountToUserBalance(long id, long amount) throws InsufficientBalanceException {
 
         Optional<Employee> employee = employeeRepository.findById(id);
 
@@ -158,36 +158,36 @@ public class UserServiceImpl implements UserService{
         if(amount > balance) throw new InsufficientBalanceException();
 
         employeeObject.setBalance(balance-amount);
-        employeeRepository.save(employeeObject);
+        return employeeRepository.save(employeeObject);
 
     }
 
     @Override
-    public void incrementToUserBalanceById(long id, long amount) throws UserNotFoundException {
+    public Employee incrementToUserBalanceById(long id, long amount) throws UserNotFoundException {
 
         Optional<Employee> employee = employeeRepository.findById(id);
         if(!employee.isPresent()) throw new UserNotFoundException();
 
-        incrementToUserBalance(employee.get(), amount);
+        return incrementToUserBalance(employee.get(), amount);
 
     }
 
     @Override
-    public void incrementToUserBalanceByEmail(String email, long amount) throws UserNotFoundException {
+    public Employee incrementToUserBalanceByEmail(String email, long amount) throws UserNotFoundException {
 
         Employee employee = employeeRepository.findByEmail(email);
         if(employee == null) throw new UserNotFoundException();
 
-        incrementToUserBalance(employee, amount);
+        return incrementToUserBalance(employee, amount);
 
     }
 
-    private void incrementToUserBalance(Employee employee, long amount) throws UserNotFoundException {
+    private Employee incrementToUserBalance(Employee employee, long amount) throws UserNotFoundException {
 
         if(!employee.getActive()) throw new UserNotFoundException("The user is not active");
 
         employee.setBalance(employee.getBalance() + amount);
-        employeeRepository.save(employee);
+        return employeeRepository.save(employee);
 
     }
 

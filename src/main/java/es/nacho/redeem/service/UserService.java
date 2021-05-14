@@ -21,11 +21,11 @@ public interface UserService extends UserDetailsService {
 
     Boolean checkIfEmailExists(String email);
 
-    void discountToUserBalance(long id, long amount) throws InsufficientBalanceException;
+    Employee discountToUserBalance(long id, long amount) throws InsufficientBalanceException;
 
-    void incrementToUserBalanceById(long id, long amount) throws UserNotFoundException;
+    Employee incrementToUserBalanceById(long id, long amount) throws UserNotFoundException;
 
-    void incrementToUserBalanceByEmail(String email , long amount) throws UserNotFoundException;
+    Employee incrementToUserBalanceByEmail(String email , long amount) throws UserNotFoundException;
 
     long getIdByEmail(String email) throws UserNotFoundException;
 
