@@ -1,5 +1,7 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
@@ -142,6 +144,60 @@ public class UserServiceImpl implements UserService{
         Employee employee = employeeRepository.findByEmail(email);
 
         return !(employee==null);
+    }
+
+    @Override
+    public void discountToUserBalance(long id, long amount) throws InsufficientBalanceException {
+
+        Optional<Employee> employee = employeeRepository.findById(id);
+
+        if(!employee.isPresent()) throw new UserNotFoundException();
+        Employee employeeObject = employee.get();
+
+        long balance = employeeObject.getBalance();
+        if(amount > balance) throw new InsufficientBalanceException();
+
+        employeeObject.setBalance(balance-amount);
+        employeeRepository.save(employeeObject);
+
+    }
+
+    @Override
+    public void incrementToUserBalanceById(long id, long amount) throws UserNotFoundException {
+
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(!employee.isPresent()) throw new UserNotFoundException();
+
+        incrementToUserBalance(employee.get(), amount);
+
+    }
+
+    @Override
+    public void incrementToUserBalanceByEmail(String email, long amount) throws UserNotFoundException {
+
+        Employee employee = employeeRepository.findByEmail(email);
+        if(employee == null) throw new UserNotFoundException();
+
+        incrementToUserBalance(employee, amount);
+
+    }
+
+    private void incrementToUserBalance(Employee employee, long amount) throws UserNotFoundException {
+
+        if(!employee.getActive()) throw new UserNotFoundException("The user is not active");
+
+        employee.setBalance(employee.getBalance() + amount);
+        employeeRepository.save(employee);
+
+    }
+
+    @Override
+    public long getIdByEmail(String email) throws UserNotFoundException {
+
+        Employee employee = employeeRepository.findByEmail(email);
+        if(employee == null) throw new UserNotFoundException();
+
+        return employee.getId();
     }
 
     private Calendar getCalendarFromString(String string){

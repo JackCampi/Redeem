@@ -8,4 +8,6 @@ public interface WebPageNames {
     String EMPLOYEE_DASHBOARD = "employeeDashboard";
     String ERROR_PAGE = "error";
     String LOGIN = "login";
+    //TODO: write the html correct name
+    String USER_TO_USER_TRANSFER = "transfer";
 }
