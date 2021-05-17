@@ -3,7 +3,7 @@ package es.nacho.redeem.web.dto;
 public class TransferDto {
 
     String receiverIdentifier;
-    long amount;
+    Long amount;
 
     public TransferDto(String receiverIdentifier, long amount) {
         this.receiverIdentifier = receiverIdentifier;

@@ -1,3 +1,4 @@
+
 function transactionsHistoryButton(){
     unselectAll();
     document.getElementById("trans-hist-button").className = "selected";

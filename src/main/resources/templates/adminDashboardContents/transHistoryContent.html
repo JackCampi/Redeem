@@ -1,6 +1,104 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/redeemIcon.ico">
+    <title>Transferences history</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="/css/transHistoryStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
 <body>
-    <!-- Poner contenido aquí -->
-    <h1>
-        Historial de transacciones
-    </h1>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+        <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+    </div>
+
+    <hr class="solid">
+
+    <div class="sidebar-menu">
+        <div>
+            <ul>
+                <li>
+                    <a href="" class="selected"><span class="material-icons sidebar-icon selected">
+                            analytics
+                            </span> <p>Dashboard</p> </a>
+                </li>
+            </ul>
+        </div>
+        <hr class="space-menu">
+        <br><br><br>
+        <div>
+            <a th:href="@{/logout}"><span class="material-icons">
+                    power_settings_new
+                    </span> <p>Cerrar sesión</p> </a>
+        </div>
+    </div>
+</div>
+
+<div class="main-content">
+    <header>
+        <div class="menu-info">
+            <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+            </label>
+            <div class="current-page"><h2>Dashboard</h2></div>
+
+        </div>
+
+        <div class="user-info">
+            <div class="name-rol">
+                <h3 th:text="${employeeDashboardInfo.name}"></h3>
+                <small>Empleado</small>
+            </div>
+            <div><span class="material-icons">account_circle</span></div>
+        </div>
+    </header>
+    <main>
+        <div class="trans-container">
+            <h1>Historial de transacciones</h1>
+            <table class="trans-table">
+                <tbody>
+                <!--<tr th:each="transaction : ${transactionList}">-->
+                <tr>
+                    <td>
+                        <div class="row-container">
+                            <div class="user-date">
+                                <p class="name">De: Jose Luis Moreno Hernández</p>
+                                <p class="date">Fecha</p>
+                            </div>
+                            <p class="amount">5000</p>
+                        </div>
+                    </td>
+                    <!--<td th:text="${transaction.employeeFrom}"></td>
+                    <td th:text="${transaction.employeeTo}"></td>
+                    <td th:text="${transaction.amount}"></td>-->
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-container">
+                            <div class="user-date">
+                                <p class="name">De: Jose Luis Moreno Hernández</p>
+                                <p class="date">Fecha</p>
+                            </div>
+                            <p class="amount">5000</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+
+    </main>
+</div>
+
 </body>

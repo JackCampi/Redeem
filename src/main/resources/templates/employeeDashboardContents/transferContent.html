@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/redeemIcon.ico">
-    <title>Transfer</title>
+    <title>Dashboard - Admin</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="/css/transferStyle.css">
+    <link rel="stylesheet" href="dashboardStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -44,6 +44,9 @@
     </div>
 </div>
 
+
+
+
 <div class="main-content">
     <header>
         <div class="menu-info">
@@ -69,24 +72,40 @@
             <img src="transferImage.png" alt="trans-image" class="trans-image">
             <div class="subcontainer">
                 <h1>Transferencias entre usuarios</h1>
-                <form class="trans-regform">
+                <form class="trans-regform" id="doc-form" th:action="@{/transfer}"  method="post" th:object="${transfer}">
                     <div class="trans-form">
                         <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
-                        <input id="beneficiary" class="trans-input" required autofocus="autofocus" >
+                        <input id="beneficiary" class="trans-input" th:field="*{receiverIdentifier}" required autofocus="autofocus" >
                     </div>
                     <div class="trans-form">
                         <label class="trans-label" for="amount">Monto a transferir</label>
-                        <input id="amount" class="trans-input" required autofocus="autofocus">
+                        <input id="amount" class="trans-input" type="number" th:field="*{amount}" required autofocus="autofocus">
                     </div>
                     <div class="trans-form">
-                        <button type="submit" class="btn-submit"><p>Transferir dinero</p></button>
+                        <button type="button" class="btn-submit" ><p class="btn-text">Transferir dinero</p></button>
+                    </div>
+                    <div class="modal">
+                        <div class="modal-content">
+                            <h2 class="casi">¡¡¡Ya casi!!!</h2>
+                            <p class="confirm"></p>
+
+                            <div class="clearfix">
+                                <button type="button" class="cancelbtn">Cancelar</button>
+                                <input type="submit" value="Transferir" class="acceptbtn"></input>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
 
         </div>
+        <div class="error"></div>
     </main>
 </div>
+
+
+
+<script src="test.js"></script>
 
 </body>
 </html>

@@ -9,5 +9,5 @@ public interface WebPageNames {
     String ERROR_PAGE = "error";
     String LOGIN = "login";
     //TODO: write the html correct name
-    String USER_TO_USER_TRANSFER = "transfer";
+    String USER_TO_USER_TRANSFER = "transferContent";
 }
