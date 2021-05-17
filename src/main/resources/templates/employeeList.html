@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Dashboard - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeListStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text"
+                class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+            <ul>
+                <li>
+                    <a id="dash-button" th:href="@{/admin/dash}">
+                        <span class="material-icons sidebar-icon">analytics</span>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/history}" id="trans-hist-button">
+                        <span class="material-icons">history_edu</span>
+                        <p>Historial transacciones</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/admin/allocation}" id="allocate-button">
+                        <span class="material-icons">attach_money</span>
+                        <p>Consignar a empleados</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/addemp}">
+                        <span class="material-icons sidebar-icon">
+                            person_add_alt
+                        </span>
+                        <span>
+                            <p>Añadir empleado</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/members}" class="selected" id="empl-list-button">
+                        <span class="material-icons">groups</span>
+                        <p>Ver empleados</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/logout}">
+                        <span class="material-icons">power_settings_new</span>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page">
+                    <h4 id="title">Lista de empleados</h4>
+                </div>
+
+            </div>
+
+            <div class="user-info">
+                <div class="name-rol">
+                    <h4 th:text="${adminDashboardInfo.name}"></h4>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+
+            <!-- Edit modal -->
+            <div id="editModal" class="myModal">
+                <div class="modal-content edit-modal">
+                    <h3>
+                        Editar información
+                    </h3>
+                    <form th:action="@{/admin/members/edit}" method="post" id="edit-form" name="edit-form"
+                        th:object="${employee}">
+                        <div class="id-form-group">
+                            <label for="id">ID</label>
+                            <input id="id" class="id-field" value="123" th:field="*{id}" required readonly />
+                        </div>
+                        <div class="input-group">
+                            <label for="name">Nombres</label>
+                            <input class="input-field" type="text" name="name" id="name" th:field="*{name}" required
+                                maxlength="250">
+                        </div>
+                        <div class="input-group">
+                            <label for="lastName">Apellidos</label>
+                            <input class="input-field" type="text" name="lastName" id="lastName" th:field="*{lastName}"
+                                required maxlength="250">
+                        </div>
+                        <div class="input-group">
+                            <label for="email">Correo</label>
+                            <input class="input-field" type="email" name="email" id="email" th:field="*{email}" required
+                                maxlength="250">
+                            <p id="email-error"></p>
+                        </div>
+                        <div class="input-group">
+                            <label for="tel">Teléfono</label>
+                            <input class="input-field" type="number" name="tel" id="tel" th:field="*{cellphone}"
+                                required maxlength="250">
+                        </div>
+                        <div class="two-input-field">
+                            <div class="input-group">
+                                <label for="area">Área</label>
+                                <select class="input-field" name="area" id="area" th:field="*{area}">
+                                    <option th:each="area : ${areaNames}" th:text="${area}" th:value="${area}"></option>
+                                </select>
+                            </div>
+
+                            <div class="input-group">
+                                <label for="date">Fecha</label>
+                                <input class="input-field" type="date" name="date" id="date" th:field="*{birthday}"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                            <div class="edit-btn cancel-edit" onclick="return closeModal()"><span>Cancelar</span></div>
+                            <input type="submit" class="edit-btn save-edit" value="Guardar cambios">
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+            <!-- Remove modal -->
+            <div id="removeModal" class="myModal">
+                <div class="modal-content remove-modal">
+                    <h3>¡Atención!</h3>
+                    <br>
+                    <h6 class="removeMessage">¿Desea <span id="desactivar">desactivar</span> la cuenta de <span
+                            id="removeName"></span> <span id="removeLastName"></span>?</h6>
+                    <br>
+                    <h6>$<span id="removeAmount"></span> serán devueltos al presupuesto de la empresa.</h6>
+                    <h6>Se conservará el historial de transacciones de este empleado.</h6>
+                    <br><br>
+                    <form th:action="@{/admin/members/disable}" class="remove-buttons" method="post" id="remove-form" name="remove-form"
+                    th:object="${employee}">
+                        <input id="removeId" class="remove-id-field" th:field="*{id}" required readonly />
+                        <div class="remove-btn cancel-remove" onclick="return closeModal()">Cancelar</div>
+                        <input type="submit" class="remove-btn save-remove" value="Sí, desactivar">
+                    </form>
+                </div>
+            </div>
+
+            <div class="employee-list">
+
+                <h3>Empleados de <span th:value="${adminDashboardInfo.name}"></span></h3><br>
+
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead class="custom-thead">
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Apellido</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Teléfono</th>
+                                <th scope="col">Correo</th>
+                                <th scope="col">Balance</th>
+                                <th scope="col">Área</th>
+                                <th scope="col">Operación</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="employee : ${employeeList}">
+                                <th scope="row">1</th>
+                                <td><span th:text="${employee.lastName}"></span></td>
+                                <td><span th:text="${employee.name}"></span></td>
+                                <td><span th:text="${employee.cellphone}"></span></td>
+                                <td><span th:text="${employee.email}"></span></td>
+                                <td>$<span th:text="${employee.balance}"></span></td>
+                                <td><span th:text="${employee.area}"></span></td>
+                                <td class="td-center">
+                                    <button class="option edit" th:attr="onclick=|editModal('${employee}')|">
+                                        <span class="material-icons">edit</span>
+                                    </button>
+                                    <button class="option remove" th:attr="onclick=|removeModal('${employee}')|">
+                                        <span class="material-icons">person_remove</span>
+                                    </button>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeListLogic.js"></script>
+</body>
+
+</html>
