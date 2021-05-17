@@ -5,7 +5,6 @@ import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
-import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.TransferDto;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,6 @@ package es.nacho.redeem.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Entity
 @Table(name="allocation")
@@ -23,11 +22,8 @@ public class Allocation {
     private String description;
 
     @ManyToOne
-    @JoinColumns({
-            @JoinColumn(name = "area_area_id",referencedColumnName = "area_name", nullable = false),
-            @JoinColumn(name = "area_company_comp_id",referencedColumnName = "company_comp_id", nullable = false)
-    })
-    private Area area;
+    @JoinColumn(name = "adm_id", nullable = false)
+    private Employee admin;
 
     @ManyToOne
     @JoinColumn(name = "emp_id", nullable = false)
@@ -75,4 +71,21 @@ public class Allocation {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public Employee getAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Employee admin) {
+        this.admin = admin;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+    
 }

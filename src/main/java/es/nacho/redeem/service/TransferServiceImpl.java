@@ -2,7 +2,7 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.Transfer;
-import es.nacho.redeem.repository.TranferRepository;
+import es.nacho.redeem.repository.TransferRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,12 +12,12 @@ import java.time.LocalDateTime;
 public class TransferServiceImpl implements TransferService{
 
     @Autowired
-    private TranferRepository tranferRepository;
+    private TransferRepository transferRepository;
 
     @Override
     public Transfer saveTransfer(Employee employeeFrom, Employee employeeTo, long amount) {
 
-        return tranferRepository.save(new Transfer(LocalDateTime.now(), employeeFrom, employeeTo, amount));
+        return transferRepository.save(new Transfer(LocalDateTime.now(), employeeFrom, employeeTo, amount));
 
     }
 }

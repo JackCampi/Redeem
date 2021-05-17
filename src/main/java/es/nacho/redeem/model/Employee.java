@@ -49,19 +49,17 @@ public class Employee {
     })
     private Area area;
 
-//    @ManyToOne
-//    @MapsId("company_comp_id")
-//    @JoinColumn(name = "area_company_comp_id", nullable = false)
-//    private Area area_company;
-
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeFrom")
-    private Collection<Transfer> transfersFrom;
+    private Collection<Transfer> outgoingTransfers;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employeeTo")
-    private Collection<Transfer> transfersTo;
+    private Collection<Transfer> incomingTransfers;
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "admin")
+    private Collection<Allocation> outgoinAllocations;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
-    private Collection<Allocation> allocations;
+    private Collection<Allocation> incomingAllocations;
 
     public Employee(String name, String lastName, String email, String password, String cellphone, Calendar birthday, Long balance, Boolean active, String rol, Area area/*, Collection<Purchase> purchases, Collection<Transfer> transfers/*, Collection<Allocation> allocations*/) {
         super();
@@ -75,9 +73,6 @@ public class Employee {
         this.active = active;
         this.rol = rol;
         this.area = area;
-//        this.purchases = purchases;
-//        this.transfers = transfers;
-//        this.allocations = allocations;
     }
 
     public Employee() {
@@ -171,36 +166,36 @@ public class Employee {
     public void setArea(Area area) {
         this.area = area;
     }
-//    public Collection<Purchase> getPurchases() {
-//        return purchases;
-//    }
-//
-//    public void setPurchases(Collection<Purchase> purchases) {
-//        this.purchases = purchases;
-//    }
-//
 
-    public Collection<Transfer> getTransfersFrom() {
-        return transfersFrom;
+    public Collection<Transfer> getOutgoingTransfers() {
+        return outgoingTransfers;
     }
 
-    public void setTransfersFrom(Collection<Transfer> transfersFrom) {
-        this.transfersFrom = transfersFrom;
+    public void setOutgoingTransfers(Collection<Transfer> outgoingTransfers) {
+        this.outgoingTransfers = outgoingTransfers;
     }
 
-    public Collection<Transfer> getTransfersTo() {
-        return transfersTo;
+    public Collection<Transfer> getIncomingTransfers() {
+        return incomingTransfers;
     }
 
-    public void setTransfersTo(Collection<Transfer> transfersTo) {
-        this.transfersTo = transfersTo;
+    public void setIncomingTransfers(Collection<Transfer> incomingTransfers) {
+        this.incomingTransfers = incomingTransfers;
     }
 
-//    public Collection<Allocation> getAllocations() {
-//        return allocations;
-//    }
-//
-//    public void setAllocations(Collection<Allocation> allocations) {
-//        this.allocations = allocations;
-//    }
+    public Collection<Allocation> getOutgoinAllocations() {
+        return outgoinAllocations;
+    }
+
+    public void setOutgoinAllocations(Collection<Allocation> outgoinAllocations) {
+        this.outgoinAllocations = outgoinAllocations;
+    }
+
+    public Collection<Allocation> getIncomingAllocations() {
+        return incomingAllocations;
+    }
+
+    public void setIncomingAllocations(Collection<Allocation> incomingAllocations) {
+        this.incomingAllocations= incomingAllocations;
+    }
 }

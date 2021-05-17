@@ -6,7 +6,6 @@ import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
 import es.nacho.redeem.repository.AreaRepository;
-import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
@@ -27,9 +26,6 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private EmployeeRepository employeeRepository;
-
-    @Autowired
-    private CompanyRepository companyRepository;
 
     @Autowired
     private AreaRepository areaRepository;

@@ -1,10 +1,10 @@
 package es.nacho.redeem.repository;
 
-import es.nacho.redeem.model.Transfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+import es.nacho.redeem.model.Allocation;
 
 @Repository
-public interface TranferRepository extends JpaRepository<Transfer, Long> {
-
+public interface AllocationRepository extends JpaRepository<Allocation, Long> {
+    
 }

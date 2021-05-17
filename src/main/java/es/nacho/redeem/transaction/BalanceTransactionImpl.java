@@ -6,7 +6,6 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -22,15 +21,15 @@ public class BalanceTransactionImpl implements BalanceTransaction{
 
     @Override
     @Transactional(rollbackOn = {UserNotFoundException.class, InsufficientBalanceException.class})
-    public void userToUserBalanceTransaction(long activeUserId, String receiverIdentifier, long amoung) throws UserNotFoundException, InsufficientBalanceException {
+    public void userToUserBalanceTransaction(long activeUserId, String receiverIdentifier, long amount) throws UserNotFoundException, InsufficientBalanceException {
 
-        Employee employeeFrom = userService.discountToUserBalance(activeUserId, amoung);
+        Employee employeeFrom = userService.discountToUserBalance(activeUserId, amount);
 
         Employee employeeTo;
-        if(receiverIdentifier.contains("@")) employeeTo = userService.incrementToUserBalanceByEmail(receiverIdentifier, amoung);
-        else employeeTo = userService.incrementToUserBalanceById(Long.parseLong(receiverIdentifier), amoung);
+        if(receiverIdentifier.contains("@")) employeeTo = userService.incrementToUserBalanceByEmail(receiverIdentifier, amount);
+        else employeeTo = userService.incrementToUserBalanceById(Long.parseLong(receiverIdentifier), amount);
 
-        transferService.saveTransfer(employeeFrom, employeeTo, amoung);
+        transferService.saveTransfer(employeeFrom, employeeTo, amount);
 
     }
 }

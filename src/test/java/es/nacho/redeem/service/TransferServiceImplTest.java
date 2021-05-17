@@ -92,7 +92,7 @@ class TransferServiceImplTest {
         employeeRepository.delete(employee);
 
         Employee employee2 = employeeRepository.findByEmail("correosupervalidoperonoactivo@gmail.com");
-        employeeRepository.delete(employee);
+        employeeRepository.delete(employee2);
 
         Optional<Company> company = companyRepository.findById(Long.MAX_VALUE);
 

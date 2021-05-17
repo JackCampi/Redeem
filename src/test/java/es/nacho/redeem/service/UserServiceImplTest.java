@@ -26,7 +26,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -99,7 +98,7 @@ class UserServiceImplTest {
         employeeRepository.delete(employee);
 
         Employee employee2 = employeeRepository.findByEmail("correosupervalidoperonoactivo@gmail.com");
-        employeeRepository.delete(employee);
+        employeeRepository.delete(employee2);
 
         Optional<Company> company = companyRepository.findById(Long.MAX_VALUE);
 

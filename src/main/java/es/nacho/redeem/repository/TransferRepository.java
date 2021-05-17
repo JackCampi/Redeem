@@ -1,10 +1,10 @@
 package es.nacho.redeem.repository;
 
-import es.nacho.redeem.model.Company;
+import es.nacho.redeem.model.Transfer;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface CompanyRepository extends JpaRepository<Company, Long> {
+public interface TransferRepository extends JpaRepository<Transfer, Long> {
 
 }
