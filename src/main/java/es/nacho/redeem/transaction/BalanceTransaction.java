@@ -5,6 +5,6 @@ import es.nacho.redeem.exception.UserNotFoundException;
 
 public interface BalanceTransaction {
 
-    void userToUserBalanceTransaction(long activeUserId, String receiverIdentifier, long amoung) throws UserNotFoundException, InsufficientBalanceException;
+    void userToUserBalanceTransaction(Boolean isAllocation, long activeUserId, String receiverIdentifier, long amount) throws UserNotFoundException, InsufficientBalanceException;
 
 }

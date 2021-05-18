@@ -62,7 +62,7 @@ public class EmployeeController {
         long id = (long) httpSession.getAttribute("id");
 
         try {
-            balanceTransaction.userToUserBalanceTransaction(id, transferDto.getReceiverIdentifier(), transferDto.getAmount());
+            balanceTransaction.userToUserBalanceTransaction(false, id, transferDto.getReceiverIdentifier(), transferDto.getAmount());
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/emp/transfer?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){

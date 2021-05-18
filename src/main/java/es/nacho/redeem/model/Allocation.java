@@ -16,7 +16,7 @@ public class Allocation {
     private LocalDateTime datetime;
 
     @Column(name="al_amount", nullable = false)
-    private Integer amount;
+    private Long amount;
 
     @Column(name="al_description", nullable = false, columnDefinition = "TEXt")
     private String description;
@@ -29,11 +29,15 @@ public class Allocation {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employee;
 
-    public Allocation(LocalDateTime datetime, Integer amount, String description) {
+    
+
+    public Allocation(LocalDateTime datetime, Long amount, String description, Employee admin, Employee employee) {
         super();
         this.datetime = datetime;
         this.amount = amount;
         this.description = description;
+        this.admin = admin;
+        this.employee = employee;
     }
 
     public Allocation() {
@@ -56,11 +60,11 @@ public class Allocation {
         this.datetime = datetime;
     }
 
-    public Integer getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
-    public void setAmount(Integer amount) {
+    public void setAmount(Long amount) {
         this.amount = amount;
     }
 

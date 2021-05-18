@@ -15,7 +15,7 @@ public class Transfer {
     @Column(name = "tr_datetime", nullable = false)
     private LocalDateTime datetime;
 
-    @Column(name="amount", nullable = false)
+    @Column(name="tr_amount", nullable = false)
     private Long amount;
 
     @ManyToOne

@@ -10,4 +10,5 @@ public interface WebPageNames {
     String LOGIN = "login";
     //TODO: write the html correct name
     String USER_TO_USER_TRANSFER = "transferContent";
+    String ADMIN_ALLOCATION = "allocation";
 }

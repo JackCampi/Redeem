@@ -33,7 +33,7 @@ class BalanceTransactionImplTest {
         Employee employee1 = employeeRepository.findByEmail("a@gmail.com");
 
         try{
-            balanceTransaction.userToUserBalanceTransaction(employee.getId(), "987676766", 2000L);
+            balanceTransaction.userToUserBalanceTransaction(false, employee.getId(), "987676766", 2000L);
         }catch (Exception e){
             System.out.println("hola");
             System.out.println("hola");
