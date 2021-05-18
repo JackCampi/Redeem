@@ -3,10 +3,12 @@ package es.nacho.redeem.controller;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.service.CompanyService;
+import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.transfer.TransferDto;
+import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/emp")
@@ -30,6 +33,9 @@ public class EmployeeController {
 
     @Autowired
     private BalanceTransaction balanceTransaction;
+
+    @Autowired
+    private TransferService transferService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -69,6 +75,17 @@ public class EmployeeController {
             return "redirect:/emp/transfer?insufficient";
         }
         return WebPageNames.USER_TO_USER_TRANSFER;
+    }
+
+    @GetMapping(value = "/history")
+    public String getHistoryView(HttpSession httpSession, Model model){
+
+        long id = (long) httpSession.getAttribute("id");
+
+        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
+        model.addAttribute("transferMessages", transferMessages);
+
+        return WebPageNames.HISTORY;
     }
 
     @ModelAttribute("transfer")

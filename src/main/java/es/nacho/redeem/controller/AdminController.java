@@ -2,12 +2,15 @@ package es.nacho.redeem.controller;
 
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.CompanyService;
+import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -33,6 +36,9 @@ public class AdminController {
 
     @Autowired
     private BalanceTransaction balanceTransaction;
+
+    @Autowired
+    private TransferService transferService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -113,6 +119,47 @@ public class AdminController {
             return "redirect:/admin/allocation?insufficient";
         }
         return WebPageNames.ADMIN_ALLOCATION;
+    }
+
+    @GetMapping(value = "/history")
+    public String getHistoryView(HttpSession httpSession, Model model){
+
+        long id = (long) httpSession.getAttribute("id");
+
+        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
+        model.addAttribute("transferMessages", transferMessages);
+
+        return WebPageNames.HISTORY;
+    }
+
+    @GetMapping(value = "/members")
+    public  String getMembersView(HttpSession session, Model model){
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        long nit = (long)  session.getAttribute("nit");
+
+        AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
+        Collection<Employee> employees = new ArrayList<>();
+        Collection<String> areaNames = new ArrayList<>();
+
+
+        try{
+            adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
+            adminDashboardInfoDto = companyService.fillAdminDashboardInfoDto(nit, adminDashboardInfoDto);
+            employees = companyService.getEmployees(nit);
+            areaNames = companyService.getAreasNames(nit);
+
+        }catch (Exception e){
+            e.printStackTrace();
+            return WebPageNames.ERROR_PAGE;
+        }
+
+        model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
+        model.addAttribute("employeeList", employees);
+        model.addAttribute("areaNames", areaNames);
+
+        return WebPageNames.MEMBERS;
+
     }
 
     @ModelAttribute("allocation")
