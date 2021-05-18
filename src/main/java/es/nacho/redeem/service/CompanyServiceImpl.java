@@ -135,7 +135,7 @@ public class CompanyServiceImpl implements CompanyService{
         areas.forEach(area -> {
             Collection<Employee> employeesInArea = employeeRepository.findAllByArea(area);
             employeesInArea.forEach(employee -> {
-                if(!employee.getActive()){
+                if(employee.getActive()){
                     employees.add(new MemberDto(
                             employee.getId(),
                             employee.getName(),
@@ -169,9 +169,7 @@ public class CompanyServiceImpl implements CompanyService{
 
     private String getStringFromCalendar(Calendar calendar){
 
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-
-        return formatter.format(calendar);
+        return calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
 
     }
 

@@ -9,9 +9,9 @@ public class MemberDto {
     private String cellphone;
     private String area;
     private String birthday;
-    private long amount;
+    private long balance;
 
-    public MemberDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday, long amount) {
+    public MemberDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday, long balance) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -19,7 +19,7 @@ public class MemberDto {
         this.cellphone = cellphone;
         this.area = area;
         this.birthday = birthday;
-        this.amount = amount;
+        this.balance = balance;
     }
 
     public MemberDto() {
@@ -81,11 +81,11 @@ public class MemberDto {
         this.birthday = birthday;
     }
 
-    public long getAmount() {
-        return amount;
+    public long getBalance() {
+        return balance;
     }
 
-    public void setAmount(long amount) {
-        this.amount = amount;
+    public void setBalance(long balance) {
+        this.balance = balance;
     }
 }

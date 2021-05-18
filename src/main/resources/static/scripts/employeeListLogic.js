@@ -45,7 +45,6 @@ function removeModal(id, name, lastName, balance) {
 function closeModal(){
   editModalElement.style.display = "none";
   removeModalElement.style.display = "none";
-  document.getElementById("testxd").innerText = "jlaksdj";
   return false;
 }
 

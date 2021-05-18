@@ -55,7 +55,7 @@ public class MembersController {
 
     }
 
-    @PostMapping(value = "/disable")
+    @GetMapping(value = "/disable")
     public String disableUser(@RequestParam long id){
 
         companyService.disableEmployee(id);

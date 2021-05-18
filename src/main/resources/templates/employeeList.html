@@ -119,7 +119,7 @@
                         Editar información
                     </h3>
                     <form th:action="@{/admin/members/edit}" method="post" id="edit-form" name="edit-form"
-                        th:object="${employeeRow}">
+                        th:object="${member}">
                         <div class="id-form-group">
                             <label for="id">ID</label>
                             <input id="id" class="id-field" value="123" th:field="*{id}" required readonly />
@@ -190,7 +190,7 @@
 
             <div class="employee-list">
 
-                <h3>Empleados de <span th:value="${adminDashboardInfo.companyName}"></span></h3><br>
+                <h3>Empleados de <span th:text="${adminDashboardInfo.companyName}"></span></h3><br>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -214,7 +214,7 @@
                                 <td><span th:text="${employeeRow.cellphone}"></span></td>
                                 <td><span th:text="${employeeRow.email}"></span></td>
                                 <td>$<span th:text="${employeeRow.balance}"></span></td>
-                                <td><span th:text="${employeeRow.area.getId().getName()}"></span></td>
+                                <td><span th:text="${employeeRow.area}"></span></td>
                                 <td class="td-center">
                                     <button class="option edit"
                                             th:data-emp-id="${employeeRow.id}"
@@ -222,7 +222,7 @@
                                             th:data-emp-lastName="${employeeRow.lastName}"
                                             th:data-emp-email="${employeeRow.email}"
                                             th:data-emp-tel="${employeeRow.cellphone}"
-                                            th:data-emp-area="${employeeRow.area.getId().getName()}"
+                                            th:data-emp-area="${employeeRow.area}"
                                             th:data-emp-birthday="${employeeRow.birthday}"
                                             th:onclick="editModal(this.getAttribute('data-emp-id'),
                                                                   this.getAttribute('data-emp-name'),
