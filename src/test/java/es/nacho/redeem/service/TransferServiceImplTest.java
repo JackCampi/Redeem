@@ -7,6 +7,8 @@ import es.nacho.redeem.model.Transfer;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.repository.TransferRepository;
+import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -19,9 +21,8 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 
-import java.util.Collection;
-import java.util.GregorianCalendar;
-import java.util.Optional;
+import java.time.LocalDateTime;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -37,6 +38,9 @@ class TransferServiceImplTest {
 
     @Autowired
     CompanyRepository companyRepository;
+
+    @Autowired
+    TransferRepository transferRepository;
 
     @Autowired
     AreaRepository areaRepository;
@@ -58,7 +62,7 @@ class TransferServiceImplTest {
         Area area = new Area("gerencia", company);
         areaRepository.save(area);
 
-        employeeRepository.save(new Employee(
+        Employee employee = employeeRepository.save(new Employee(
                 "brayan",
                 "quintero",
                 "correosupervalido@gmail.com",
@@ -71,8 +75,8 @@ class TransferServiceImplTest {
                 area
         ));
 
-        employeeRepository.save(new Employee(
-                "brayan",
+        Employee employee1 = employeeRepository.save(new Employee(
+                "sebastian",
                 "quintero",
                 "correosupervalido@gmail.com2",
                 "hola",
@@ -84,6 +88,10 @@ class TransferServiceImplTest {
                 area
         ));
 
+        transferRepository.save(new Transfer(LocalDateTime.of(2010,05,16,22,10),employee, employee1,2000L));
+        transferRepository.save(new Transfer(LocalDateTime.of(2019,05,16,22,10),employee1, employee,1000L));
+        transferRepository.save(new Transfer(LocalDateTime.of(2020,05,16,22,10),employee, employee1,5000L));
+
     }
 
     @AfterAll
@@ -91,7 +99,7 @@ class TransferServiceImplTest {
         Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
         employeeRepository.delete(employee);
 
-        Employee employee2 = employeeRepository.findByEmail("correosupervalidoperonoactivo@gmail.com");
+        Employee employee2 = employeeRepository.findByEmail("correosupervalido@gmail.com2");
         employeeRepository.delete(employee2);
 
         Optional<Company> company = companyRepository.findById(Long.MAX_VALUE);
@@ -118,5 +126,25 @@ class TransferServiceImplTest {
         assertEquals(transfer.getEmployeeTo(), employeeTo);
 
     }
+
+    @Test
+    @Rollback
+    void getTransferMessagesTest(){
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+        Employee employee2 = employeeRepository.findByEmail("correosupervalido@gmail.com2");
+        ArrayList<TransferHistoryMessageDto> collection = (ArrayList<TransferHistoryMessageDto>) transferService.getTransferMessages(employee.getId());
+
+        assertEquals(collection.size(), 3);
+
+        ArrayList<TransferHistoryMessageDto> expectedCollection = new ArrayList<>();
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2020,05,16,22,10), 5000L, false));
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2019,05,16,22,10), 1000L, true));
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2010,05,16,22,10), 2000L, false));
+
+        assertIterableEquals(expectedCollection, collection);
+
+    }
+
 
 }

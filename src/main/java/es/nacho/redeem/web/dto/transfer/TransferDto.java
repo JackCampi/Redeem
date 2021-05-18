@@ -1,4 +1,4 @@
-package es.nacho.redeem.web.dto;
+package es.nacho.redeem.web.dto.transfer;
 
 public class TransferDto {
 

@@ -6,7 +6,7 @@ import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
-import es.nacho.redeem.web.dto.TransferDto;
+import es.nacho.redeem.web.dto.transfer.TransferDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
