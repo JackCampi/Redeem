@@ -132,38 +132,6 @@ public class AdminController {
         return WebPageNames.HISTORY;
     }
 
-    @GetMapping(value = "/members")
-    public  String getMembersView(HttpSession session, Model model){
-
-        String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        long nit = (long)  session.getAttribute("nit");
-
-        AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
-        Collection<Employee> employees = new ArrayList<>();
-        Collection<String> areaNames = new ArrayList<>();
-
-
-        try{
-            adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
-            adminDashboardInfoDto = companyService.fillAdminDashboardInfoDto(nit, adminDashboardInfoDto);
-            employees = companyService.getEmployees(nit);
-            areaNames = companyService.getAreasNames(nit);
-
-        }catch (Exception e){
-            e.printStackTrace();
-            return WebPageNames.ERROR_PAGE;
-        }
-
-        model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
-        model.addAttribute("employeeList", employees);
-        model.addAttribute("areaNames", areaNames);
-
-        return WebPageNames.MEMBERS;
-
-    }
-
-
-
     @ModelAttribute("allocation")
     public AllocationDto allocationDto(){
         return new AllocationDto();
