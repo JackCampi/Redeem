@@ -6,6 +6,7 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 
 import java.util.Collection;
 
@@ -22,9 +23,9 @@ public interface CompanyService {
 
     EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(long nit, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception;
 
-    Collection<Employee> getEmployees(Long companyNIT) throws Exception;
+    Collection<MemberDto> getEmployees(Long companyNIT) throws Exception;
 
-    void disableEmployee(String mail);
+    void disableEmployee(long id);
 
     void enableEmployee(String mail);
 

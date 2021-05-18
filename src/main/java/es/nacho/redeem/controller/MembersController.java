@@ -4,7 +4,7 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
-import es.nacho.redeem.web.dto.employee.EditedEmployeeInfoDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,7 +32,7 @@ public class MembersController {
         long nit = (long)  session.getAttribute("nit");
 
         AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
-        Collection<Employee> employees = new ArrayList<>();
+        Collection<MemberDto> employees = new ArrayList<>();
         Collection<String> areaNames = new ArrayList<>();
 
 
@@ -56,30 +56,25 @@ public class MembersController {
     }
 
     @PostMapping(value = "/disable")
-    public String disableUser(@RequestParam String email){
+    public String disableUser(@RequestParam long id){
 
-        companyService.disableEmployee(email);
+        companyService.disableEmployee(id);
 
         return "redirect:/admin/members";
     }
 
     @PostMapping(value = "/edit")
-    public String editUser(@ModelAttribute("editedEmployeeInfo") EditedEmployeeInfoDto editedEmployeeInfoDto, HttpSession session){
+    public String editUser(@ModelAttribute("member") MemberDto memberDto, HttpSession session){
 
         long nit = (long) session.getAttribute("nit");
-        userService.editUserInformation(nit, editedEmployeeInfoDto);
+        userService.editUserInformation(nit, memberDto);
         return "redirect:/admin/members";
 
     }
 
-    @ModelAttribute("editedEmployeeInfo")
-    public EditedEmployeeInfoDto editedEmployeeInfoDto(){
-        return new EditedEmployeeInfoDto();
-    }
-
-    @ModelAttribute("employeeRow")
-    public Employee getEmployee(){
-        return new Employee();
+    @ModelAttribute("member")
+    public MemberDto editedEmployeeInfoDto(){
+        return new MemberDto();
     }
 
 }

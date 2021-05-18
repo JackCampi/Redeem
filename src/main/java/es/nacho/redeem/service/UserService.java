@@ -8,7 +8,7 @@ import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
-import es.nacho.redeem.web.dto.employee.EditedEmployeeInfoDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -31,6 +31,6 @@ public interface UserService extends UserDetailsService {
 
     AuthDto fillAuthDto(String email);
 
-    void editUserInformation(long nit, EditedEmployeeInfoDto editedEmployeeInfoDto);
+    void editUserInformation(long nit, MemberDto memberDto);
 
 }

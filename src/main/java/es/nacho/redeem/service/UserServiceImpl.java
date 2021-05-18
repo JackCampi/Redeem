@@ -12,7 +12,7 @@ import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
-import es.nacho.redeem.web.dto.employee.EditedEmployeeInfoDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -202,19 +202,19 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void editUserInformation(long nit, EditedEmployeeInfoDto editedEmployeeInfoDto) {
+    public void editUserInformation(long nit, MemberDto memberDto) {
 
-        Optional<Employee> employee = employeeRepository.findById(editedEmployeeInfoDto.getId());
+        Optional<Employee> employee = employeeRepository.findById(memberDto.getId());
         if(!employee.isPresent()) throw new UserNotFoundException();
 
         Employee employeeObject = employee.get();
-        employeeObject.setEmail(editedEmployeeInfoDto.getEmail());
-        employeeObject.setName(editedEmployeeInfoDto.getName());
-        employeeObject.setLastName(editedEmployeeInfoDto.getLastName());
-        employeeObject.setCellphone(editedEmployeeInfoDto.getCellphone());
-        employeeObject.setBirthday(getCalendarFromString(editedEmployeeInfoDto.getBirthday()));
+        employeeObject.setEmail(memberDto.getEmail());
+        employeeObject.setName(memberDto.getName());
+        employeeObject.setLastName(memberDto.getLastName());
+        employeeObject.setCellphone(memberDto.getCellphone());
+        employeeObject.setBirthday(getCalendarFromString(memberDto.getBirthday()));
 
-        AreaKey key = new AreaKey(areaService.lowercaseAreaName(editedEmployeeInfoDto.getArea()), nit);
+        AreaKey key = new AreaKey(areaService.lowercaseAreaName(memberDto.getArea()), nit);
         Optional<Area> area = areaRepository.findById(key);
 
         if( !area.isPresent()) throw new RuntimeException("Area not found");

@@ -125,7 +125,7 @@ class CompanyServiceImplTest {
         Arrays.stream(mails).forEach(mail -> {
             Employee employee = employeeRepository.findByEmail(mail);
             assertTrue(employee.getActive());
-            companyService.disableEmployee(mail);
+            companyService.disableEmployee(employee.getId());
             assertFalse(employee.getActive());
         });
     }
@@ -136,7 +136,7 @@ class CompanyServiceImplTest {
         String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
         Arrays.stream(mails).forEach(mail -> {
             Employee employee = employeeRepository.findByEmail(mail);
-            companyService.disableEmployee(mail);
+            companyService.disableEmployee(employee.getId());
             assertFalse(employee.getActive());
             companyService.enableEmployee(mail);
             assertTrue(employee.getActive());

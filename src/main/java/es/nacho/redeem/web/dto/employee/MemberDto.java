@@ -1,6 +1,6 @@
 package es.nacho.redeem.web.dto.employee;
 
-public class EditedEmployeeInfoDto {
+public class MemberDto {
 
     private long id;
     private String name;
@@ -9,8 +9,9 @@ public class EditedEmployeeInfoDto {
     private String cellphone;
     private String area;
     private String birthday;
+    private long amount;
 
-    public EditedEmployeeInfoDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday) {
+    public MemberDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday, long amount) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
@@ -18,9 +19,10 @@ public class EditedEmployeeInfoDto {
         this.cellphone = cellphone;
         this.area = area;
         this.birthday = birthday;
+        this.amount = amount;
     }
 
-    public EditedEmployeeInfoDto() {
+    public MemberDto() {
     }
 
     public long getId() {
@@ -77,5 +79,13 @@ public class EditedEmployeeInfoDto {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    public long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(long amount) {
+        this.amount = amount;
     }
 }
