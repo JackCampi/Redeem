@@ -15,7 +15,7 @@ public class Transfer {
     @Column(name = "tr_datetime", nullable = false)
     private LocalDateTime datetime;
 
-    @Column(name="amount", nullable = false)
+    @Column(name="tr_amount", nullable = false)
     private Long amount;
 
     @ManyToOne
@@ -26,11 +26,12 @@ public class Transfer {
     @JoinColumn(name = "emp_to_id", nullable = false)
     private Employee employeeTo;
 
-    public Transfer(LocalDateTime datetime/*, Employee employeeFrom, Employee employeeTo*/) {
+    public Transfer(LocalDateTime datetime, Employee employeeFrom, Employee employeeTo, long amount) {
         super();
         this.datetime = datetime;
-//        this.employeeFrom = employeeFrom;
-//        this.employeeTo = employeeTo;
+        this.employeeFrom = employeeFrom;
+        this.employeeTo = employeeTo;
+        this.amount = amount;
     }
 
     public Transfer() {
@@ -66,5 +67,13 @@ public class Transfer {
 
     public void setEmployeeTo(Employee employeeTo) {
         this.employeeTo = employeeTo;
+    }
+
+    public Long getAmount() {
+        return amount;
+    }
+
+    public void setAmount(Long amount) {
+        this.amount = amount;
     }
 }

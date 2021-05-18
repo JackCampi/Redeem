@@ -1,6 +1,7 @@
 package es.nacho.redeem.config;
 
 import es.nacho.redeem.service.CompanyService;
+import es.nacho.redeem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -22,6 +23,9 @@ public class AuthSuccessHandlerConfig implements AuthenticationSuccessHandler {
     @Autowired
     private CompanyService companyService;
 
+    @Autowired
+    private UserService userService;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Authentication authentication) throws IOException, ServletException {
 
@@ -32,15 +36,20 @@ public class AuthSuccessHandlerConfig implements AuthenticationSuccessHandler {
             User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
             email = user.getUsername();
         }
+
+        long id;
         long nit;
         try{
             nit = companyService.getCompanyNitByUser(email);
+            id = userService.getIdByEmail(email);
         }catch (Exception e){
             e.printStackTrace();
             nit = 0L;
+            id = 0L;
         }
 
         httpServletRequest.getSession().setAttribute("nit",  nit);
+        httpServletRequest.getSession().setAttribute("id", id);
 
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if(roles.contains("administrador")) httpServletResponse.sendRedirect("/admin");

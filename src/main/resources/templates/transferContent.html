@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/redeemIcon.ico">
+    <title>Dashboard - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="dashboardStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+        <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+    </div>
+
+    <hr class="solid">
+
+    <div class="sidebar-menu">
+        <div>
+            <ul>
+                <li>
+                    <a href="" class="selected"><span class="material-icons sidebar-icon selected">
+                            analytics
+                            </span> <p>Dashboard</p> </a>
+                </li>
+            </ul>
+        </div>
+        <hr class="space-menu">
+        <br><br><br>
+        <div>
+            <a th:href="@{/logout}"><span class="material-icons">
+                    power_settings_new
+                    </span> <p>Cerrar sesión</p> </a>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="main-content">
+    <header>
+        <div class="menu-info">
+            <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+            </label>
+            <div class="current-page"><h2>Dashboard</h2></div>
+
+        </div>
+
+        <div class="user-info">
+            <div class="name-rol">
+                <h3 th:text="${employeeDashboardInfo.name}"></h3>
+                <small>Empleado</small>
+            </div>
+            <div><span class="material-icons">account_circle</span></div>
+        </div>
+    </header>
+    <main>
+        <div class="container">
+            <img src="transferImage.png" alt="trans-image" class="trans-image">
+            <div class="subcontainer">
+                <h1>Transferencias entre usuarios</h1>
+                <form class="trans-regform" id="doc-form" th:action="@{/transfer}"  method="post" th:object="${transfer}">
+                    <div class="trans-form">
+                        <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
+                        <input id="beneficiary" class="trans-input" th:field="*{receiverIdentifier}" required autofocus="autofocus" >
+                    </div>
+                    <div class="trans-form">
+                        <label class="trans-label" for="amount">Monto a transferir</label>
+                        <input id="amount" class="trans-input" type="number" th:field="*{amount}" required autofocus="autofocus">
+                    </div>
+                    <div class="trans-form">
+                        <button type="button" class="btn-submit" ><p class="btn-text">Transferir dinero</p></button>
+                    </div>
+                    <div class="modal">
+                        <div class="modal-content">
+                            <h2 class="casi">¡¡¡Ya casi!!!</h2>
+                            <p class="confirm"></p>
+
+                            <div class="clearfix">
+                                <button type="button" class="cancelbtn">Cancelar</button>
+                                <input type="submit" value="Transferir" class="acceptbtn"></input>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="error"></div>
+    </main>
+</div>
+
+
+
+<script src="test.js"></script>
+
+</body>
+</html>

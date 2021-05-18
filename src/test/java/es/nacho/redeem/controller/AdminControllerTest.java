@@ -6,7 +6,6 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
-import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -19,13 +18,10 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.HttpSessionContext;
 import javax.transaction.Transactional;
 
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Optional;
 

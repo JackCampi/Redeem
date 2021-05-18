@@ -1,5 +1,7 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
@@ -18,5 +20,13 @@ public interface UserService extends UserDetailsService {
     EmployeeDashboardInfoDto fillEmployeeDashboardInfoDto(String email, EmployeeDashboardInfoDto employeeDashboardInfoDto) throws Exception;
 
     Boolean checkIfEmailExists(String email);
+
+    Employee discountToUserBalance(long id, long amount) throws InsufficientBalanceException;
+
+    Employee incrementToUserBalanceById(long id, long amount) throws UserNotFoundException;
+
+    Employee incrementToUserBalanceByEmail(String email , long amount) throws UserNotFoundException;
+
+    long getIdByEmail(String email) throws UserNotFoundException;
 
 }

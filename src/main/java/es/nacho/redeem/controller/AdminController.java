@@ -1,14 +1,15 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
+import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,9 @@ public class AdminController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private BalanceTransaction balanceTransaction;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -91,6 +95,29 @@ public class AdminController {
         }catch (Exception e){
             return WebPageNames.ERROR_PAGE;
         }
+    }
+
+    @GetMapping(value = "/allocation")
+    public String getAllocationView(){return "allocation";}
+
+    @PostMapping(value = "/allocation")
+    public String processAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
+
+        long id = (long) httpSession.getAttribute("id");
+
+        try {
+            balanceTransaction.userToUserBalanceTransaction(true, id, allocationDto.getEmployee(), allocationDto.getAmount());
+        }catch (UserNotFoundException userNotFoundException){
+            return "redirect:/adm/allocation?userNotFound";
+        }catch (InsufficientBalanceException insufficientBalanceException){
+            return "redirect:/admin/allocation?insufficient";
+        }
+        return WebPageNames.ADMIN_ALLOCATION;
+    }
+
+    @ModelAttribute("allocation")
+    public AllocationDto allocationDto(){
+        return new AllocationDto();
     }
 
     @ModelAttribute("employee")

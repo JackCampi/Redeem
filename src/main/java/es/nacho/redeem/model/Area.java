@@ -21,9 +21,6 @@ public class Area {
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
     private Collection<Employee> employees;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "area")
-    private Collection<Allocation> allocations;
-
     public Area(String name, Company company) {
         super();
         this.id = new AreaKey(name, company.getId());
@@ -49,19 +46,12 @@ public class Area {
         this.company = companyId;
     }
 
-    //    public Collection<Employee> getEmployees() {
-//        return employees;
-//    }
-//
-//    public void setEmployees(Collection<Employee> employees) {
-//        this.employees = employees;
-//    }
-//
-//    public Collection<Allocation> getAllocations() {
-//        return allocations;
-//    }
-//
-//    public void setAllocations(Collection<Allocation> allocations) {
-//        this.allocations = allocations;
-//    }
+    public Collection<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Collection<Employee> employees) {
+        this.employees = employees;
+    }
+
 }

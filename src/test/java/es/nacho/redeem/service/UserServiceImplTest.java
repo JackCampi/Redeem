@@ -1,5 +1,7 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Employee;
@@ -24,7 +26,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.transaction.Transactional;
 
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -53,7 +54,7 @@ class UserServiceImplTest {
     void before(){
 
         Company company = new Company(
-                120L,
+                Long.MAX_VALUE,
                 "gulugulu",
                 10000000L
         );
@@ -70,11 +71,25 @@ class UserServiceImplTest {
                 "hola",
                 "323323232323",
                 new GregorianCalendar(2002,02,02),
-                0L,
+                50000L,
                 true,
                 "administrador",
                 area
         ));
+
+        employeeRepository.save(new Employee(
+                "brayan",
+                "quintero",
+                "correosupervalidoperonoactivo@gmail.com",
+                "hola",
+                "323323232323",
+                new GregorianCalendar(2002,02,02),
+                50000L,
+                false,
+                "administrador",
+                area
+        ));
+
     }
 
     @AfterAll
@@ -82,7 +97,10 @@ class UserServiceImplTest {
         Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
         employeeRepository.delete(employee);
 
-        Optional<Company> company = companyRepository.findById(120L);
+        Employee employee2 = employeeRepository.findByEmail("correosupervalidoperonoactivo@gmail.com");
+        employeeRepository.delete(employee2);
+
+        Optional<Company> company = companyRepository.findById(Long.MAX_VALUE);
 
         Collection<Area> area = areaRepository.findByCompany(company.get());
 
@@ -117,7 +135,7 @@ class UserServiceImplTest {
     @Rollback
     void registerEmployeeTest1() throws Exception {
 
-        Long nit = 12L;
+        Long nit = Long.MAX_VALUE;
         EmployeeRegistrationDto employeeRegistrationDto = new EmployeeRegistrationDto("Santiago", "Sanchez", "nuevo@unal.edu.co", "hola", "3232332234", "12-12-2333", "gerencia", "hola");
 
         Employee employee = userService.registerEmployee(employeeRegistrationDto, nit);
@@ -129,7 +147,7 @@ class UserServiceImplTest {
     @Rollback
     void registerEmployeeTest2() {
 
-        Long nit = 12L;
+        Long nit = Long.MAX_VALUE;
         EmployeeRegistrationDto employeeRegistrationDto = new EmployeeRegistrationDto("Santiago", "Sanchez", "nuevo@unal.edu.co", "hola", "3232332234", "12-12-2333", "video", "hola");
 
         assertThrows(Exception.class, () -> userService.registerEmployee(employeeRegistrationDto, nit));
@@ -168,7 +186,7 @@ class UserServiceImplTest {
         employeeDashboardInfoDto = userService.fillEmployeeDashboardInfoDto(email, employeeDashboardInfoDto);
 
         assertEquals("brayan", employeeDashboardInfoDto.getName());
-        assertEquals(0L, employeeDashboardInfoDto.getBalance());
+        assertEquals(50000L, employeeDashboardInfoDto.getBalance());
 
     }
 
@@ -180,6 +198,86 @@ class UserServiceImplTest {
         EmployeeDashboardInfoDto employeeDashboardInfoDto = new EmployeeDashboardInfoDto();
 
         assertThrows(Exception.class, () -> userService.fillEmployeeDashboardInfoDto(email, employeeDashboardInfoDto));
+
+    }
+    @Test
+    @Rollback
+    void discountToUserBalanceTest1() throws InsufficientBalanceException {
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+        userService.discountToUserBalance(employee.getId(), 30000L);
+        assertEquals(employee.getBalance(), 20000L);
+
+    }
+    @Test
+    @Rollback
+    void discountToUserBalanceTest2() {
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+
+        assertThrows(InsufficientBalanceException.class, () -> userService.discountToUserBalance(employee.getId(), Long.MAX_VALUE));
+
+    }
+
+    @Test
+    @Rollback
+    void discountToUserBalanceTest3() {
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+
+        assertThrows(UserNotFoundException.class, () -> userService.discountToUserBalance(Long.MAX_VALUE, Long.MAX_VALUE));
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByIdTest1(){
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+
+        userService.incrementToUserBalanceById(employee.getId(), 20000L);
+        assertEquals(employee.getBalance(), 70000L);
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByIdTest2(){
+        assertThrows(UserNotFoundException.class, () -> userService.incrementToUserBalanceById(Long.MAX_VALUE, 20000L));
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByIdTest3(){
+        Employee employee = employeeRepository.findByEmail("correosupervalidoperonoactivo@gmail.com");
+        assertThrows(UserNotFoundException.class, () -> userService.incrementToUserBalanceById(employee.getId(), 20000L));
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByEmailTest1(){
+
+        Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
+
+        userService.incrementToUserBalanceByEmail("correosupervalido@gmail.com", 20000L);
+        assertEquals(employee.getBalance(), 70000L);
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByEmailTest2(){
+        assertThrows(UserNotFoundException.class, () -> userService.incrementToUserBalanceByEmail("noexiste@unal.edu.co", 20000L));
+
+    }
+
+    @Test
+    @Rollback
+    void incrementToUserBalanceByEmailTest3(){
+
+        assertThrows(UserNotFoundException.class, () -> userService.incrementToUserBalanceByEmail("correosupervalidoperonoactivo@gmail.com", 20000L));
 
     }
 

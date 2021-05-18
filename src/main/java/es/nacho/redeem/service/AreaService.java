@@ -14,5 +14,4 @@ public interface AreaService {
 
     String lowercaseAreaName(String areaName);
 
-
 }

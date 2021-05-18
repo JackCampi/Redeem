@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/redeemIcon.ico">
-    <title>Transfer</title>
+    <title>Transferences history</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="/css/transferStyle.css">
+    <link rel="stylesheet" href="/css/transHistoryStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -65,28 +65,40 @@
         </div>
     </header>
     <main>
-        <div class="container">
-            <img src="transferImage.png" alt="trans-image" class="trans-image">
-            <div class="subcontainer">
-                <h1>Transferencias entre usuarios</h1>
-                <form class="trans-regform">
-                    <div class="trans-form">
-                        <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
-                        <input id="beneficiary" class="trans-input" required autofocus="autofocus" >
-                    </div>
-                    <div class="trans-form">
-                        <label class="trans-label" for="amount">Monto a transferir</label>
-                        <input id="amount" class="trans-input" required autofocus="autofocus">
-                    </div>
-                    <div class="trans-form">
-                        <button type="submit" class="btn-submit"><p>Transferir dinero</p></button>
-                    </div>
-                </form>
-            </div>
+        <div class="trans-container">
+            <h1>Historial de transacciones</h1>
+            <table class="trans-table">
+                <tbody>
+                <!--<tr th:each="transaction : ${transactionList}">-->
+                <tr>
+                    <td>
+                        <div class="row-container">
+                            <div class="user-date">
+                                <p class="name">De: Jose Luis Moreno Hernández</p>
+                                <p class="date">Fecha</p>
+                            </div>
+                            <p class="amount">5000</p>
+                        </div>
+                    </td>
+                    <!--<td th:text="${transaction.employeeFrom}"></td>
+                    <td th:text="${transaction.employeeTo}"></td>
+                    <td th:text="${transaction.amount}"></td>-->
+                </tr>
+                <tr>
+                    <td>
+                        <div class="row-container">
+                            <div class="user-date">
+                                <p class="name">De: Jose Luis Moreno Hernández</p>
+                                <p class="date">Fecha</p>
+                            </div>
+                            <p class="amount">5000</p>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
 
-        </div>
     </main>
 </div>
 
 </body>
-</html>

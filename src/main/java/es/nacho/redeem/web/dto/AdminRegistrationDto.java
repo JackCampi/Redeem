@@ -1,7 +1,5 @@
 package es.nacho.redeem.web.dto;
 
-import java.util.Calendar;
-
 public class AdminRegistrationDto {
 
     private String name;

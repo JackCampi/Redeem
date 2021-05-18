@@ -37,6 +37,9 @@ h3 {
     margin: 0 25%;
     padding: .5rem 1rem;
     border: 1px solid rgba(255, 255, 255, 0.705);
+    color: white;
+    font-family: 'Nunito Sans', sans-serif;
+    text-decoration: none;
 }
 
 .button:hover{
@@ -44,8 +47,3 @@ h3 {
     margin: 0 24%;
 }
 
-a {
-    color: white;
-    font-family: 'Nunito Sans', sans-serif;
-    text-decoration: none;
-}

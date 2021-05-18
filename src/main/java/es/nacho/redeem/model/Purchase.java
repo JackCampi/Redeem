@@ -3,7 +3,6 @@ package es.nacho.redeem.model;
 import javax.persistence.*;
 import java.util.Calendar;
 import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Table(name = "purchase")
