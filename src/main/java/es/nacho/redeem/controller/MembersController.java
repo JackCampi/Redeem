@@ -4,6 +4,7 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
+import es.nacho.redeem.web.dto.employee.EditedEmployeeInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -55,15 +56,29 @@ public class MembersController {
     }
 
     @PostMapping(value = "/disable")
-    private String disableUser(@RequestParam String email){
+    public String disableUser(@RequestParam String email){
 
         companyService.disableEmployee(email);
 
         return "redirect:/admin/members";
     }
 
+    @PostMapping(value = "/edit")
+    public String editUser(@ModelAttribute("editedEmployeeInfo") EditedEmployeeInfoDto editedEmployeeInfoDto, HttpSession session){
+
+        long nit = (long) session.getAttribute("nit");
+        userService.editUserInformation(nit, editedEmployeeInfoDto);
+        return "redirect:/admin/members";
+
+    }
+
+    @ModelAttribute("editedEmployeeInfo")
+    public EditedEmployeeInfoDto editedEmployeeInfoDto(){
+        return new EditedEmployeeInfoDto();
+    }
+
     @ModelAttribute("employeeRow")
-    private Employee getEmployee(){
+    public Employee getEmployee(){
         return new Employee();
     }
 

@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService{
         Employee employee = employeeRepository.findByEmail(email);
 
         if (employee == null) throw new UsernameNotFoundException("Usuario y/o contraseña incorrecta");
+        if(!employee.getActive()) throw new UsernameNotFoundException("Usuario no activo");
 
         Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(employee.getRol()));
