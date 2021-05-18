@@ -56,7 +56,7 @@
                     <input type="text" class="field-box" name="email" id="email" th:field="*{email}" required
                            maxlength="250">
                     <div class="validation-error" style="display: none" id="email_error"> Por favor, introduzca un correo válido. </div>
-                    <div style="color:firebrick; display: none;" th:if="${param.error}"  id="email_error2"> Este correo ya existe. </div>
+                    <div style="color:firebrick;" th:if="${param.error}"  id="email_error2"> Este correo ya existe. </div>
                 </div>
 
                 <!-- Area field -->

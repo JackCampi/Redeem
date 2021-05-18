@@ -12,8 +12,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardStyle.css">
-    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
-    <link rel="stylesheet" href="../static/styles/employeeListStyle.css">
+    <link rel="stylesheet" href="/css/employeeListStyle.css">
+    <!--link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeListStyle.css"-->
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -118,7 +119,7 @@
                         Editar información
                     </h3>
                     <form th:action="@{/admin/members/edit}" method="post" id="edit-form" name="edit-form"
-                        th:object="${employee}">
+                        th:object="${employeeRow}">
                         <div class="id-form-group">
                             <label for="id">ID</label>
                             <input id="id" class="id-field" value="123" th:field="*{id}" required readonly />
@@ -153,9 +154,9 @@
                             </div>
 
                             <div class="input-group">
-                                <label for="date">Fecha</label>
+                                <label for="date">Fecha de cumpleaños</label>
                                 <input class="input-field" type="date" name="date" id="date" th:field="*{birthday}"
-                                    required>
+                                    pattern="dd/mm/yyyy" required>
                             </div>
                         </div>
 
@@ -179,9 +180,8 @@
                     <h6>$<span id="removeAmount"></span> serán devueltos al presupuesto de la empresa.</h6>
                     <h6>Se conservará el historial de transacciones de este empleado.</h6>
                     <br><br>
-                    <form th:action="@{/admin/members/disable}" class="remove-buttons" method="post" id="remove-form" name="remove-form"
-                    th:object="${employee}">
-                        <input id="removeId" class="remove-id-field" th:field="*{id}" required readonly />
+                    <form th:action="@{/admin/members/disable}" class="remove-buttons" method="get" id="remove-form" name="remove-form">
+                        <input class="remove-id-field" id="removeId" name="id" required readonly />
                         <div class="remove-btn cancel-remove" onclick="return closeModal()">Cancelar</div>
                         <input type="submit" class="remove-btn save-remove" value="Sí, desactivar">
                     </form>
@@ -190,7 +190,7 @@
 
             <div class="employee-list">
 
-                <h3>Empleados de <span th:value="${adminDashboardInfo.name}"></span></h3><br>
+                <h3>Empleados de <span th:value="${adminDashboardInfo.companyName}"></span></h3><br>
 
                 <div class="table-responsive">
                     <table class="table">
@@ -207,19 +207,41 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:each="employee : ${employeeList}">
-                                <th scope="row">1</th>
-                                <td><span th:text="${employee.lastName}"></span></td>
-                                <td><span th:text="${employee.name}"></span></td>
-                                <td><span th:text="${employee.cellphone}"></span></td>
-                                <td><span th:text="${employee.email}"></span></td>
-                                <td>$<span th:text="${employee.balance}"></span></td>
-                                <td><span th:text="${employee.area}"></span></td>
+                            <tr th:each="employeeRow : ${employeeList}">
+                                <th scope="row"><span th:text="${employeeRow.id}"></span></th>
+                                <td><span th:text="${employeeRow.lastName}"></span></td>
+                                <td><span th:text="${employeeRow.name}"></span></td>
+                                <td><span th:text="${employeeRow.cellphone}"></span></td>
+                                <td><span th:text="${employeeRow.email}"></span></td>
+                                <td>$<span th:text="${employeeRow.balance}"></span></td>
+                                <td><span th:text="${employeeRow.area.getId().getName()}"></span></td>
                                 <td class="td-center">
-                                    <button class="option edit" th:attr="onclick=|editModal('${employee}')|">
+                                    <button class="option edit"
+                                            th:data-emp-id="${employeeRow.id}"
+                                            th:data-emp-name="${employeeRow.name}"
+                                            th:data-emp-lastName="${employeeRow.lastName}"
+                                            th:data-emp-email="${employeeRow.email}"
+                                            th:data-emp-tel="${employeeRow.cellphone}"
+                                            th:data-emp-area="${employeeRow.area.getId().getName()}"
+                                            th:data-emp-birthday="${employeeRow.birthday}"
+                                            th:onclick="editModal(this.getAttribute('data-emp-id'),
+                                                                  this.getAttribute('data-emp-name'),
+                                                                  this.getAttribute('data-emp-lastName'),
+                                                                  this.getAttribute('data-emp-email'),
+                                                                  this.getAttribute('data-emp-tel'),
+                                                                  this.getAttribute('data-emp-area'),
+                                                                  this.getAttribute('data-emp-birthday'))">
                                         <span class="material-icons">edit</span>
                                     </button>
-                                    <button class="option remove" th:attr="onclick=|removeModal('${employee}')|">
+                                    <button class="option remove"
+                                            th:data-emp-id="${employeeRow.id}"
+                                            th:data-emp-name="${employeeRow.name}"
+                                            th:data-emp-lastName="${employeeRow.lastName}"
+                                            th:data-emp-balance="${employeeRow.balance}"
+                                            th:onclick="removeModal(this.getAttribute('data-emp-id'),
+                                                                  this.getAttribute('data-emp-name'),
+                                                                  this.getAttribute('data-emp-lastName'),
+                                                                  this.getAttribute('data-emp-balance'))">
                                         <span class="material-icons">person_remove</span>
                                     </button>
                                 </td>
@@ -231,9 +253,11 @@
             </div>
         </main>
     </div>
-    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <!--script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeListLogic.js"></script-->
     <script src="/scripts/adminDashboardLogic.js"></script>
-    <script src="../static/scripts/employeeListLogic.js"></script>
+    <script src="/scripts/employeeListLogic.js"></script>
+
 </body>
 
 </html>

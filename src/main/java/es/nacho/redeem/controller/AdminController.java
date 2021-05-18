@@ -140,4 +140,8 @@ public class AdminController {
     @ModelAttribute("employee")
     public EmployeeRegistrationDto employeeRegistrationDto() {return new EmployeeRegistrationDto();}
 
+    @ModelAttribute("employeeRow")
+    private Employee getEmployee(){
+        return new Employee();
+    }
 }

@@ -1,4 +1,5 @@
 const email = document.forms['reg-form']['email'];
+const area = document.forms['reg-form']['area'];
 const password = document.forms['reg-form']['password'];
 const password_confirm = document.forms['reg-form']['password_confirm'];
 
@@ -40,10 +41,13 @@ form.addEventListener( 'submit', (event) => {
         return false;
     }
 
-    if(confirm("Atención: al registrar a un empleado en el área de Gerencia, le está concediendo los permisos de administrados.\n ¿Desea Continuar?")){
-        return true;
-      } else {
-        event.preventDefault();
-      }
+    if(password.value == "Gerencia (Admin)"){
+        if(confirm("Atención: al registrar a un empleado en el área de Gerencia, le está concediendo los permisos de administrados.\n ¿Desea Continuar?")){
+            return true;
+        } else {
+            event.preventDefault();
+        } 
+    }
+        
 
 })
