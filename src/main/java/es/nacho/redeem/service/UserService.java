@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.config.dto.AuthDto;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
@@ -7,6 +8,7 @@ import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import es.nacho.redeem.web.dto.employee.EditedEmployeeInfoDto;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
 public interface UserService extends UserDetailsService {
@@ -27,6 +29,8 @@ public interface UserService extends UserDetailsService {
 
     Employee incrementToUserBalanceByEmail(String email , long amount) throws UserNotFoundException;
 
-    long getIdByEmail(String email) throws UserNotFoundException;
+    AuthDto fillAuthDto(String email);
+
+    void editUserInformation(long nit, EditedEmployeeInfoDto editedEmployeeInfoDto);
 
 }
