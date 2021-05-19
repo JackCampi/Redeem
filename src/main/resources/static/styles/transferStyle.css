@@ -29,7 +29,7 @@ html, body{
 
 /* side bar */
 
-.sidebar{
+.custom-sidebar{
     width: 22%;
     position: fixed;
     left: 0;
@@ -73,33 +73,46 @@ hr.space-menu{
     margin: 70% 0;
 }
 
-.sidebar-menu{
+div.principal-sidebar-menu{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.sidebar-menu li{
+div.principal-sidebar-menu li{
     width: 100%;
     margin: 1.5rem 0;
 }
 
-.sidebar-menu a{
+div.principal-sidebar-menu a{
     display: flex;
-    color: var(--second-color);
+    color: var(--second-color) !important;
     font-weight: 600;
     font-size: 1rem;
+    cursor: pointer !important;
 }
 
-.sidebar-menu a:hover{
+.principal-sidebar-menu a:hover{
+    text-decoration:none;
     color: #fff;
 }
 
-.sidebar-menu a.selected, span.material-icons.sidebar-icon.selected{
-    color: #fff;
+.principal-sidebar-menu a:hover{
+    text-decoration:none;
+    color: white !important;
 }
 
-.sidebar-menu p{
+div.principal-sidebar-menu a.selected, span.material-icons.sidebar-icon.selected{
+    color: #fff !important;
+}
+
+
+div.principal-sidebar-menu a.non-selected, span.material-icons.sidebar-icon.non-selected{
+    color: var(--second-color);
+}
+
+
+.principal-sidebar-menu p{
     margin-left: 1rem;
 }
 
@@ -109,13 +122,13 @@ hr.space-menu{
     margin: 0 20px;
 }
 
-#nav-toggle:checked + .sidebar {
+#nav-toggle:checked + .custom-sidebar {
     width: 80px;
 }
 
-#nav-toggle:checked + .sidebar p ,
-#nav-toggle:checked + .sidebar li a span:last-child ,
-#nav-toggle:checked + .sidebar.sidebar-brand img:last-child
+#nav-toggle:checked + .custom-sidebar p ,
+#nav-toggle:checked + .custom-sidebar li a span:last-child ,
+#nav-toggle:checked + .custom-sidebar.sidebar-brand img:last-child
 {
     display: none;
 }
@@ -124,7 +137,7 @@ hr.space-menu{
     margin-left: 80px;
 }
 
-#nav-toggle:checked ~ .sidebar hr.solid{
+#nav-toggle:checked ~ .custom-sidebar hr.solid{
     border: 1px solid #c396d7b0;
     width: 60%;
     margin: 10% 0;
@@ -224,9 +237,9 @@ h1{
     width: 100%;
     height: 30px;
     font-family: 'Nunito Sans', sans-serif;
-    background: #E4E4E4;
-    box-shadow: inset 0px 4px 14px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.24);
     border-radius: 40px;
+    border: none;
 }
 
 .btn-submit{

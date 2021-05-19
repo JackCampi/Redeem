@@ -35,7 +35,6 @@ form.addEventListener('submit', (e) => {
         e.preventDefault()
     }else{
         modal.style.display = "none";
-        form.submit();
     }
 })
 
@@ -50,5 +49,6 @@ window.onclick = function(event) {
         modal.style.display = "none";
     }
 }
+
 
 

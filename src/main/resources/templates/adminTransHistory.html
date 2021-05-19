@@ -4,11 +4,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="/img/redeemIcon.ico">
-    <title>Transferences history</title>
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Dashboard - Admin</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="/css/transHistoryStyle.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/transhistoryStyle.css">
+    <link rel="stylesheet" href="../static/styles/transHistoryStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,31 +18,67 @@
 </head>
 <body>
 <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-<div class="sidebar">
+<div class="custom-sidebar">
     <div class="sidebar-brand">
         <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
-        <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
     </div>
 
     <hr class="solid">
 
-    <div class="sidebar-menu">
-        <div>
-            <ul>
-                <li>
-                    <a href="" class="selected"><span class="material-icons sidebar-icon selected">
-                            analytics
-                            </span> <p>Dashboard</p> </a>
-                </li>
-            </ul>
-        </div>
-        <hr class="space-menu">
-        <br><br><br>
-        <div>
-            <a th:href="@{/logout}"><span class="material-icons">
-                    power_settings_new
-                    </span> <p>Cerrar sesión</p> </a>
-        </div>
+    <div class="principal-sidebar-menu">
+        <ul>
+            <li>
+                <a id="dash-button"   th:href="@{/admin/}">
+                    <span class="material-icons sidebar-icon">analytics</span>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/history}"  class="selected" id="trans-hist-button">
+                    <span class="material-icons">history_edu</span>
+                    <p>Historial transacciones</p>
+                </a>
+            </li>
+
+            <hr class="solid">
+
+            <li>
+                <a th:href="@{/admin/allocation}" id="allocate-button">
+                    <span class="material-icons">attach_money</span>
+                    <p>Consignar a empleados</p>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/addemp}">
+                        <span class="material-icons sidebar-icon">
+                            person_add_alt
+                        </span>
+                    <span>
+                            <p>Añadir empleado</p>
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/members}" id="empl-list-button">
+                    <span class="material-icons">groups</span>
+                    <p>Ver empleados</p>
+                </a>
+            </li>
+
+            <hr class="solid">
+
+            <li>
+                <a th:href="@{/logout}">
+                    <span class="material-icons">power_settings_new</span>
+                    <p>Cerrar sesión</p>
+                </a>
+            </li>
+
+
+        </ul>
     </div>
 </div>
 
@@ -52,25 +90,25 @@
                         menu
                     </span>
             </label>
-            <div class="current-page"><h2>Dashboard</h2></div>
+            <div class="current-page"><h4 id="title">Dashboard</h4></div>
 
         </div>
 
         <div class="user-info">
             <div class="name-rol">
-                <h3 th:text="${employeeDashboardInfo.name}"></h3>
-                <small>Empleado</small>
+                <h4 th:text="${session.name}"></h4>
+                <small>Administrador</small>
             </div>
             <div><span class="material-icons">account_circle</span></div>
         </div>
     </header>
-    <main>
+
+    <main id="main-content">
         <div class="trans-container">
             <h1>Historial de transacciones</h1>
             <table class="trans-table">
                 <tbody>
-                <!--<tr th:each="transaction : ${transactionList}">-->
-                <tr>
+                <tr> <!--th:each="transaction : ${transactionList}"-->
                     <td>
                         <div class="row-container">
                             <div class="user-date">
@@ -84,21 +122,17 @@
                     <td th:text="${transaction.employeeTo}"></td>
                     <td th:text="${transaction.amount}"></td>-->
                 </tr>
-                <tr>
-                    <td>
-                        <div class="row-container">
-                            <div class="user-date">
-                                <p class="name">De: Jose Luis Moreno Hernández</p>
-                                <p class="date">Fecha</p>
-                            </div>
-                            <p class="amount">5000</p>
-                        </div>
-                    </td>
-                </tr>
+
+
                 </tbody>
             </table>
+        </div>
 
+
+        <div class="error"></div>
     </main>
 </div>
-
+<script src="../static/scripts/adminDashboardLogic.js"></script>
+<script src="/scripts/adminDashboardLogic.js"></script>
 </body>
+</html>
