@@ -3,12 +3,15 @@ package es.nacho.redeem.controller;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.service.AreaService;
+import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.CompanyService;
+import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -37,6 +40,9 @@ public class AdminController {
 
     @Autowired
     private BalanceTransaction balanceTransaction;
+
+    @Autowired
+    private TransferService transferService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -200,6 +206,17 @@ public class AdminController {
         return WebPageNames.ADMIN_ALLOCATION_AREA;
     }
 
+    @GetMapping(value = "/history")
+    public String getHistoryView(HttpSession httpSession, Model model){
+
+        long id = (long) httpSession.getAttribute("id");
+
+        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
+        model.addAttribute("transferMessages", transferMessages);
+
+        return WebPageNames.HISTORY;
+    }
+
     @ModelAttribute("allocation")
     public AllocationDto allocationDto(){
         return new AllocationDto();
@@ -208,4 +225,8 @@ public class AdminController {
     @ModelAttribute("employee")
     public EmployeeRegistrationDto employeeRegistrationDto() {return new EmployeeRegistrationDto();}
 
+    @ModelAttribute("employeeRow")
+    private Employee getEmployee(){
+        return new Employee();
+    }
 }

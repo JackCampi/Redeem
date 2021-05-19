@@ -1,5 +1,6 @@
 package es.nacho.redeem.config;
 
+import es.nacho.redeem.config.dto.AuthDto;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,19 +38,19 @@ public class AuthSuccessHandlerConfig implements AuthenticationSuccessHandler {
             email = user.getUsername();
         }
 
-        long id;
         long nit;
+        AuthDto authDto = userService.fillAuthDto(email);
         try{
             nit = companyService.getCompanyNitByUser(email);
-            id = userService.getIdByEmail(email);
         }catch (Exception e){
             e.printStackTrace();
             nit = 0L;
-            id = 0L;
         }
 
         httpServletRequest.getSession().setAttribute("nit",  nit);
-        httpServletRequest.getSession().setAttribute("id", id);
+        httpServletRequest.getSession().setAttribute("id", authDto.getId());
+        httpServletRequest.getSession().setAttribute("name", authDto.getName());
+        httpServletRequest.getSession().setAttribute("email", email);
 
         Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
         if(roles.contains("administrador")) httpServletResponse.sendRedirect("/admin");

@@ -46,7 +46,13 @@ class CompanyServiceImplTest {
         this.company = new Company(-123456789L,"Test",1L);
         companyRepository.save(company);
         Area area = new Area("gerencia", company);
+        Area area2 = new Area("contabilidad", company);
+        Area area3 = new Area("seguridad", company);
+        Area area4 = new Area("ventas", company);
         areaRepository.save(area);
+        areaRepository.save(area2);
+        areaRepository.save(area3);
+        areaRepository.save(area4);
         this.employee = new Employee(
                 "juan",
                 "veloza",
@@ -59,6 +65,99 @@ class CompanyServiceImplTest {
                 "administrador",
                 area
         );
+        Employee employee2 = new Employee(
+                "brian",
+                "veloza",
+                "brian@gmail.com",
+                "supapa",
+                "123456789876",
+                new GregorianCalendar(1970, Calendar.JUNE,20),
+                0L,
+                true,
+                "administrador",
+                area2
+        );
+        Employee employee3 = new Employee(
+                "jorge",
+                "veloza",
+                "jorgeveloza@gmail.com",
+                "supapa",
+                "123456789876",
+                new GregorianCalendar(1970, Calendar.JUNE,20),
+                0L,
+                true,
+                "administrador",
+                area3
+        );
+        Employee employee4 = new Employee(
+                "ricardo",
+                "veloza",
+                "rveloza@gmail.com",
+                "supapa",
+                "123456789876",
+                new GregorianCalendar(1970, Calendar.JUNE,20),
+                0L,
+                true,
+                "administrador",
+                area4
+        );
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+        employeeRepository.save(employee4);
+    }
+
+    @AfterAll
+    void afterAll() {
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            employeeRepository.delete(employee);
+        });
+        Collection<Area> areas = areaRepository.findByCompany(company);
+        areas.forEach(area -> areaRepository.delete(area));
+        companyRepository.delete(company);
+    }
+
+    @Test
+    @Rollback
+    void disableEmployee() {
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            assertTrue(employee.getActive());
+            companyService.disableEmployee(employee.getId());
+            assertFalse(employee.getActive());
+        });
+    }
+
+    @Test
+    @Rollback
+    void enableEmployee() {
+        String[] mails = {"brian@gmail.com","jorgeveloza@gmail.com","rveloza@gmail.com"};
+        Arrays.stream(mails).forEach(mail -> {
+            Employee employee = employeeRepository.findByEmail(mail);
+            companyService.disableEmployee(employee.getId());
+            assertFalse(employee.getActive());
+            companyService.enableEmployee(mail);
+            assertTrue(employee.getActive());
+        });
+    }
+
+    @Test
+    void getEmployees(){
+        employeeRepository.save(employee);
+        List<String> mails = new LinkedList<>();
+        mails.add("jveloza@gmail.com");
+        mails.add("brian@gmail.com");
+        mails.add("jorgeveloza@gmail.com");
+        mails.add("rveloza@gmail.com");
+        assertDoesNotThrow(() -> {
+            companyService.getEmployees(company.getId())
+                    .forEach(employees ->
+                        mails.remove(employees.getEmail())
+                    );
+        });
+        assertEquals(0,mails.size());
     }
 
     @Test

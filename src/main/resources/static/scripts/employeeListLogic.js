@@ -21,31 +21,30 @@ form.addEventListener( 'submit', (event) => {
   }
 });
 
-function editModal(employee) {
-  document.getElementById("id").value = employee.id;
-  document.getElementById("name").value = employee.name;
-  document.getElementById("lastName").value = employee.lastName;
-  document.getElementById("email").value = employee.email;
-  document.getElementById("tel").value = employee.cellphone;
-
-  /* TODO: format the date and the area */
-  document.getElementById("date").value = employee.birthday;
-  document.getElementById("area").value = employee.area;
+function editModal(id, name, lastName, email, cellphone, area, birthday) {
+  alert(id + name + lastName + email + cellphone + area + birthday);
+  document.getElementById("id").value = id;
+  document.getElementById("name").value = name;
+  document.getElementById("lastName").value = lastName;
+  document.getElementById("email").value = email;
+  document.getElementById("tel").value = cellphone;
+  document.getElementById("date").value = birthday;
+  document.getElementById("area").value = area;
   editModalElement.style.display = "block";
 }
 
-function removeModal(employee) {
-  document.getElementById("removeName").value = employee.name;
-  document.getElementById("removeLastName").value = employee.lastName;
-  document.getElementById("removeAmount").value = employee.balance;
-  document.getElementById("removeId").value = employee.id;
+function removeModal(id, name, lastName, balance) {
+  alert(id + name + lastName + balance)
+  document.getElementById("removeName").innerText = name;
+  document.getElementById("removeLastName").innerText = lastName;
+  document.getElementById("removeAmount").innerText = balance;
+  document.getElementById("removeId").value = id;
   removeModalElement.style.display = "block";
 }
 
 function closeModal(){
   editModalElement.style.display = "none";
   removeModalElement.style.display = "none";
-  document.getElementById("testxd").innerText = "jlaksdj";
   return false;
 }
 

@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.config.dto.AuthDto;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Area;
@@ -11,6 +12,7 @@ import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AdminRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService{
         Employee employee = employeeRepository.findByEmail(email);
 
         if (employee == null) throw new UsernameNotFoundException("Usuario y/o contraseña incorrecta");
+        if(!employee.getActive()) throw new UsernameNotFoundException("Usuario no activo");
 
         Collection<SimpleGrantedAuthority> roles = new ArrayList<>();
         roles.add(new SimpleGrantedAuthority(employee.getRol()));
@@ -188,12 +191,39 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public long getIdByEmail(String email) throws UserNotFoundException {
+    public AuthDto fillAuthDto(String email) {
 
         Employee employee = employeeRepository.findByEmail(email);
         if(employee == null) throw new UserNotFoundException();
 
-        return employee.getId();
+        AuthDto authDto = new AuthDto(email, employee.getName(), employee.getId());
+
+        return authDto;
+    }
+
+    @Override
+    public void editUserInformation(long nit, MemberDto memberDto) {
+
+        Optional<Employee> employee = employeeRepository.findById(memberDto.getId());
+        if(!employee.isPresent()) throw new UserNotFoundException();
+
+        Employee employeeObject = employee.get();
+        employeeObject.setEmail(memberDto.getEmail());
+        employeeObject.setName(memberDto.getName());
+        employeeObject.setLastName(memberDto.getLastName());
+        employeeObject.setCellphone(memberDto.getCellphone());
+        employeeObject.setBirthday(getCalendarFromString(memberDto.getBirthday()));
+
+        AreaKey key = new AreaKey(areaService.lowercaseAreaName(memberDto.getArea()), nit);
+        Optional<Area> area = areaRepository.findById(key);
+
+        if( !area.isPresent()) throw new RuntimeException("Area not found");
+
+        employeeObject.setArea(area.get());
+
+        employeeRepository.save(employeeObject);
+
+
     }
 
     private Calendar getCalendarFromString(String string){

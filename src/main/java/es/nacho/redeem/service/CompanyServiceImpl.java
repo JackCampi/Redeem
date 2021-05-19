@@ -9,9 +9,11 @@ import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.CompanyRegistrationDto;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 @Service
@@ -122,4 +124,54 @@ public class CompanyServiceImpl implements CompanyService{
 
         return employeeDashboardInfoDto;
     }
+
+    @Override
+    public Collection<MemberDto> getEmployees(Long companyNIT) throws Exception{
+        Collection<MemberDto> employees = new ArrayList<>();
+        Optional<Company> company =  companyRepository.findById(companyNIT);
+        if(!company.isPresent()) throw new Exception("Company not found");
+        Collection<Area> areas = areaRepository.findByCompany(company.get());
+        //areas.forEach(area -> employees.addAll(employeeRepository.findAllByArea(area)));
+        areas.forEach(area -> {
+            Collection<Employee> employeesInArea = employeeRepository.findAllByArea(area);
+            employeesInArea.forEach(employee -> {
+                if(employee.getActive()){
+                    employees.add(new MemberDto(
+                            employee.getId(),
+                            employee.getName(),
+                            employee.getLastName(),
+                            employee.getEmail(),
+                            employee.getCellphone(),
+                            areaService.capitalizeAreaName(employee.getArea().getId().getName()),
+                            getStringFromCalendar(employee.getBirthday()),
+                            employee.getBalance()
+                    ));
+                }
+            });
+        });
+        return employees;
+    }
+
+    @Override
+    public void disableEmployee(long id) {
+        Optional<Employee> employee = employeeRepository.findById(id);
+        Employee employeeObject = employee.get();
+        employeeObject.setActive(false);
+        employeeRepository.save(employeeObject);
+    }
+
+    @Override
+    public void enableEmployee(String mail) {
+        Employee employee = employeeRepository.findByEmail(mail);
+        employee.setActive(true);
+        employeeRepository.save(employee);
+    }
+
+    private String getStringFromCalendar(Calendar calendar){
+
+        return calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+
+    }
+
+
 }
