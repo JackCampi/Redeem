@@ -3,6 +3,8 @@ package es.nacho.redeem.model;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
 
 import javax.persistence.*;
+
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Entity
@@ -52,6 +54,16 @@ public class Area {
 
     public void setEmployees(Collection<Employee> employees) {
         this.employees = employees;
+    }
+
+    public Collection<Long> getEmployeesIds() {
+        
+        Collection<Long> employeesIds = new ArrayList<>();
+
+        for (Employee employee : employees) {
+            employeesIds.add(employee.getId());
+        }
+        return employeesIds;
     }
 
 }

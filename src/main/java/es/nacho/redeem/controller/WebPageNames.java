@@ -11,4 +11,7 @@ public interface WebPageNames {
     //TODO: write the html correct name
     String USER_TO_USER_TRANSFER = "transferContent";
     String ADMIN_ALLOCATION = "allocation";
+    String ADMIN_ALLOCATION_EMPLOYEE = "employeeAllocation";
+    String ADMIN_ALLOCATION_COMPANY = "companyAllocation";
+    String ADMIN_ALLOCATION_AREA = "areaAllocation";
 }

@@ -1,13 +1,23 @@
 package es.nacho.redeem.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+
 import org.springframework.util.StringUtils;
+
+import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.model.Area;
+import es.nacho.redeem.repository.AreaRepository;
 
 @Service
 public class AreaServiceImpl implements AreaService{
+
+    @Autowired
+    private AreaRepository areaRepository;
+
     @Override
     public Collection<String> capitalizeAreaNames(Collection<String> areaNames) {
         Collection<String> newAreaNames = new ArrayList<>();
@@ -66,5 +76,20 @@ public class AreaServiceImpl implements AreaService{
     public String lowercaseAreaName(String areaName) {
         if(areaName.equals("Gerencia (Admin)")) return "gerencia";
         return areaName.trim().toLowerCase();
+    }
+
+    @Override
+    public Collection<Long> getAllEmployees(Collection<String> areasNames) throws UserNotFoundException {
+        
+        Collection<Long> employees = new ArrayList<>();
+
+        for (String areaName : areasNames){
+            if(!areaName.equals("gerencia")){
+                Area area = areaRepository.findByName(areaName);
+                employees.addAll(area.getEmployeesIds());
+            }
+            if(areaName.equals("areas not found")) throw new UserNotFoundException();
+        }
+        return employees;
     }
 }

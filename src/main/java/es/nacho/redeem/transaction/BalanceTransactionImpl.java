@@ -9,6 +9,8 @@ import es.nacho.redeem.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collection;
+
 import javax.transaction.Transactional;
 
 @Service
@@ -40,6 +42,19 @@ public class BalanceTransactionImpl implements BalanceTransaction{
         transferService.saveTransfer(employeeFrom, employeeTo, amount);
         }
 
+    }
+
+    @Override
+    @Transactional(rollbackOn = {UserNotFoundException.class, InsufficientBalanceException.class})
+    public void userToUsersBalanceTransaction(long adminId, Collection<Long> employeesIds, long amount)
+            throws UserNotFoundException, InsufficientBalanceException {
+        Employee admin = userService.discountToUserBalance(adminId, amount);
+
+        Employee employee;
+        for (Long employeeId : employeesIds) {
+            employee = userService.incrementToUserBalanceById(employeeId, amount);
+            allocationService.saveAllocation(amount, "", admin, employee); 
+        }
     }
 
 }

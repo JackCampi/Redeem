@@ -11,4 +11,5 @@ import java.util.Collection;
 @Repository
 public interface AreaRepository extends JpaRepository<Area, AreaKey> {//AreaKey es la llave compuesta de Area
     Collection<Area> findByCompany(Company comp);
+    Area findByName(String areaName);
 }

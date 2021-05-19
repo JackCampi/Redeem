@@ -14,4 +14,6 @@ public interface AreaService {
 
     String lowercaseAreaName(String areaName);
 
+    Collection<Long> getAllEmployees(Collection<String> areasNames);
+
 }

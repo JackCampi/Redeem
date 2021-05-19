@@ -2,6 +2,7 @@ package es.nacho.redeem.controller;
 
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.service.AreaService;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
@@ -30,6 +31,9 @@ public class AdminController {
 
     @Autowired
     private CompanyService companyService;
+
+    @Autowired
+    private AreaService areaService;
 
     @Autowired
     private BalanceTransaction balanceTransaction;
@@ -100,19 +104,100 @@ public class AdminController {
     @GetMapping(value = "/allocation")
     public String getAllocationView(){return "allocation";}
 
-    @PostMapping(value = "/allocation")
-    public String processAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
+    @GetMapping(value = "/allocation/emp")
+    public String getEmployeeAllocationView(){return "allocation";}
+
+    @GetMapping(value = "/allocation/comp")
+    public String getCompanyAllocationView(){return "allocation";}
+
+    @GetMapping(value = "/allocation/area")
+    public String getAreaAllocationView(HttpSession session, Model model){
+
+        Long nit = (long) session.getAttribute("nit");
+
+        Collection<String> areaNames = new ArrayList<>();
+
+        try{
+            areaNames = companyService.getAreasNames(nit);
+
+        }catch (Exception e){
+            areaNames.add("areas not found");
+            return WebPageNames.ERROR_PAGE;
+        }
+
+        model.addAttribute("areaNames", areaNames);
+
+        return "allocation";
+    }
+
+    @PostMapping(value = "/allocation/emp")
+    public String processEmployeeAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
 
         long id = (long) httpSession.getAttribute("id");
 
         try {
             balanceTransaction.userToUserBalanceTransaction(true, id, allocationDto.getEmployee(), allocationDto.getAmount());
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/adm/allocation?userNotFound";
+            return "redirect:/adm/allocation/emp?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
-            return "redirect:/admin/allocation?insufficient";
+            return "redirect:/admin/allocation/emp?insufficient";
         }
-        return WebPageNames.ADMIN_ALLOCATION;
+        return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;
+    }
+
+    @PostMapping(value = "/allocation/comp")
+    public String processCompanyAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
+
+        long id = (long) httpSession.getAttribute("id");
+        
+        Long nit = (long) httpSession.getAttribute("nit");
+
+        Collection<String> areasNames = new ArrayList<>();
+
+        try {
+            areasNames = companyService.getAreasNames(nit);
+        } catch (Exception e) {
+            areasNames.add("areas not found");
+        }
+
+        Collection<Long> employeesIdentifiers = new ArrayList<>();
+
+        try {
+            employeesIdentifiers = areaService.getAllEmployees(areasNames);
+        } catch (UserNotFoundException userNotFoundException) {
+            return "redirect:/adm/allocation/comp?userNotFound";
+        }
+        
+
+        for (Long employeeIdentifier : employeesIdentifiers) {
+            try {
+                balanceTransaction.userToUserBalanceTransaction(true, id, employeeIdentifier.toString(), allocationDto.getAmount());
+            }catch (UserNotFoundException userNotFoundException){
+                return "redirect:/adm/allocation/comp?userNotFound";
+            }catch (InsufficientBalanceException insufficientBalanceException){
+                return "redirect:/admin/allocation/comp?insufficient";
+            }
+        }
+        return WebPageNames.ADMIN_ALLOCATION_COMPANY;
+    }
+
+    @PostMapping(value = "/allocation/area")
+    public String processAreaAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
+
+        long id = (long) httpSession.getAttribute("id");
+        
+        Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas());
+
+        for (Long employeeIdentifier : employeesIdentifiers) {
+            try {
+                balanceTransaction.userToUserBalanceTransaction(true, id, employeeIdentifier.toString(), allocationDto.getAmount());
+            }catch (UserNotFoundException userNotFoundException){
+                return "redirect:/adm/allocation/area?userNotFound";
+            }catch (InsufficientBalanceException insufficientBalanceException){
+                return "redirect:/admin/allocation/area?insufficient";
+            }
+        }
+        return WebPageNames.ADMIN_ALLOCATION_AREA;
     }
 
     @ModelAttribute("allocation")
