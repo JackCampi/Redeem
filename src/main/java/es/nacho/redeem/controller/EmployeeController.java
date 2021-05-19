@@ -85,7 +85,7 @@ public class EmployeeController {
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
 
-        return WebPageNames.EMP_HISTORY;
+        return WebPageNames.HISTORY;
     }
 
     @ModelAttribute("transfer")

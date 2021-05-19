@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 import org.springframework.util.StringUtils;
 
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Area;
+import es.nacho.redeem.model.compositeKeys.AreaKey;
 import es.nacho.redeem.repository.AreaRepository;
 
 @Service
@@ -79,16 +81,21 @@ public class AreaServiceImpl implements AreaService{
     }
 
     @Override
-    public Collection<Long> getAllEmployees(Collection<String> areasNames) throws UserNotFoundException {
+    public Collection<Long> getAllEmployees(Collection<String> areasNames, Long nit) throws UserNotFoundException {
         
         Collection<Long> employees = new ArrayList<>();
 
         for (String areaName : areasNames){
-            if(!areaName.equals("gerencia")){
-                Area area = areaRepository.findByName(areaName);
-                employees.addAll(area.getEmployeesIds());
-            }
+            
             if(areaName.equals("areas not found")) throw new UserNotFoundException();
+            else if(!areaName.equals("gerencia")){
+                
+                AreaKey areaKey = new AreaKey(areaName, nit);
+                Optional<Area> area = areaRepository.findById(areaKey)
+                
+                if (area.isPresent()){
+                employees.addAll(area.get().getEmployeesIds());}
+            }
         }
         return employees;
     }

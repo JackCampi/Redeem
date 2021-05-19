@@ -169,7 +169,7 @@ public class AdminController {
         Collection<Long> employeesIdentifiers = new ArrayList<>();
 
         try {
-            employeesIdentifiers = areaService.getAllEmployees(areasNames);
+            employeesIdentifiers = areaService.getAllEmployees(areasNames, nit);
         } catch (UserNotFoundException userNotFoundException) {
             return "redirect:/adm/allocation/comp?userNotFound";
         }
@@ -188,8 +188,9 @@ public class AdminController {
     public String processAreaAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
 
         long id = (long) httpSession.getAttribute("id");
+        Long nit = (long) httpSession.getAttribute("nit");
         
-        Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas());
+        Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas(), nit);
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
@@ -210,7 +211,7 @@ public class AdminController {
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
 
-        return WebPageNames.ADMIN_HISTORY;
+        return WebPageNames.HISTORY;
     }
 
     @ModelAttribute("allocation")

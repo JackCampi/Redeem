@@ -1,6 +1,5 @@
 package es.nacho.redeem.controller;
 
-import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
