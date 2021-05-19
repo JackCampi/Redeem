@@ -8,7 +8,8 @@
     <title>Dashboard - Admin</title>
 
     <!-- Style -->
-    <link rel="stylesheet" href="dashboardStyle.css">
+    <link rel="stylesheet" href="/css/transferStyle.css">
+    <link rel="stylesheet" href="../static/styles/transferStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -16,33 +17,53 @@
 </head>
 <body>
 <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-<div class="sidebar">
-    <div class="sidebar-brand">
-        <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
-        <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
-    </div>
-
-    <hr class="solid">
-
-    <div class="sidebar-menu">
-        <div>
-            <ul>
-                <li>
-                    <a href="" class="selected"><span class="material-icons sidebar-icon selected">
-                            analytics
-                            </span> <p>Dashboard</p> </a>
-                </li>
-            </ul>
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
         </div>
-        <hr class="space-menu">
-        <br><br><br>
-        <div>
-            <a th:href="@{/logout}"><span class="material-icons">
-                    power_settings_new
-                    </span> <p>Cerrar sesión</p> </a>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+            <div>
+                <ul>
+                    <li>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a th:href="@{/emp/}" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p>
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/emp/history}" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p>
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/emp/transfer}" class="selected" id="transfer-button">
+                            <span class="material-icons">connect_without_contact</span>
+                            <p>Transferir</p>
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 
 
 
@@ -55,34 +76,40 @@
                         menu
                     </span>
             </label>
-            <div class="current-page"><h2>Dashboard</h2></div>
+            <div class="current-page"><h4>Dashboard</h4></div>
 
         </div>
 
         <div class="user-info">
             <div class="name-rol">
-                <h3 th:text="${employeeDashboardInfo.name}"></h3>
+                <h5 th:text="${session.name}"></h5>
                 <small>Empleado</small>
             </div>
             <div><span class="material-icons">account_circle</span></div>
         </div>
     </header>
-    <main>
+    <main id="main-content">
         <div class="container">
-            <img src="transferImage.png" alt="trans-image" class="trans-image">
+            <img src="/img/transferImage.png" alt="trans-image" class="trans-image">
             <div class="subcontainer">
                 <h1>Transferencias entre usuarios</h1>
-                <form class="trans-regform" id="doc-form" th:action="@{/transfer}"  method="post" th:object="${transfer}">
+                <form class="trans-regform" id="doc-form" th:action="@{/emp/transfer}"  method="post" th:object="${transfer}">
                     <div class="trans-form">
                         <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
-                        <input id="beneficiary" class="trans-input" th:field="*{receiverIdentifier}" required autofocus="autofocus" >
+                        <input id="beneficiary" class="trans-input" placeholder="    Ingrese un email o un id." th:field="*{receiverIdentifier}" required autofocus="autofocus" >
+                    </div>
+                    <div  th:if="${param.userNotFound}">
+                        <div style="color:firebrick; "   class="error_messaje"> El usuario que ingresaste no existe. </div>
                     </div>
                     <div class="trans-form">
                         <label class="trans-label" for="amount">Monto a transferir</label>
-                        <input id="amount" class="trans-input" type="number" th:field="*{amount}" required autofocus="autofocus">
+                        <input id="amount" class="trans-input" placeholder="    Ingrese la cantidad a transferir." type="number" th:field="*{amount}" required autofocus="autofocus">
+                    </div>
+                    <div  th:if="${param.insufficient}">
+                        <div style="color:firebrick; "   class="error_messaje"> Tu saldo es insuficiente. </div>
                     </div>
                     <div class="trans-form">
-                        <button type="button" class="btn-submit" ><p class="btn-text">Transferir dinero</p></button>
+                        <button type="button" class="btn-submit"><p class="btn-text">Transferir dinero</p></button>
                     </div>
                     <div class="modal">
                         <div class="modal-content">
@@ -91,21 +118,22 @@
 
                             <div class="clearfix">
                                 <button type="button" class="cancelbtn">Cancelar</button>
-                                <input type="submit" value="Transferir" class="acceptbtn"></input>
+                                <input type="submit" value="Transferir" class="acceptbtn">
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
-
         </div>
-        <div class="error"></div>
+
     </main>
 </div>
 
 
 
-<script src="test.js"></script>
+<script src="/scripts/transferLogic.js"></script>
+<script src="../static/scripts/transferLogic.js"></script>
+
 
 </body>
 </html>

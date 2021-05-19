@@ -31,13 +31,13 @@
                 <ul>
                     <li>
                         <!-- El href vacío hace que se redireccione al dashboard -->
-                        <a href="" class="selected" id="dash-button">
+                        <a th:href="@{/emp/}" class="selected" id="dash-button">
                             <span class="material-icons sidebar-icon">analytics</span>
                             <p>Dashboard</p> 
                         </a>
                     </li>
                     <li>
-                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
+                        <a th:href="@{/emp/history}" id="trans-hist-button">
                             <span class="material-icons">history_edu</span>
                             <p>Historial transacciones</p> 
                         </a>
@@ -46,7 +46,7 @@
                     <hr class="solid">
 
                     <li>
-                        <a onclick="return transferButton()" id="transfer-button">
+                        <a th:href="@{/emp/transfer}" id="transfer-button">
                             <span class="material-icons">connect_without_contact</span>
                             <p>Transferir</p> 
                         </a>

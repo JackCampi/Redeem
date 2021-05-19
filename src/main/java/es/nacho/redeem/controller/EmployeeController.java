@@ -60,7 +60,7 @@ public class EmployeeController {
     }
 
     @GetMapping(value = "/transfer")
-    public String getTransferView(){return "transfer";}
+    public String getTransferView(){return WebPageNames.USER_TO_USER_TRANSFER;}
 
     @PostMapping(value = "/transfer")
     public String processTransaction(@ModelAttribute("transfer") TransferDto transferDto, HttpSession httpSession){
@@ -85,7 +85,7 @@ public class EmployeeController {
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
 
-        return WebPageNames.HISTORY;
+        return WebPageNames.EMP_HISTORY;
     }
 
     @ModelAttribute("transfer")
