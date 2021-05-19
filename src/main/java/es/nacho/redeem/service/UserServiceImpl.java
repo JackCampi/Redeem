@@ -197,9 +197,7 @@ public class UserServiceImpl implements UserService{
         Employee employee = employeeRepository.findByEmail(email);
         if(employee == null) throw new UserNotFoundException();
 
-        AuthDto authDto = new AuthDto(email, employee.getName(), employee.getId());
-
-        return authDto;
+        return new AuthDto(email, employee.getName(), employee.getId());
     }
 
     @Override
@@ -213,7 +211,11 @@ public class UserServiceImpl implements UserService{
         employeeObject.setName(memberDto.getName());
         employeeObject.setLastName(memberDto.getLastName());
         employeeObject.setCellphone(memberDto.getCellphone());
-        employeeObject.setBirthday(getCalendarFromString(memberDto.getBirthday()));
+        try {
+            employeeObject.setBirthday(getCalendarFromString(memberDto.getBirthday()));
+        } catch (InvalidCalendarFormatException e) {
+            e.printStackTrace();
+        }
 
         AreaKey key = new AreaKey(areaService.lowercaseAreaName(memberDto.getArea()), nit);
         Optional<Area> area = areaRepository.findById(key);
@@ -247,11 +249,24 @@ public class UserServiceImpl implements UserService{
         return date.matches("^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1])$");
     }
 
+    public void changePassword(long id, String currentPassword, String newPassword) throws Exception{
+        Optional<Employee> possibleEmployee = employeeRepository.findById(id);
+        if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = possibleEmployee.get();
+        if(!passwordIsCorrect(id,currentPassword)) throw new Exception();
+        employee.setPassword(passwordEncoder.encode(newPassword));
+        employeeRepository.save(employee);
+    }
+
     @Override
-    public boolean passwordIsCorrect(String mail, String password) {
-        Employee employee = employeeRepository.findByEmail(mail);
+    public boolean passwordIsCorrect(long id, String passwordToTest) throws UserNotFoundException {
+        Optional<Employee> possibleEmployee = employeeRepository.findById(id);
+        if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = possibleEmployee.get();
         String passwordInDatabase = employee.getPassword(),
-               passwordToConfirm = passwordEncoder.encode(password);
+               passwordToConfirm = passwordEncoder.encode(passwordToTest);
         return passwordInDatabase.equals(passwordToConfirm);
     }
+
+
 }

@@ -33,6 +33,8 @@ public interface UserService extends UserDetailsService {
 
     void editUserInformation(long nit, MemberDto memberDto);
 
-    boolean passwordIsCorrect(String mail, String password);
+    void changePassword(long id, String currentPassword, String newPassword) throws Exception;
+
+    boolean passwordIsCorrect(long id, String passwordToTest)throws UserNotFoundException ;
 
 }
