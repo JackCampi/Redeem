@@ -35,6 +35,6 @@ public interface UserService extends UserDetailsService {
 
     void changePassword(long id, String currentPassword, String newPassword) throws Exception;
 
-    boolean passwordIsCorrect(long id, String passwordToTest)throws UserNotFoundException ;
+    boolean passwordIsIncorrect(long id, String passwordToTest)throws UserNotFoundException ;
 
 }

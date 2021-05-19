@@ -253,19 +253,19 @@ public class UserServiceImpl implements UserService{
         Optional<Employee> possibleEmployee = employeeRepository.findById(id);
         if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
         Employee employee = possibleEmployee.get();
-        if(!passwordIsCorrect(id,currentPassword)) throw new Exception();
+        if(passwordIsIncorrect(id,currentPassword)) throw new Exception();
         employee.setPassword(passwordEncoder.encode(newPassword));
         employeeRepository.save(employee);
     }
 
     @Override
-    public boolean passwordIsCorrect(long id, String passwordToTest) throws UserNotFoundException {
+    public boolean passwordIsIncorrect(long id, String passwordToTest) throws UserNotFoundException {
         Optional<Employee> possibleEmployee = employeeRepository.findById(id);
         if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
         Employee employee = possibleEmployee.get();
         String passwordInDatabase = employee.getPassword(),
                passwordToConfirm = passwordEncoder.encode(passwordToTest);
-        return passwordInDatabase.equals(passwordToConfirm);
+        return !passwordInDatabase.equals(passwordToConfirm);
     }
 
 
