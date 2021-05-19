@@ -91,10 +91,11 @@ public class AreaServiceImpl implements AreaService{
             else if(!areaName.equals("gerencia")){
                 
                 AreaKey areaKey = new AreaKey(areaName, nit);
-                Optional<Area> area = areaRepository.findById(areaKey)
+                Optional<Area> area = areaRepository.findById(areaKey);
                 
                 if (area.isPresent()){
-                employees.addAll(area.get().getEmployeesIds());}
+                    employees.addAll(area.get().getEmployeesIds());
+                }
             }
         }
         return employees;
