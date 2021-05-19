@@ -173,16 +173,13 @@ public class AdminController {
         } catch (UserNotFoundException userNotFoundException) {
             return "redirect:/adm/allocation/comp?userNotFound";
         }
-        
 
-        for (Long employeeIdentifier : employeesIdentifiers) {
-            try {
-                balanceTransaction.userToUserBalanceTransaction(true, id, employeeIdentifier.toString(), allocationDto.getAmount());
-            }catch (UserNotFoundException userNotFoundException){
-                return "redirect:/adm/allocation/comp?userNotFound";
-            }catch (InsufficientBalanceException insufficientBalanceException){
-                return "redirect:/admin/allocation/comp?insufficient";
-            }
+        try {
+            balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+        }catch (UserNotFoundException userNotFoundException){
+            return "redirect:/adm/allocation/area?userNotFound";
+        }catch (InsufficientBalanceException insufficientBalanceException){
+            return "redirect:/admin/allocation/area?insufficient";
         }
         return WebPageNames.ADMIN_ALLOCATION_COMPANY;
     }
@@ -194,15 +191,14 @@ public class AdminController {
         
         Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas());
 
-        for (Long employeeIdentifier : employeesIdentifiers) {
-            try {
-                balanceTransaction.userToUserBalanceTransaction(true, id, employeeIdentifier.toString(), allocationDto.getAmount());
-            }catch (UserNotFoundException userNotFoundException){
-                return "redirect:/adm/allocation/area?userNotFound";
-            }catch (InsufficientBalanceException insufficientBalanceException){
-                return "redirect:/admin/allocation/area?insufficient";
-            }
+        try {
+            balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+        }catch (UserNotFoundException userNotFoundException){
+            return "redirect:/adm/allocation/area?userNotFound";
+        }catch (InsufficientBalanceException insufficientBalanceException){
+            return "redirect:/admin/allocation/area?insufficient";
         }
+        
         return WebPageNames.ADMIN_ALLOCATION_AREA;
     }
 

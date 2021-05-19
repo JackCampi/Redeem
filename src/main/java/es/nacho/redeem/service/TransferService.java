@@ -3,8 +3,6 @@ package es.nacho.redeem.service;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.Transfer;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
-import javafx.print.Collation;
-
 import java.util.Collection;
 
 public interface TransferService {
