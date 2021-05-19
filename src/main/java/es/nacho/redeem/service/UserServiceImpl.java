@@ -2,6 +2,7 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.config.dto.AuthDto;
 import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.InvalidCalendarFormatException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Employee;
@@ -226,12 +227,12 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    private Calendar getCalendarFromString(String string){
+    private Calendar getCalendarFromString(String string) throws InvalidCalendarFormatException {
 
         /*
         * Only works for date string with the format "yyyy-mm-dd"
          */
-
+        if(!calendarAsStringIsValid(string)) throw new InvalidCalendarFormatException(); //TODO test
         String[] dateArray = string.split("-");
 
         int year = Integer.parseInt(dateArray[0]);
@@ -242,6 +243,15 @@ public class UserServiceImpl implements UserService{
 
     }
 
+    private boolean calendarAsStringIsValid(String date){
+        return date.matches("^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1])$");
+    }
 
-
+    @Override
+    public boolean passwordIsCorrect(String mail, String password) {
+        Employee employee = employeeRepository.findByEmail(mail);
+        String passwordInDatabase = employee.getPassword(),
+               passwordToConfirm = passwordEncoder.encode(password);
+        return passwordInDatabase.equals(passwordToConfirm);
+    }
 }

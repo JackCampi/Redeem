@@ -33,4 +33,6 @@ public interface UserService extends UserDetailsService {
 
     void editUserInformation(long nit, MemberDto memberDto);
 
+    boolean passwordIsCorrect(String mail, String password);
+
 }
