@@ -14,6 +14,8 @@
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+
+
 </head>
 <body>
 
@@ -92,19 +94,17 @@
             <h1>Historial de transacciones</h1>
             <table class="trans-table">
                 <tbody>
-                <tr> <!--th:each="transaction : ${transactionList}">-->
+                <tr th:each="transaction : ${transferMessages}">
                     <td>
-                        <div class="row-container">
+                        <div class="row-container" th:object="${transaction}">
                             <div class="user-date">
-                                <p class="name">De: Jose Luis Moreno Hernández</p>
-                                <p class="date">Fecha</p>
+                                <p class="name"></p>
+                                <p class="date"></p>
                             </div>
-                            <p class="amount">5000</p>
+                            <p class="amount"></p>
                         </div>
+
                     </td>
-                    <!--<td th:text="${transaction.employeeFrom}"></td>
-                    <td th:text="${transaction.employeeTo}"></td>
-                    <td th:text="${transaction.amount}"></td>-->
                 </tr>
 
 
@@ -116,4 +116,54 @@
         <div class="error"></div>
     </main>
 </div>
+
+
+<script th:inline="javascript">
+    var registros = document.getElementsByClassName("row-container");
+    var nombres = document.getElementsByClassName("name");
+    var fechas = document.getElementsByClassName("date");
+    var cantidades = document.getElementsByClassName("amount");
+    let listado =  [[${transferMessages}]];
+    var valores;
+    var pos;
+
+    for(var i=0;i<listado.length;i++){
+        valores = listado[i];
+        pos = Object.values(valores);
+        fechas[i].innerHTML =dateFormat(pos[1]);
+        cantidades[i].innerHTML = "$" + pos[2];
+        if(pos[3] == 0){
+            registros[i].style.marginLeft = "40%";
+            nombres[i].innerHTML = "Para: "+ pos[0];
+            nombres[i].style.color = "#85342A";
+            cantidades[i].style.color = "#85342A";
+        }else{
+            nombres[i].innerHTML = "De: "+pos[0];
+            nombres[i].style.color = "#36852A";
+            cantidades[i].style.color = "#36852A";
+        }
+    }
+
+    function dateFormat(date){
+        var newDate = "";
+        for(var i=0; i<11;i++){
+            if(date[i] == "-"){
+                newDate += "/";
+            }else{
+                newDate += date[i];
+            }
+        }
+        var hour = parseInt(date.slice(11,13),10);
+        var dayPart;
+        if(Math.floor(hour/12)==1){dayPart="PM";}else{dayPart="AM";}
+        hour = (hour%12).toString();
+        if(hour.length==1){hour="0"+hour;}
+        newDate += hour+":"+date.slice(14,16)+" "+dayPart;
+        return newDate ;
+    }
+
+</script>
+
+
 </body>
+</html>

@@ -6,11 +6,11 @@ import java.util.Objects;
 public class TransferHistoryMessageDto implements Comparable<TransferHistoryMessageDto> {
 
     private String name;
-    private LocalDateTime dateTime;
+    private String dateTime;
     private long amount;
-    private boolean isArrival;
+    private long isArrival;
 
-    public TransferHistoryMessageDto(String name, LocalDateTime dateTime, long amount, boolean isArrival) {
+    public TransferHistoryMessageDto(String name, String dateTime, long amount, long isArrival) {
         this.name = name;
         this.dateTime = dateTime;
         this.amount = amount;
@@ -53,11 +53,11 @@ public class TransferHistoryMessageDto implements Comparable<TransferHistoryMess
         this.name = name;
     }
 
-    public LocalDateTime getDateTime() {
+    public String getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
+    public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
 
@@ -69,11 +69,7 @@ public class TransferHistoryMessageDto implements Comparable<TransferHistoryMess
         this.amount = amount;
     }
 
-    public boolean isArrival() {
-        return isArrival;
-    }
+    public long getIsArrival() { return isArrival; }
 
-    public void setArrival(boolean arrival) {
-        isArrival = arrival;
-    }
+    public void setIsArrival(long isArrival) { this.isArrival = isArrival; }
 }

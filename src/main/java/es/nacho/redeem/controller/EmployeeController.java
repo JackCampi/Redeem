@@ -74,7 +74,7 @@ public class EmployeeController {
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/emp/transfer?insufficient";
         }
-        return WebPageNames.USER_TO_USER_TRANSFER;
+        return "redirect:/emp/transfer?success";
     }
 
     @GetMapping(value = "/history")
@@ -85,7 +85,7 @@ public class EmployeeController {
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
 
-        return WebPageNames.HISTORY;
+        return WebPageNames.EMP_HISTORY;
     }
 
     @ModelAttribute("transfer")

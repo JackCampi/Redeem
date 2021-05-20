@@ -111,6 +111,9 @@
                     <div class="trans-form">
                         <button type="button" class="btn-submit"><p class="btn-text">Transferir dinero</p></button>
                     </div>
+                    <div  th:if="${param.success}">
+                        <div style="color:lawngreen; "   class="error_messaje"> Transacción realizada con éxito. </div>
+                    </div>
                     <div class="modal">
                         <div class="modal-content">
                             <h2 class="casi">¡¡¡Ya casi!!!</h2>

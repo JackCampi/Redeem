@@ -14,6 +14,7 @@ public interface WebPageNames {
     String ADMIN_ALLOCATION_EMPLOYEE = "employeeAllocation";
     String ADMIN_ALLOCATION_COMPANY = "companyAllocation";
     String ADMIN_ALLOCATION_AREA = "areaAllocation";
-    String HISTORY = "history";
+    String ADMIN_HISTORY = "adminTransHistory";
+    String EMP_HISTORY = "employeeTransHistory";
     String MEMBERS = "employeeList";
 }
