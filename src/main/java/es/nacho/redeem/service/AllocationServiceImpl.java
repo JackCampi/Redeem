@@ -16,9 +16,9 @@ public class AllocationServiceImpl implements AllocationService{
     private AllocationRepository allocationRepository;
 
     @Override
-    public Allocation saveAllocation(long amount, String description, Employee admin, Employee employee) {
+    public Allocation saveAllocation(String company, long amount, String description, Employee admin, Employee employee) {
         
-        description = String.format("El administrador %s %s abonó $%o al empleado %s %s", admin.getName(),admin.getLastName(),amount, employee.getName(),employee.getLastName());
+        description = String.format("El administrador %s %s de la empresa %s abonó $%o al empleado %s %s", admin.getName(),admin.getLastName(), company, amount, employee.getName(),employee.getLastName());
         return allocationRepository.save(new Allocation(LocalDateTime.now(), amount, description, admin, employee));
     }
     

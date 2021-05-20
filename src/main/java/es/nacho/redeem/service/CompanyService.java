@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
@@ -17,6 +18,8 @@ public interface CompanyService {
     Collection<String> getAreasNames(Long companyNIT) throws Exception;
 
     Long getCompanyNitByUser(String userEmail) throws Exception;
+
+    Company discountCompanyBudget(long nit, long amount) throws InsufficientBalanceException;
 
     AdminDashboardInfoDto fillAdminDashboardInfoDto(long nit, AdminDashboardInfoDto adminDashboardInfoDto) throws Exception;
 

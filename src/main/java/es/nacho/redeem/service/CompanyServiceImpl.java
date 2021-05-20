@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Employee;
@@ -169,6 +170,21 @@ public class CompanyServiceImpl implements CompanyService{
     private String getStringFromCalendar(Calendar calendar){
 
         return calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+
+    }
+
+    @Override
+    public Company discountCompanyBudget(long nit, long amount) throws InsufficientBalanceException {
+        
+        Optional<Company> company = companyRepository.findById(nit);
+
+        Company companyObject = company.get();
+
+        long budget= companyObject.getBudget();
+        if(amount > budget) throw new InsufficientBalanceException();
+
+        companyObject.setBudget(budget-amount);
+        return companyRepository.save(companyObject);
 
     }
 

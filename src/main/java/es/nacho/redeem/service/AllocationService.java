@@ -5,6 +5,6 @@ import es.nacho.redeem.model.Employee;
 
 public interface AllocationService {
     
-    Allocation saveAllocation(long amount, String description, Employee admin, Employee employee);
+    Allocation saveAllocation(String company, long amount, String description, Employee admin, Employee employee);
     
 }

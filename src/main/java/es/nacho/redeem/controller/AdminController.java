@@ -4,6 +4,7 @@ import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.service.AreaService;
 import es.nacho.redeem.model.Employee;
+import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
@@ -43,6 +44,9 @@ public class AdminController {
 
     @Autowired
     private TransferService transferService;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -140,9 +144,17 @@ public class AdminController {
     public String processEmployeeAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
 
         long id = (long) httpSession.getAttribute("id");
+        Long nit = (long) httpSession.getAttribute("nit");
+
+        Collection<Long> employeesIdentifiers = new ArrayList<>();
+        Employee employee = employeeRepository.findByEmail(allocationDto.getEmployee());
 
         try {
-            balanceTransaction.userToUserBalanceTransaction(true, id, allocationDto.getEmployee(), allocationDto.getAmount());
+            if(employee == null) throw new UserNotFoundException();
+            employeesIdentifiers.add(employee.getId());
+
+            balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
+            
             return "redirect:/adm/allocation/emp?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/emp?userNotFound";
@@ -175,7 +187,7 @@ public class AdminController {
         }
 
         try {
-            balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+            balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             return "redirect:/adm/allocation/comp?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/area?userNotFound";
@@ -193,7 +205,7 @@ public class AdminController {
         Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas(), nit);
 
         try {
-            balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+            balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             return "redirect:/adm/allocation/area?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/area?userNotFound";
