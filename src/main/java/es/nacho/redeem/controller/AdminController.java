@@ -108,13 +108,13 @@ public class AdminController {
     }
 
     @GetMapping(value = "/allocation")
-    public String getAllocationView(){return "allocation";}
+    public String getAllocationView(){return WebPageNames.ADMIN_ALLOCATION;}
 
     @GetMapping(value = "/allocation/emp")
-    public String getEmployeeAllocationView(){return "allocation";}
+    public String getEmployeeAllocationView(){return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;}
 
     @GetMapping(value = "/allocation/comp")
-    public String getCompanyAllocationView(){return "allocation";}
+    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION_COMPANY;}
 
     @GetMapping(value = "/allocation/area")
     public String getAreaAllocationView(HttpSession session, Model model){
@@ -133,7 +133,7 @@ public class AdminController {
 
         model.addAttribute("areaNames", areaNames);
 
-        return "allocation";
+        return WebPageNames.ADMIN_ALLOCATION_AREA;
     }
 
     @PostMapping(value = "/allocation/emp")
@@ -143,12 +143,12 @@ public class AdminController {
 
         try {
             balanceTransaction.userToUserBalanceTransaction(true, id, allocationDto.getEmployee(), allocationDto.getAmount());
+            return "redirect:/adm/allocation/emp?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/emp?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/emp?insufficient";
         }
-        return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;
     }
 
     @PostMapping(value = "/allocation/comp")
@@ -176,12 +176,12 @@ public class AdminController {
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+            return "redirect:/adm/allocation/comp?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/area?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/area?insufficient";
         }
-        return WebPageNames.ADMIN_ALLOCATION_COMPANY;
     }
 
     @PostMapping(value = "/allocation/area")
@@ -194,13 +194,12 @@ public class AdminController {
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(id, employeesIdentifiers, allocationDto.getAmount());
+            return "redirect:/adm/allocation/area?success";
         }catch (UserNotFoundException userNotFoundException){
             return "redirect:/adm/allocation/area?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/area?insufficient";
         }
-        
-        return WebPageNames.ADMIN_ALLOCATION_AREA;
     }
 
     @GetMapping(value = "/history")
