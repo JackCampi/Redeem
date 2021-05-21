@@ -8,6 +8,7 @@
     <title>Employee history</title>
 
     <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/transhistoryStyle.css">
     <link rel="stylesheet" href="../static/styles/transHistoryStyle.css">
 
@@ -113,7 +114,6 @@
         </div>
 
 
-        <div class="error"></div>
     </main>
 </div>
 
@@ -125,13 +125,13 @@
     var cantidades = document.getElementsByClassName("amount");
     let listado =  [[${transferMessages}]];
     var valores;
-    var pos;
-
-    for(var i=0;i<listado.length;i++){
-        valores = listado[i];
+    var pos, inverse;
+    for(var i=listado.length-1;i>=0;i--){
+        inverse = listado.length-1-i;
+        valores = listado[inverse];
         pos = Object.values(valores);
-        fechas[i].innerHTML =dateFormat(pos[1]);
-        cantidades[i].innerHTML = "$" + pos[2];
+        fechas[i].innerHTML = dateFormat(pos[1]);
+        cantidades[i].innerHTML = "$" + pos[2]+",00";
         if(pos[3] == 0){
             registros[i].style.marginLeft = "40%";
             nombres[i].innerHTML = "Para: "+ pos[0];

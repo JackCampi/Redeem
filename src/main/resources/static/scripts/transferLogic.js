@@ -15,6 +15,8 @@ var amount = document.getElementById("amount");
 
 var invalidUser = document.getElementById("email_error");
 
+var invalidAmount = document.getElementById("amount_error");
+
 btn.onclick = function(){
     modal.style.display="block";
     var benValue = beneficiary.value;
@@ -25,14 +27,25 @@ btn.onclick = function(){
 
 
 form.addEventListener('submit', (e) => {
+    var benValue = beneficiary.value;
+    var amountValue = amount.value;
 
-    if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(beneficiary.value))){
+    if((/^\d+$/.test(benValue))){
+        modal.style.display = "none";
+    }else if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(beneficiary.value))){
         beneficiary.style.border = '1px solid firebrick';
         beneficiary.focus();
         modal.style.display = "none";
         invalidUser.style.display = "block";
         invalidUser.style.color = "firebrick";
         e.preventDefault()
+    }else if(parseInt(amountValue) < 10000){
+        amount.style.border = '1px solid firebrick';
+        amount.focus();
+        modal.style.display = "none";
+        invalidAmount.style.display = "block";
+        invalidAmount.style.color = "firebrick";
+        e.preventDefault();
     }else{
         modal.style.display = "none";
     }
