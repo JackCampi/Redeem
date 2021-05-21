@@ -217,12 +217,17 @@ public class UserServiceImpl implements UserService{
             e.printStackTrace();
         }
 
-        AreaKey key = new AreaKey(areaService.lowercaseAreaName(memberDto.getArea()), nit);
+        String areaName = areaService.lowercaseAreaName(memberDto.getArea());
+
+        AreaKey key = new AreaKey(areaName, nit);
         Optional<Area> area = areaRepository.findById(key);
 
         if( !area.isPresent()) throw new RuntimeException("Area not found");
 
         employeeObject.setArea(area.get());
+
+        if(areaName.equals("gerencia")) employeeObject.setRol("administrador");
+        else employeeObject.setRol("empleado");
 
         employeeRepository.save(employeeObject);
 

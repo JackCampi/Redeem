@@ -8,9 +8,9 @@ public class TransferHistoryMessageDto implements Comparable<TransferHistoryMess
     private String name;
     private String dateTime;
     private long amount;
-    private long isArrival;
+    private byte isArrival;
 
-    public TransferHistoryMessageDto(String name, String dateTime, long amount, long isArrival) {
+    public TransferHistoryMessageDto(String name, String dateTime, long amount, byte isArrival) {
         this.name = name;
         this.dateTime = dateTime;
         this.amount = amount;
@@ -69,7 +69,7 @@ public class TransferHistoryMessageDto implements Comparable<TransferHistoryMess
         this.amount = amount;
     }
 
-    public long getIsArrival() { return isArrival; }
+    public byte getIsArrival() { return isArrival; }
 
-    public void setIsArrival(long isArrival) { this.isArrival = isArrival; }
+    public void setIsArrival(byte isArrival) { this.isArrival = isArrival; }
 }

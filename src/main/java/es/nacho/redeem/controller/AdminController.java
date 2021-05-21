@@ -222,7 +222,7 @@ public class AdminController {
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
 
-        return WebPageNames.HISTORY;
+        return WebPageNames.ADMIN_HISTORY;
     }
 
     @ModelAttribute("allocation")

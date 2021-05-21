@@ -138,9 +138,9 @@ class TransferServiceImplTest {
         assertEquals(collection.size(), 3);
 
         ArrayList<TransferHistoryMessageDto> expectedCollection = new ArrayList<>();
-        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2020,05,16,22,10), 5000L, false));
-        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2019,05,16,22,10), 1000L, true));
-        expectedCollection.add(new TransferHistoryMessageDto("sebastian", LocalDateTime.of(2010,05,16,22,10), 2000L, false));
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", "2020-05-16 22:10:00", 5000L, (byte) 0));
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", "2019-05-16 22:10:00", 1000L, (byte) 1));
+        expectedCollection.add(new TransferHistoryMessageDto("sebastian", "2010-05-16 22:10:00", 2000L, (byte) 0));
 
         assertIterableEquals(expectedCollection, collection);
 

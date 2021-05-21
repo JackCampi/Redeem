@@ -169,7 +169,10 @@ public class CompanyServiceImpl implements CompanyService{
 
     private String getStringFromCalendar(Calendar calendar){
 
-        return calendar.get(Calendar.YEAR) + "-" + calendar.get(Calendar.MONTH) + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+        String month = "" + calendar.get(Calendar.MONTH);
+        if(month.length() < 2) month = "0" + month;
+
+        return calendar.get(Calendar.YEAR) + "-" + month + "-" + calendar.get(Calendar.DAY_OF_MONTH);
 
     }
 

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -41,8 +42,9 @@ public class TransferServiceImpl implements TransferService{
 
             transferHistoryMessageDtos.add(new TransferHistoryMessageDto(
                     transfer.getEmployeeTo().getName(),
-                    transfer.getDatetime(),
-                    transfer.getAmount(),false
+                    formatLocalDateTime(transfer.getDatetime()),
+                    transfer.getAmount(),
+                    (byte) 0
 
             ));
 
@@ -52,9 +54,9 @@ public class TransferServiceImpl implements TransferService{
 
             transferHistoryMessageDtos.add(new TransferHistoryMessageDto(
                     transfer.getEmployeeFrom().getName(),
-                    transfer.getDatetime(),
+                    formatLocalDateTime(transfer.getDatetime()),
                     transfer.getAmount(),
-                    true
+                    (byte) 1
             ));
 
         });
@@ -64,4 +66,10 @@ public class TransferServiceImpl implements TransferService{
         return transferHistoryMessageDtos;
 
     }
+
+    private String formatLocalDateTime(LocalDateTime localDateTime){
+        return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+    }
+
 }

@@ -22,7 +22,6 @@ form.addEventListener( 'submit', (event) => {
 });
 
 function editModal(id, name, lastName, email, cellphone, area, birthday) {
-  alert(id + name + lastName + email + cellphone + area + birthday);
   document.getElementById("id").value = id;
   document.getElementById("name").value = name;
   document.getElementById("lastName").value = lastName;
@@ -34,7 +33,6 @@ function editModal(id, name, lastName, email, cellphone, area, birthday) {
 }
 
 function removeModal(id, name, lastName, balance) {
-  alert(id + name + lastName + balance)
   document.getElementById("removeName").innerText = name;
   document.getElementById("removeLastName").innerText = lastName;
   document.getElementById("removeAmount").innerText = balance;
