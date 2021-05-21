@@ -9,11 +9,11 @@ var cancel = document.getElementsByClassName("cancelbtn")[0];
 
 var form = document.getElementById("doc-form");
 
-var errorElement = document.getElementById('error');
-
 var beneficiary = document.getElementById("beneficiary");
 
 var amount = document.getElementById("amount");
+
+var invalidUser = document.getElementById("email_error");
 
 btn.onclick = function(){
     modal.style.display="block";
@@ -25,13 +25,13 @@ btn.onclick = function(){
 
 
 form.addEventListener('submit', (e) => {
-    let messages = []
 
-
-    if (messages.length > 0){
-
-        errorElement.innerText = messages.join('/')
+    if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(beneficiary.value))){
+        beneficiary.style.border = '1px solid firebrick';
+        beneficiary.focus();
         modal.style.display = "none";
+        invalidUser.style.display = "block";
+        invalidUser.style.color = "firebrick";
         e.preventDefault()
     }else{
         modal.style.display = "none";

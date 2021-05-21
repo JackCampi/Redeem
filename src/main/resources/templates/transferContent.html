@@ -98,6 +98,7 @@
                         <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
                         <input id="beneficiary" class="trans-input" placeholder="    Ingrese un email o un id." th:field="*{receiverIdentifier}" required autofocus="autofocus" >
                     </div>
+                    <div  style="display: none" id="email_error"> Por favor, introduzca un correo válido. </div>
                     <div  th:if="${param.userNotFound}">
                         <div style="color:firebrick; "   class="error_messaje"> El usuario que ingresaste no existe. </div>
                     </div>
