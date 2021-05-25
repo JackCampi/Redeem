@@ -105,7 +105,7 @@
                     </div>
                     <div class="trans-form">
                         <label class="trans-label" for="amount">Monto a transferir</label>
-                        <input id="amount" class="trans-input" placeholder="    Ingrese la cantidad a transferir." type="number" th:field="*{amount}" required autofocus="autofocus">
+                        <input id="amount" class="trans-input" max="10000000" placeholder="    Ingrese la cantidad a transferir." type="number" th:field="*{amount}" required autofocus="autofocus">
                     </div>
                     <div  style="display: none" id="amount_error"> Como mínimo se deben transferir 10000$. </div>
                     <div  th:if="${param.insufficient}">

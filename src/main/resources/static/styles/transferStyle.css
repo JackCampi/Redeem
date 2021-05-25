@@ -209,14 +209,14 @@ h1{
 
 .subcontainer{
     margin-right: 15%;
-    margin-left: 5%;
+    margin-left: 0;
     margin-top: 5%;
-    width: 100%;
+    width: 110%;
 }
 
 .trans-image{
     margin-right: 10%;
-    margin-top: 5%;
+    margin-top: 15%;
     width: 25%;
     height: 25%;
 }
@@ -248,7 +248,7 @@ h1{
     border: 1px solid rgba(255, 255, 255, 0.705);
     width: 249px;
     height: 53px;
-    margin-left: 30%;
+    margin-left: 27%;
     margin-top: 10%;
 }
 
