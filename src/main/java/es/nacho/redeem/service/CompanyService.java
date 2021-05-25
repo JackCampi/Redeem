@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.CompanyNotFoundException;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
@@ -20,6 +21,7 @@ public interface CompanyService {
     Long getCompanyNitByUser(String userEmail) throws Exception;
 
     Company discountCompanyBudget(long nit, long amount) throws InsufficientBalanceException;
+    Company incrementCompanyBudget(long nit, long amount);
 
     AdminDashboardInfoDto fillAdminDashboardInfoDto(long nit, AdminDashboardInfoDto adminDashboardInfoDto) throws Exception;
 
@@ -27,7 +29,7 @@ public interface CompanyService {
 
     Collection<MemberDto> getEmployees(Long companyNIT) throws Exception;
 
-    void disableEmployee(long id);
+    long disableEmployee(long id);
 
     void enableEmployee(String mail);
 

@@ -1,6 +1,7 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.config.dto.AuthDto;
+import es.nacho.redeem.exception.EmailAlreadyRegisteredException;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.InvalidCalendarFormatException;
 import es.nacho.redeem.exception.UserNotFoundException;
@@ -201,10 +202,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void editUserInformation(long nit, MemberDto memberDto) {
+    public void editUserInformation(long nit, MemberDto memberDto) throws EmailAlreadyRegisteredException {
 
         Optional<Employee> employee = employeeRepository.findById(memberDto.getId());
         if(!employee.isPresent()) throw new UserNotFoundException();
+
+        if(checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
         Employee employeeObject = employee.get();
         employeeObject.setEmail(memberDto.getEmail());
@@ -254,6 +257,7 @@ public class UserServiceImpl implements UserService{
         return date.matches("^\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[1-2][0-9]|3[0-1])$");
     }
 
+    @Override
     public void changePassword(long id, String currentPassword, String newPassword) throws Exception{
         Optional<Employee> possibleEmployee = employeeRepository.findById(id);
         if(!possibleEmployee.isPresent()) throw new UserNotFoundException();

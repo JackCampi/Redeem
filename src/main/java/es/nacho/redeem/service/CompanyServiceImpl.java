@@ -1,5 +1,6 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.exception.CompanyNotFoundException;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Company;
@@ -153,11 +154,12 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public void disableEmployee(long id) {
+    public long disableEmployee(long id) {
         Optional<Employee> employee = employeeRepository.findById(id);
         Employee employeeObject = employee.get();
         employeeObject.setActive(false);
         employeeRepository.save(employeeObject);
+        return employeeObject.getBalance();
     }
 
     @Override
@@ -180,6 +182,7 @@ public class CompanyServiceImpl implements CompanyService{
     public Company discountCompanyBudget(long nit, long amount) throws InsufficientBalanceException {
         
         Optional<Company> company = companyRepository.findById(nit);
+        if(!company.isPresent()) throw new CompanyNotFoundException();
 
         Company companyObject = company.get();
 
@@ -191,5 +194,14 @@ public class CompanyServiceImpl implements CompanyService{
 
     }
 
+    @Override
+    public Company incrementCompanyBudget(long nit, long amount) {
+        Optional<Company> company = companyRepository.findById(nit);
+        if(!company.isPresent()) throw new CompanyNotFoundException();
 
+        Company companyObject = company.get();
+        companyObject.setBudget(companyObject.getBudget() + amount);
+        return companyRepository.save(companyObject);
+
+    }
 }

@@ -1,7 +1,10 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.exception.EmailAlreadyRegisteredException;
+import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +26,9 @@ public class MembersController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private BalanceTransaction balanceTransaction;
 
     @GetMapping
     public  String getMembersView(HttpSession session, Model model){
@@ -55,19 +61,30 @@ public class MembersController {
     }
 
     @GetMapping(value = "/disable")
-    public String disableUser(@RequestParam long id){
+    public String disableUser(@RequestParam long id, HttpSession session){
 
-        companyService.disableEmployee(id);
+        long nit = (long) session.getAttribute("nit");
 
-        return "redirect:/admin/members";
+        long amount = companyService.disableEmployee(id);
+        try{
+            balanceTransaction.returnDisabledUserBalanceToCompany(nit, id, amount);
+        }catch (InsufficientBalanceException e){
+            return "redirect:/error";
+        }
+
+        return "redirect:/admin/members?disable&success";
     }
 
     @PostMapping(value = "/edit")
     public String editUser(@ModelAttribute("member") MemberDto memberDto, HttpSession session){
 
         long nit = (long) session.getAttribute("nit");
-        userService.editUserInformation(nit, memberDto);
-        return "redirect:/admin/members";
+        try{
+            userService.editUserInformation(nit, memberDto);
+        }catch (EmailAlreadyRegisteredException e){
+            return "redirect:/admin/members?error&emailAlreadyRegistered";
+        }
+        return "redirect:/admin/members?edit&success";
 
     }
 

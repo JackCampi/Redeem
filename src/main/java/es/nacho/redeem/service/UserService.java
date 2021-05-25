@@ -1,6 +1,7 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.config.dto.AuthDto;
+import es.nacho.redeem.exception.EmailAlreadyRegisteredException;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
@@ -31,7 +32,7 @@ public interface UserService extends UserDetailsService {
 
     AuthDto fillAuthDto(String email);
 
-    void editUserInformation(long nit, MemberDto memberDto);
+    void editUserInformation(long nit, MemberDto memberDto) throws EmailAlreadyRegisteredException;
 
     void changePassword(long id, String currentPassword, String newPassword) throws Exception;
 
