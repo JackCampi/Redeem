@@ -86,8 +86,7 @@ public class AreaServiceImpl implements AreaService{
         Collection<Long> employees = new ArrayList<>();
 
         for (String areaName : areasNames){
-            
-            if(areaName.equals("areas not found")) throw new UserNotFoundException();
+            if(areaName.equals("company not found")) throw new UserNotFoundException();
             else if(!areaName.equals("gerencia")){
                 
                 AreaKey areaKey = new AreaKey(areaName, nit);
@@ -95,6 +94,8 @@ public class AreaServiceImpl implements AreaService{
                 
                 if (area.isPresent()){
                     employees.addAll(area.get().getEmployeesIds());
+                }else{
+                    throw new UserNotFoundException();
                 }
             }
         }

@@ -3,7 +3,7 @@ package es.nacho.redeem.web.dto;
 import java.util.Collection;
 
 public class AllocationDto {
-    
+
     private String employee;
     private Long amount;
     private Collection<String> areas;
@@ -15,6 +15,10 @@ public class AllocationDto {
 
     public AllocationDto(Collection<String> areas, Long amount) {
         this.areas = areas;
+        this.amount = amount;
+    }
+
+    public AllocationDto(Long amount) {
         this.amount = amount;
     }
 

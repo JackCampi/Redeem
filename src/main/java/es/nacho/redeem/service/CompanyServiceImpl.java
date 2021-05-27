@@ -71,7 +71,7 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public Collection<String> getAreasNames(Long companyNIT) throws Exception {
+    public Collection<String> getAreasNames(Boolean capitalized,Long companyNIT) throws Exception {
 
         Optional<Company> company =  companyRepository.findById(companyNIT);
         if( !company.isPresent()) throw new Exception("Company not found");
@@ -79,7 +79,11 @@ public class CompanyServiceImpl implements CompanyService{
         Collection<Area> area = areaRepository.findByCompany(company.get());
 
         Collection<String> areaNames = new ArrayList<>();
-        area.forEach(areaObject -> areaNames.add(areaService.capitalizeAreaName(areaObject.getId().getName())));
+        if(capitalized){
+            area.forEach(areaObject -> areaNames.add(areaService.capitalizeAreaName(areaObject.getId().getName())));
+        }else{
+            area.forEach(areaObject -> areaNames.add(areaObject.getId().getName()));
+        }
 
         return areaNames;
     }
@@ -195,13 +199,13 @@ public class CompanyServiceImpl implements CompanyService{
     }
 
     @Override
-    public Company incrementCompanyBudget(long nit, long amount) {
+    public void incrementCompanyBudget(long nit, long amount) {
         Optional<Company> company = companyRepository.findById(nit);
         if(!company.isPresent()) throw new CompanyNotFoundException();
 
         Company companyObject = company.get();
         companyObject.setBudget(companyObject.getBudget() + amount);
-        return companyRepository.save(companyObject);
+        companyRepository.save(companyObject);
 
     }
 }

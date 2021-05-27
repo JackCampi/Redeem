@@ -45,7 +45,7 @@ public class MembersController {
             adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
             adminDashboardInfoDto = companyService.fillAdminDashboardInfoDto(nit, adminDashboardInfoDto);
             employees = companyService.getEmployees(nit);
-            areaNames = companyService.getAreasNames(nit);
+            areaNames = companyService.getAreasNames(true,nit);
 
         }catch (Exception e){
             e.printStackTrace();

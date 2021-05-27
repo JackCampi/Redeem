@@ -61,7 +61,9 @@ public class Area {
         Collection<Long> employeesIds = new ArrayList<>();
 
         for (Employee employee : employees) {
+            if(employee.getActive()){
             employeesIds.add(employee.getId());
+            }
         }
         return employeesIds;
     }

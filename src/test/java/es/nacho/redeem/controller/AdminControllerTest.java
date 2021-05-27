@@ -22,6 +22,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -64,6 +65,8 @@ class AdminControllerTest {
         areaRepository.save(area);
         Area area2 = new Area("bodega", company);
         areaRepository.save(area2);
+        Area area3 = new Area("compras", company);
+        areaRepository.save(area3);
 
         employeeRepository.save(new Employee(
                 "brayan",
@@ -87,7 +90,7 @@ class AdminControllerTest {
                 0L,
                 true,
                 "administrador",
-                area2
+                area
         ));
         employeeRepository.save(new Employee(
                 "emp",
@@ -100,6 +103,18 @@ class AdminControllerTest {
                 true,
                 "empleado",
                 area2
+        ));
+        employeeRepository.save(new Employee(
+                "emp",
+                "test3",
+                "emptest3@gmail.com",
+                "1234",
+                "1111",
+                new GregorianCalendar(2002,02,02),
+                0L,
+                true,
+                "empleado",
+                area3
         ));
     }
 
@@ -186,7 +201,7 @@ class AdminControllerTest {
 
     @Test
     @Rollback
-    void processEmployeeAllocation() {
+    void processEmployeeAllocationTest() {
 
         HttpSession session = new MockHttpSession();
         Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
@@ -197,12 +212,13 @@ class AdminControllerTest {
         String page = controller.processEmployeeAllocation(allocationDto, session);
 
         assertEquals("redirect:/admin/allocation/emp?success", page);
+        employee.getOutgoinAllocations().forEach(allocation -> System.out.println(allocation.getDescription()));
 
     }
 
     @Test
     @Rollback
-    void processEmployeeAllocation2() {
+    void processEmployeeAllocationTest2() {
 
         HttpSession session = new MockHttpSession();
         Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
@@ -218,7 +234,7 @@ class AdminControllerTest {
 
     @Test
     @Rollback
-    void processEmployeeAllocation3() {
+    void processEmployeeAllocationTest3() {
 
         HttpSession session = new MockHttpSession();
         Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
@@ -229,6 +245,114 @@ class AdminControllerTest {
         String page = controller.processEmployeeAllocation(allocationDto, session);
 
         assertEquals("redirect:/admin/allocation/emp?insufficient", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processCompanyAllocationTest() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto(10000L);
+        String page = controller.processCompanyAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/comp?success", page);
+        employee.getOutgoinAllocations().forEach(allocation -> System.out.println(allocation.getDescription()));
+    }
+
+    @Test
+    @Rollback
+    void processCompanyAllocationTest2() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 12L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto(1000L);
+        String page = controller.processCompanyAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/comp?companyNotFound", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processCompanyAllocationTest3() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto(9999999L);
+        String page = controller.processCompanyAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/comp?insufficient", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processAreaAllocationTest() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        Collection<String> areas = new ArrayList<>();
+        areas.add("bodega");
+        areas.add("compras");
+
+        AllocationDto allocationDto = new AllocationDto(areas,10000L);
+        String page = controller.processAreaAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/area?success", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processAreaAllocationTest2() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        Collection<String> areas = new ArrayList<>();
+        areas.add("bodega");
+        areas.add("comunicaciones");
+
+        AllocationDto allocationDto = new AllocationDto(areas,10000L);
+        String page = controller.processAreaAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/area?areaNotFound", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processAreaAllocationTest3() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        Collection<String> areas = new ArrayList<>();
+        areas.add("bodega");
+        areas.add("compras");
+
+        AllocationDto allocationDto = new AllocationDto(areas,10000000L);
+        String page = controller.processAreaAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/area?insufficient", page);
 
     }
 }

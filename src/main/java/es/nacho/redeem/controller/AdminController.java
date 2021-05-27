@@ -80,7 +80,7 @@ public class AdminController {
         Collection<String> areaNames = new ArrayList<>();
 
         try{
-            areaNames = companyService.getAreasNames(nit);
+            areaNames = companyService.getAreasNames(true, nit);
 
         }catch (Exception e){
             areaNames.add("areas not found");
@@ -128,7 +128,7 @@ public class AdminController {
         Collection<String> areaNames = new ArrayList<>();
 
         try{
-            areaNames = companyService.getAreasNames(nit);
+            areaNames = companyService.getAreasNames(false, nit);
 
         }catch (Exception e){
             areaNames.add("areas not found");
@@ -144,7 +144,7 @@ public class AdminController {
     public String processEmployeeAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
 
         long id = (long) httpSession.getAttribute("id");
-        Long nit = (long) httpSession.getAttribute("nit");
+        long nit = (long) httpSession.getAttribute("nit");
 
         Collection<Long> employeesIdentifiers = new ArrayList<>();
         Employee employee = employeeRepository.findByEmail(allocationDto.getEmployee());
@@ -173,26 +173,24 @@ public class AdminController {
         Collection<String> areasNames = new ArrayList<>();
 
         try {
-            areasNames = companyService.getAreasNames(nit);
+            areasNames = companyService.getAreasNames(false, nit);
         } catch (Exception e) {
-            areasNames.add("areas not found");
+            areasNames.add("company not found");
         }
 
-        Collection<Long> employeesIdentifiers = new ArrayList<>();
+        Collection<Long> employeesIdentifiers;
 
         try {
             employeesIdentifiers = areaService.getAllEmployees(areasNames, nit);
         } catch (UserNotFoundException userNotFoundException) {
-            return "redirect:/admin/allocation/comp?userNotFound";
+            return "redirect:/admin/allocation/comp?companyNotFound";
         }
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             return "redirect:/admin/allocation/comp?success";
-        }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/admin/allocation/area?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
-            return "redirect:/admin/allocation/area?insufficient";
+            return "redirect:/admin/allocation/comp?insufficient";
         }
     }
 
@@ -200,15 +198,16 @@ public class AdminController {
     public String processAreaAllocation(@ModelAttribute("allocation") AllocationDto allocationDto, HttpSession httpSession){
 
         long id = (long) httpSession.getAttribute("id");
-        Long nit = (long) httpSession.getAttribute("nit");
-        
-        Collection<Long> employeesIdentifiers = areaService.getAllEmployees(allocationDto.getAreas(), nit);
+        long nit = (long) httpSession.getAttribute("nit");
+
+        Collection<String> areaNames = areaService.lowercaseAreaNames(allocationDto.getAreas());
 
         try {
+            Collection<Long> employeesIdentifiers = areaService.getAllEmployees(areaNames, nit);
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             return "redirect:/admin/allocation/area?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/admin/allocation/area?userNotFound";
+            return "redirect:/admin/allocation/area?areaNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/area?insufficient";
         }

@@ -220,12 +220,12 @@ class CompanyServiceImplTest {
     @Test
     @Rollback
     void getAreasNames() {
-        assertThrows(Exception.class,() -> companyService.getAreasNames(-1L), "Company not found");
+        assertThrows(Exception.class,() -> companyService.getAreasNames(true,-1L), "Company not found");
         areaRepository.save(new Area("recursos humanos",company));
         areaRepository.save(new Area("servicios generales",company));
         areaRepository.save(new Area("seguridad",company));
         assertDoesNotThrow(() -> {
-            Collection<String> areasInDataBase = companyService.getAreasNames(company.getId());
+            Collection<String> areasInDataBase = companyService.getAreasNames(true,company.getId());
             assertTrue(areasInDataBase.contains("Recursos Humanos"));
             assertTrue(areasInDataBase.contains("Servicios Generales"));
             assertTrue(areasInDataBase.contains("Seguridad"));
