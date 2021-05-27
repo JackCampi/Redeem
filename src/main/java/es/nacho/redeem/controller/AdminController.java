@@ -150,14 +150,14 @@ public class AdminController {
         Employee employee = employeeRepository.findByEmail(allocationDto.getEmployee());
 
         try {
-            if(employee == null) throw new UserNotFoundException();
+            if(employee == null || employee.getRol().equals("administrador")) throw new UserNotFoundException();
             employeesIdentifiers.add(employee.getId());
 
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             
-            return "redirect:/adm/allocation/emp?success";
+            return "redirect:/admin/allocation/emp?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/adm/allocation/emp?userNotFound";
+            return "redirect:/admin/allocation/emp?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/emp?insufficient";
         }
@@ -183,14 +183,14 @@ public class AdminController {
         try {
             employeesIdentifiers = areaService.getAllEmployees(areasNames, nit);
         } catch (UserNotFoundException userNotFoundException) {
-            return "redirect:/adm/allocation/comp?userNotFound";
+            return "redirect:/admin/allocation/comp?userNotFound";
         }
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
-            return "redirect:/adm/allocation/comp?success";
+            return "redirect:/admin/allocation/comp?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/adm/allocation/area?userNotFound";
+            return "redirect:/admin/allocation/area?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/area?insufficient";
         }
@@ -206,9 +206,9 @@ public class AdminController {
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
-            return "redirect:/adm/allocation/area?success";
+            return "redirect:/admin/allocation/area?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/adm/allocation/area?userNotFound";
+            return "redirect:/admin/allocation/area?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
             return "redirect:/admin/allocation/area?insufficient";
         }

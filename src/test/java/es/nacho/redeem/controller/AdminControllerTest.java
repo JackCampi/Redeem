@@ -6,6 +6,7 @@ import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -61,6 +62,8 @@ class AdminControllerTest {
 
         Area area = new Area("gerencia", company);
         areaRepository.save(area);
+        Area area2 = new Area("bodega", company);
+        areaRepository.save(area2);
 
         employeeRepository.save(new Employee(
                 "brayan",
@@ -74,12 +77,42 @@ class AdminControllerTest {
                 "administrador",
                 area
         ));
+        employeeRepository.save(new Employee(
+                "emp",
+                "test1",
+                "emptest1@gmail.com",
+                "1234",
+                "1111",
+                new GregorianCalendar(2002,02,02),
+                0L,
+                true,
+                "administrador",
+                area2
+        ));
+        employeeRepository.save(new Employee(
+                "emp",
+                "test2",
+                "emptest2@gmail.com",
+                "1234",
+                "1111",
+                new GregorianCalendar(2002,02,02),
+                0L,
+                true,
+                "empleado",
+                area2
+        ));
     }
 
     @AfterAll
     void after(){
         Employee employee = employeeRepository.findByEmail("correosupervalido@gmail.com");
         employeeRepository.delete(employee);
+
+        Employee employeeTest1 = employeeRepository.findByEmail("emptest1@gmail.com");
+        employeeRepository.delete(employeeTest1);
+
+        Employee employeeTest2 = employeeRepository.findByEmail("emptest2@gmail.com");
+        employeeRepository.delete(employeeTest2);
 
         Optional<Company> company = companyRepository.findById(120L);
 
@@ -97,12 +130,12 @@ class AdminControllerTest {
 
         HttpSession session = new MockHttpSession();
 
-        session.setAttribute("nit", 12L);
+        session.setAttribute("nit", 120L);
 
-        EmployeeRegistrationDto  employeeRegistrationDto= new EmployeeRegistrationDto("hola", "hola", "nuevo@nuevo.com", "hola", "23423", "12-12-2333", "gerencia", "hola");
+        EmployeeRegistrationDto  employeeRegistrationDto= new EmployeeRegistrationDto("hola", "hola", "nuevo@gmail.com", "hola", "23423", "12-12-2333", "gerencia", "hola");
         String page = controller.registerEmployee(employeeRegistrationDto, session);
 
-        assertEquals("redirect:/admin/addemp?success", page);
+        assertEquals("error", page);
 
     }
 
@@ -151,5 +184,51 @@ class AdminControllerTest {
 
     }
 
+    @Test
+    @Rollback
+    void processEmployeeAllocation() {
 
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto("emptest2@gmail.com",5000L);
+        String page = controller.processEmployeeAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/emp?success", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processEmployeeAllocation2() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto("emptest1@gmail.com",5000L);
+        String page = controller.processEmployeeAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/emp?userNotFound", page);
+
+    }
+
+    @Test
+    @Rollback
+    void processEmployeeAllocation3() {
+
+        HttpSession session = new MockHttpSession();
+        Employee employee = employeeRepository.findByEmail("emptest1@gmail.com");
+        session.setAttribute("nit", 120L);
+        session.setAttribute("id", employee.getId());
+
+        AllocationDto allocationDto = new AllocationDto("emptest2@gmail.com",10000001L);
+        String page = controller.processEmployeeAllocation(allocationDto, session);
+
+        assertEquals("redirect:/admin/allocation/emp?insufficient", page);
+
+    }
 }
