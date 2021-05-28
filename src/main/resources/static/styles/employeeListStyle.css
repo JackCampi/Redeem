@@ -234,3 +234,24 @@ input::-webkit-inner-spin-button {
 .remove-id-field{
     display: none;
 }
+
+/* Messages */
+
+.message-box {
+    margin: 0 0 3% 3%;
+    width: 60%;
+    padding: 1rem;
+    border-radius: 10px;
+}
+
+.message-box.success {
+    border: 2px solid rgb(121, 199, 121);
+    background-color: rgb(191, 250, 191);
+    color: rgb(73, 121, 73);
+}
+
+.message-box.error {
+    border: 2px solid rgb(255, 93, 93);
+    background-color: rgb(255, 195, 195);
+    color: rgb(197, 58, 58);
+}

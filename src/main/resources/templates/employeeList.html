@@ -13,8 +13,8 @@
         integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardStyle.css">
     <link rel="stylesheet" href="/css/employeeListStyle.css">
-    <!--link rel="stylesheet" href="../static/styles/dashboardStyle.css">
-    <link rel="stylesheet" href="../static/styles/employeeListStyle.css"-->
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeListStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -192,6 +192,24 @@
 
                 <h3>Empleados de <span th:text="${adminDashboardInfo.companyName}"></span></h3><br>
 
+                <div class="message-box success" th:if="${param.success}">
+                    <div th:if="${param.edit}">
+                        <span>Se editó el empleado exitosamente.</span>
+                    </div>
+                    <div th:if="${param.disable}">
+                        <span>Se deshabilitó el empleado exitosamente.</span>
+                    </div>
+                </div>
+
+                <div class="message-box error" th:if="${param.error}">
+                    <div th:if="${param.emailAlreadyRegistered}">
+                        <span>No se pudo editar el empleado, el correo introducido ya existe.</span>
+                    </div>
+                    <div th:if="${param.uniqueAdmin}">
+                        <span>No se puede realizar la operación, al menos una persona debe tener los privilegios del administrador.</span>
+                    </div>
+                </div>
+
                 <div class="table-responsive">
                     <table class="table">
                         <thead class="custom-thead">
@@ -233,7 +251,8 @@
                                                                   this.getAttribute('data-emp-birthday'))">
                                         <span class="material-icons">edit</span>
                                     </button>
-                                    <button class="option remove"
+                                    <button th:unless="${session.id == employeeRow.id}"
+                                            class="option remove"
                                             th:data-emp-id="${employeeRow.id}"
                                             th:data-emp-name="${employeeRow.name}"
                                             th:data-emp-lastName="${employeeRow.lastName}"
@@ -253,8 +272,8 @@
             </div>
         </main>
     </div>
-    <!--script src="../static/scripts/adminDashboardLogic.js"></script>
-    <script src="../static/scripts/employeeListLogic.js"></script-->
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeListLogic.js"></script>
     <script src="/scripts/adminDashboardLogic.js"></script>
     <script src="/scripts/employeeListLogic.js"></script>
 
