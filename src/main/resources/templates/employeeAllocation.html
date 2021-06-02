@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/RedeemIcon.ico">
+    <title>Dashboard - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="/css/employeeAllocationStyle.css">
+    <!-- <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeAllocationStyle.css">-->
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+                <ul>
+                    <li>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a href="" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p> 
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a onclick="return allocateButton()" id="allocate-button" class="selected">
+                            <span class="material-icons">attach_money</span>
+                            <p>Consignar a empleados</p> 
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/admin/addemp}">
+                            <span class="material-icons sidebar-icon">
+                                person_add_alt
+                                </span>
+                            <span> <p>Añadir empleado</p> </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onclick="return empListButton()" id="empl-list-button">
+                            <span class="material-icons">groups</span>
+                            <p>Ver empleados</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
+
+                </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h4 id="title">Dashboard</h4></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h4 th:text="${session.name}"></h4>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!------------------------------------------------------------------------------------------------->
+            <!--| TODO: Agregate Thymeleaf methods | MAIN CONTENT |                                         |-->
+            <!------------------------------------------------------------------------------------------------->
+            <div class="main-content-columns">
+
+                <h2>Consignar a empleados</h2>
+                <h3>¿Qué tipo de consignación deseas realizar?</h3>
+                <select  class="selection1" name="cars" id="transferOption" onchange="changeSelection()" required>
+                    <option value="defaultOption">Selecciona una opción</option>
+                    <option value="empresa">Empresa</option>
+                    <option value="area">Área</option>
+                    <option value="individual">Individual</option>
+                </select>
+                    <!---------------------------- OPTION 1: Empresa ---------------------------------->
+                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/comp}">
+                    <div style="display: none;" id="empresaInput">
+
+                        <h3 id="empresaInput1">Ingresa la cantidad que deseas consignar:</h3>
+
+                        <!-- Money Amount -->
+                        <input type="number" class="selection2" name="moneyAmount" id="moneyAmount" th:field="*{amount}" max="9999999999" placeholder="Ejemplo: $ 15000" required="Por favor diligencie este campo.">
+
+                        <!-- Allocate Button -->
+                        <div class="button-alignment">
+                            <input type="submit" class="submit-button" name="comp" id="reg-submit1" value="Consignar">
+                        </div>
+
+                    </div>
+                </form>
+                    <!------------------------------ OPTION 2: Área ----------------------------------->
+                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/area}">
+                    <div style="display: none;" id="areaInput">
+
+                        <h3 id="areaInput1">Seleccione el área de interés:</h3>
+
+                        <!-- Area Selection -->
+                        <select class="selection1" name="areaSelection" id="areaSelection" th:field="*{areas}" onchange="changeAreaSelection()" required>
+                            <option value="default">Seleccione una opción</option>
+                            <option th:each="area : ${areaNames}" th:text="${area}" th:value="${area}"></option>
+                        </select>
+
+                        <h3 style="display: none;" id="areaInput2">Ingresa la cantidad que deseas consignar:</h3>
+
+                        <!-- Money Amount -->
+                        <input style="display: none;" type="number" class="selection2" name="moneyAmount" id="moneyAmount2" th:field="*{amount}" max="9999999999" placeholder="Ejemplo: $ 15000" required>
+
+                        <!-- Allocate Button -->
+                        <div style="display: none;" class="button-alignment" id="allocateButton">
+                            <input type="submit" class="submit-button" name="area" id="reg-submit2" value="Consignar" >
+                        </div>
+
+                    </div>
+                </form>
+                    <!--------------------------- OPTION 3: Individual -------------------------------->
+                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/emp}">
+                    <div style="display: none;" id="individualInput">
+                        <h3 id="individualInput1">Introduzca la información del empleado:</h3>
+
+                        <!-- User info -->
+                        <input type="text" class="selection2" name="userInfo" id="userInfo" th:field="*{employee}" placeholder="Inserte correo o ID del empleado" required>
+
+                        <h3 id="individualInput2">Ingresa la cantidad que deseas consignar:</h3>
+
+                        <!-- Money Amount -->
+                        <input type="number" class="selection2" name="moneyAmount" id="moneyAmount3" th:field="*{amount}" max="9999999999" placeholder="Ejemplo: $ 15000" required>
+
+                        <!-- Allocate Button -->
+                        <div class="button-alignment" id="allocateButton2">
+                            <input type="submit" class="submit-button" name="emp" id="reg-submit" value="Consignar" >
+                        </div>
+
+                    </div>
+                </form>
+                <div class="column2">
+                    <img class = "image1" src="/img/AllocateImage.png">
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/employeeAllocationLogic.js"></script>
+    <!-- <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeAllocationLogic.js"></script>-->
+</body>
+</html>

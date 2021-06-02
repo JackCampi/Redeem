@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/img/RedeemIcon.ico">
+    <title>Dashboard - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- link rel="stylesheet" href="/css/dashboardStyle.css"> 
+    <link rel="stylesheet" href="/css/usersProfileInfoStyles.css"-->
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/usersProfileInfoStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="../static/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="../static/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+                <ul>
+                    <li>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a href="" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p> 
+                        </a>
+                    </li>
+                    <li>
+                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a onclick="return allocateButton()" id="allocate-button">
+                            <span class="material-icons">attach_money</span>
+                            <p>Consignar a empleados</p> 
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/admin/addemp}">
+                            <span class="material-icons sidebar-icon">
+                                person_add_alt
+                                </span>
+                            <span> <p>Añadir empleado</p> </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a onclick="return empListButton()" id="empl-list-button">
+                            <span class="material-icons">groups</span>
+                            <p>Ver empleados</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
+
+                </ul>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h4 id="title">Dashboard</h4></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h4 th:text="${session.name}"></h4>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            <!------------------------------------------------------------------------------------------------->
+            <!--| TODO: Agregate Thymeleaf methods | MAIN CONTENT |                                         |-->
+            <!------------------------------------------------------------------------------------------------->
+            <div class="main-content-columns">
+                <form class="column1" th:action="@{admin/profile}" method="post" th:object="${changePassword}">
+                    <h2>Perfil de Usuario</h2>
+                    <div class="main-content-columns2">
+                        <div class="items1">
+                            <h3 class="h3-purple">ID</h3>
+                            <h3 class="h3-purple">Nombre</h3>
+                            <h3 class="h3-purple">Apellido</h3>
+                            <h3 class="h3-purple">Teléfono</h3>
+                            <h3 class="h3-purple">Correo</h3>
+                            <h3 class="h3-purple">Nacimiento</h3>
+                            <h3 class="h3-purple">Área</h3>
+                            <h3 style="display: none;"class="h3-purple" id="item1">Contraseña antigua</h3>
+                            <h3 style="display: none;"class="h3-purple" id="item2">Contraseña nueva</h3>
+                            <h3 style="display: none;"class="h3-purple" id="item3">Confirmar contraseña</h3>
+                        </div>
+                        <div class="items2">
+                            <h3>000000001</h3>
+                            <h3>Marlon Alejandro</h3>
+                            <h3>Barreto Tejada</h3>
+                            <h3>32148229394</h3>
+                            <h3>marlonad@sdodo.com</h3>
+                            <h3>13/09/2001</h3>
+                            <h3>Gerencia (Administrador)</h3>
+                            <input style="display: none;" type="text" class="selection2" name="oldPassword" id="oldPassword" th:field="*{oldPassword}" required>
+                            <input style="display: none;" type="text" class="selection2" name="newPassword" id="newPassword" th:field="*{newPassord}" required>
+                            <input style="display: none;" type="text" class="selection2" name="confirmPassword" id="confirmPassword" th:field="*{confirmPassword}" required>
+                            
+                        </div>
+                    </div>
+                    <!-- Show Password Inputs -->
+                        <div class="button-alignment">
+                            <input type="submit" onclick="changePasswordFields()" class="submit-button" name="reg-submit" id="showInputs" value="Cambiar contraseña" required>
+                        </div>
+
+                    <!-- Password Buttons -->
+                    <div style="display: none;" id="inputButtons" class="main-content-columns3">
+                        <div class="edit-btn cancel-edit" onclick="return closeChangePassword()" id="cancelChange">Cancelar</div>
+                        <div>
+                            <input type="submit" id="cancelPasswordChange" class="submit-button" id="changePassword" value="Confirmar" required>
+                        </div> 
+                    </div>
+                </form>
+                <div class="column2">
+                    <img class = "image1" src="../static/img/UserProfileImage.png">
+                </div>
+            </div>
+        </main>
+    </div>
+    <!-- script src="/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/usersProfileInfoLogic.js"></script-->
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/usersProfileInfoLogic.js"></script>
+</body>
+</html>

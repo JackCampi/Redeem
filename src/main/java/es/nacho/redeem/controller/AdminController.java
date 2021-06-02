@@ -12,6 +12,7 @@ import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
+import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -112,13 +113,29 @@ public class AdminController {
     }
 
     @GetMapping(value = "/allocation")
-    public String getAllocationView(){return WebPageNames.ADMIN_ALLOCATION;}
+    public String getAllocationView(Model model, HttpSession session){
+
+        Long nit = (long) session.getAttribute("nit");
+
+        Collection<String> areaNames = new ArrayList<>();
+
+        try{
+            areaNames = companyService.getAreasNames(true, nit);
+
+        }catch (Exception e){
+            areaNames.add("areas not found");
+            return WebPageNames.ERROR_PAGE;
+        }
+
+        model.addAttribute("areaNames", areaNames);
+        return WebPageNames.ADMIN_ALLOCATION;
+    }
 
     @GetMapping(value = "/allocation/emp")
-    public String getEmployeeAllocationView(){return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;}
+    public String getEmployeeAllocationView(){return "redirect:/allocation";}
 
     @GetMapping(value = "/allocation/comp")
-    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION_COMPANY;}
+    public String getCompanyAllocationView(){return "redirect:/allocation";}
 
     @GetMapping(value = "/allocation/area")
     public String getAreaAllocationView(HttpSession session, Model model){
@@ -155,11 +172,11 @@ public class AdminController {
 
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
             
-            return "redirect:/admin/allocation/emp?success";
+            return "redirect:/admin/allocation?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/admin/allocation/emp?userNotFound";
+            return "redirect:/admin/allocation?userNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
-            return "redirect:/admin/allocation/emp?insufficient";
+            return "redirect:/admin/allocation?insufficient";
         }
     }
 
@@ -183,14 +200,14 @@ public class AdminController {
         try {
             employeesIdentifiers = areaService.getAllEmployees(areasNames, nit);
         } catch (UserNotFoundException userNotFoundException) {
-            return "redirect:/admin/allocation/comp?companyNotFound";
+            return "redirect:/admin/allocation?companyNotFound";
         }
 
         try {
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
-            return "redirect:/admin/allocation/comp?success";
+            return "redirect:/admin/allocation?success";
         }catch (InsufficientBalanceException insufficientBalanceException){
-            return "redirect:/admin/allocation/comp?insufficient";
+            return "redirect:/admin/allocation?insufficient";
         }
     }
 
@@ -205,11 +222,11 @@ public class AdminController {
         try {
             Collection<Long> employeesIdentifiers = areaService.getAllEmployees(areaNames, nit);
             balanceTransaction.userToUsersBalanceTransaction(nit, id, employeesIdentifiers, allocationDto.getAmount());
-            return "redirect:/admin/allocation/area?success";
+            return "redirect:/admin/allocation?success";
         }catch (UserNotFoundException userNotFoundException){
-            return "redirect:/admin/allocation/area?areaNotFound";
+            return "redirect:/admin/allocation?areaNotFound";
         }catch (InsufficientBalanceException insufficientBalanceException){
-            return "redirect:/admin/allocation/area?insufficient";
+            return "redirect:/admin/allocation?insufficient";
         }
     }
 
@@ -223,6 +240,24 @@ public class AdminController {
 
         return WebPageNames.ADMIN_HISTORY;
     }
+    
+    @GetMapping(value = "/profile")
+    public String getProfileView(HttpSession session){
+        return WebPageNames.ADMIN_PROFILE;
+
+    }
+
+    @PostMapping(value = "/profile")
+    public String changePassword(@ModelAttribute ChangePasswordDto changePasswordDto, HttpSession session){
+       return null;
+
+    }
+
+    @ModelAttribute("changePassword")
+    public ChangePasswordDto changePasswordDto(){
+        return new ChangePasswordDto();
+    }
+
 
     @ModelAttribute("allocation")
     public AllocationDto allocationDto(){

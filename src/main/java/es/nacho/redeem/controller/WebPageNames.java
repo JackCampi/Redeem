@@ -10,11 +10,12 @@ public interface WebPageNames {
     String LOGIN = "login";
     //TODO: write the html correct name
     String USER_TO_USER_TRANSFER = "transferContent";
-    String ADMIN_ALLOCATION = "allocation";
+    String ADMIN_ALLOCATION = "employeeAllocation";
     String ADMIN_ALLOCATION_EMPLOYEE = "employeeAllocation";
     String ADMIN_ALLOCATION_COMPANY = "companyAllocation";
     String ADMIN_ALLOCATION_AREA = "areaAllocation";
     String ADMIN_HISTORY = "adminTransHistory";
     String EMP_HISTORY = "employeeTransHistory";
     String MEMBERS = "employeeList";
+    String ADMIN_PROFILE = "usersProfileInfo";
 }

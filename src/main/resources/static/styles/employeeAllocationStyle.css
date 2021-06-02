@@ -1,0 +1,112 @@
+h2 {
+    font-weight: bold;
+    font-size: 30px;
+    padding-bottom: 10px;
+}
+
+h3 {
+    font-size: 18px;
+    padding-left: 5px;
+}
+
+.main-content-columns {
+    display: grid;  
+    grid-template-columns: 60% 40%;
+}
+
+.image1 {
+    height: 100%;
+    width: 100%;
+    padding: 20px 20px 20px 20px;
+    object-fit: contain;
+    /* transform: scaleX(-1); */
+
+}
+
+main{
+    padding: 1rem 2rem;
+}
+
+.selection1 {
+    width: 90%;
+    background-color: rgb(243, 243, 243);
+    color: black;
+    height: 35px;
+    border-radius: 10px;
+    border: none/*1px solid gray*/;
+    box-shadow: inset 0 4px 4px 0 rgba(167, 167, 167, 0.589);
+    padding: 0 1rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 2rem;
+    /*
+    text-transform: none;
+    margin-top: 10px;
+    width: -webkit-fill-available;
+    border-radius: 20px;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    outline: none;
+    */
+}
+
+.selection1:focus {
+    box-shadow: 0 0 1pt 1pt black;
+    outline: none;
+}
+
+.selection2 {
+    width: 90%;
+    background-color: rgb(243, 243, 243);
+    height: 35px;
+    border-radius: 10px;
+    border: none;
+    box-shadow: inset 0 4px 4px 0 rgba(167, 167, 167, 0.589);
+    padding: 0 1rem;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    margin-right: 2rem;
+    /*
+    text-transform: none;
+    margin-top: 10px;
+    width: -webkit-fill-available;
+    border-radius: 20px;
+    height: 40px;
+    padding-left: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    outline: none;
+    */
+}
+
+.selection2:focus {
+    box-shadow: 0 0 1pt 1pt black;
+    outline: none;
+}
+
+.button-alignment {
+    text-align: center;
+    width: 90%;
+}
+
+.column1 {
+    margin-left: 20px;
+}
+
+.submit-button {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    height: 40px;
+    width: 200px;
+    background-color: #8E44AD;
+    color: white;
+    border-radius: 18px;
+    border: none;
+}
+
+.submit-button:hover {
+    background-color: #D474FC;
+    cursor: pointer;
+}
