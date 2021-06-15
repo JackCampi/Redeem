@@ -6,16 +6,18 @@ public class MemberDto {
     private String name;
     private String lastName;
     private String email;
+    private String oldEmail;
     private String cellphone;
     private String area;
     private String birthday;
     private long balance;
 
-    public MemberDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday, long balance) {
+    public MemberDto(long id, String name, String lastName, String email, String oldEmail, String cellphone, String area, String birthday, long balance) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.email = email;
+        this.oldEmail = oldEmail;
         this.cellphone = cellphone;
         this.area = area;
         this.birthday = birthday;
@@ -87,5 +89,13 @@ public class MemberDto {
 
     public void setBalance(long balance) {
         this.balance = balance;
+    }
+
+    public String getOldEmail() {
+        return oldEmail;
+    }
+
+    public void setOldEmail(String oldEmail) {
+        this.oldEmail = oldEmail;
     }
 }
