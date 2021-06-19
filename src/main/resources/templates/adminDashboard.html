@@ -68,6 +68,13 @@
                     </a>
                 </li>
 
+                <li>
+                    <a th:href="@{/admin/history}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                    </a>
+                </li>
+
                 <hr class="solid">
 
                 <li>
@@ -113,6 +120,52 @@
                     <span>Presupuesto</span>
                     <h3>$ <span th:text="${adminDashboardInfo.companyBudget}"></span></h3>
                 </div>
+            </div>
+            <div class="admin-lists">
+                <h3>Pendientes por envío</h3>
+                <ul>
+                   <li class="shippment-list">
+                       <div class="shippment-card">
+
+                       </div>
+                   </li>
+                </ul>
+            </div>
+            <div class="products-container">
+                <h3>Productos mas comprados</h3>
+                <ul>
+                    <li class="buyed-products">
+                        <div class="buyed-card">
+                            <div class="inside-image">
+
+                            </div>
+                            <h4>1. Arroz roa</h4>
+                        </div>
+                    </li><li class="buyed-products">
+                    <div class="buyed-card">
+                        <div class="inside-image">
+
+                        </div>
+                        <h4>1. Arroz roa</h4>
+                    </div>
+                </li>
+                </ul>
+            </div>
+            <div class="day-graph">
+                <h3>Productos vendidos diariamente</h3>
+                <canvas>
+
+                </canvas>
+            </div>
+            <div class="admin-lists" id="div-canvas">
+                <h3>Empleados que mas compraron</h3>
+                <ul>
+                    <li class="shippment-list">
+                        <div class="shippment-card">
+
+                        </div>
+                    </li>
+                </ul>
             </div>
         </main>
     </div>
