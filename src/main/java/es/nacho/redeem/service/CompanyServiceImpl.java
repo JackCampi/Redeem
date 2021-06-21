@@ -136,7 +136,6 @@ public class CompanyServiceImpl implements CompanyService{
         Optional<Company> company =  companyRepository.findById(companyNIT);
         if(!company.isPresent()) throw new Exception("Company not found");
         Collection<Area> areas = areaRepository.findByCompany(company.get());
-        //areas.forEach(area -> employees.addAll(employeeRepository.findAllByArea(area)));
         areas.forEach(area -> {
             Collection<Employee> employeesInArea = employeeRepository.findAllByArea(area);
             employeesInArea.forEach(employee -> {
