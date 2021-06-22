@@ -21,23 +21,4 @@ public class UserLoginController {
         return WebPageNames.LOGIN;
     }
 
-    /*@PostMapping
-    @RequestMapping("/login")
-    public String dashboard(){
-        return WebPageNames.EMPLOYEE_DASHBOARD;
-    }
-
-    /*@GetMapping
-    @RequestMapping("/admin")
-    public String homeAdmin(){
-        return "index";
-    }
-
-    @GetMapping
-    @RequestMapping("/emp")
-    public String homeEmployee(){
-        return "index";
-    }*/
-
-
 }
