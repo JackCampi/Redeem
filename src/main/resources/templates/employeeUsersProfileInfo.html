@@ -145,6 +145,10 @@
                     <br>
                     <br>
                     <div id="error-message" class="error-message-class"></div>
+                    <div th:if="${param.error}" id="errorIncorrectPassword" class="error-message-class">La contraseña antigua es incorrecta.</div>
+                    <div  th:if="${param.success}" id="param-success-label">
+                        <div id="param-success" class="param-success">Se ha actualizado la contraseña.</div>
+                    </div>
                 </form>
                 <div class="column2">
                     <img class = "image1" src="/img/UserProfileImage.png">

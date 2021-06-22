@@ -153,5 +153,9 @@ main {
 
 .error-message-class {
     color: firebrick;
-    text-align: center;
+}
+
+.param-success {
+    color: green;
+    width: 90%;
 }

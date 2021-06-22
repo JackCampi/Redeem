@@ -120,7 +120,7 @@ public class EmployeeController {
             return "redirect:/emp/profile?error";
         }
 
-        return "redirect:/emp/profile";
+        return "redirect:/emp/profile?success";
 
     }
 

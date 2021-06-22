@@ -266,7 +266,7 @@ public class AdminController {
             return "redirect:/admin/profile?error";
         }
 
-        return "redirect:/admin/profile";
+        return "redirect:/admin/profile?success";
 
     }
 
