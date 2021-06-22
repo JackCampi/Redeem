@@ -2,6 +2,7 @@ package es.nacho.redeem.controller;
 
 import es.nacho.redeem.exception.EmailAlreadyRegisteredException;
 import es.nacho.redeem.exception.InsufficientBalanceException;
+import es.nacho.redeem.exception.OnlyAdminRemainingException;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
@@ -83,6 +84,8 @@ public class MembersController {
             userService.editUserInformation(nit, memberDto);
         }catch (EmailAlreadyRegisteredException e){
             return "redirect:/admin/members?error&emailAlreadyRegistered";
+        }catch (OnlyAdminRemainingException onlyAdminRemainingException) {
+            return "redirect:/admin/members?error&onlyAdminRemaining";
         }
         return "redirect:/admin/members?edit&success";
 

@@ -12,7 +12,7 @@ public class MemberDto {
     private String birthday;
     private long balance;
 
-    public MemberDto(long id, String name, String lastName, String email, String oldEmail, String cellphone, String area, long balance) {
+    public MemberDto(long id, String name, String lastName, String email, String oldEmail, String cellphone, String area, String birthday, long balance) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;

@@ -146,6 +146,7 @@ public class CompanyServiceImpl implements CompanyService{
                             employee.getName(),
                             employee.getLastName(),
                             employee.getEmail(),
+                            employee.getEmail(),
                             employee.getCellphone(),
                             areaService.capitalizeAreaName(employee.getArea().getId().getName()),
                             getStringFromCalendar(employee.getBirthday()),

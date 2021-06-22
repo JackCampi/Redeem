@@ -1,10 +1,7 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.config.dto.AuthDto;
-import es.nacho.redeem.exception.EmailAlreadyRegisteredException;
-import es.nacho.redeem.exception.InsufficientBalanceException;
-import es.nacho.redeem.exception.InvalidCalendarFormatException;
-import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.exception.*;
 import es.nacho.redeem.model.Area;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.compositeKeys.AreaKey;
@@ -205,7 +202,8 @@ public class UserServiceImpl implements UserService{
     public void editUserInformation(long nit, MemberDto memberDto) throws EmailAlreadyRegisteredException {
 
         Optional<Employee> employee = employeeRepository.findById(memberDto.getId());
-        if(!employee.isPresent()) throw new UserNotFoundException();
+        //TODO: check if it works :)
+        if(!memberDto.getEmail().equals(memberDto.getOldEmail()) && checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
         if(checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
@@ -230,7 +228,11 @@ public class UserServiceImpl implements UserService{
         employeeObject.setArea(area.get());
 
         if(areaName.equals("gerencia")) employeeObject.setRol("administrador");
-        else employeeObject.setRol("empleado");
+        else {
+            //TODO: test
+            if(isTheLastAdmin(nit, memberDto.getId())) throw new OnlyAdminRemainingException();
+            employeeObject.setRol("empleado");
+        }
 
         employeeRepository.save(employeeObject);
 
@@ -251,6 +253,13 @@ public class UserServiceImpl implements UserService{
 
         return new GregorianCalendar(year, month, day);
 
+    }
+
+    private boolean isTheLastAdmin(long nit, long id){
+
+        Collection<Employee> admins = employeeRepository.findAllByCompanyAndRol(nit, "administrador");
+        if(admins.size() <= 1) return true;
+        return false;
     }
 
     private boolean calendarAsStringIsValid(String date){
