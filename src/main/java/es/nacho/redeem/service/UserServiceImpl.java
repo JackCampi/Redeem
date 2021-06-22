@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static es.nacho.redeem.format.CalendarFormat.getStringFromCalendar;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -283,8 +285,24 @@ public class UserServiceImpl implements UserService{
         Employee employee = possibleEmployee.get();
         String passwordInDatabase = employee.getPassword(),
                passwordToConfirm = passwordEncoder.encode(passwordToTest);
-        return !passwordInDatabase.equals(passwordToConfirm);
+        //return !passwordInDatabase.equals(passwordToConfirm);
+        return !passwordEncoder.matches(passwordToTest, passwordInDatabase);
     }
 
-
+    @Override
+    public MemberDto getProfileInfo(long id) {
+        Optional<Employee> possibleEmployee = employeeRepository.findById(id);
+        if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = possibleEmployee.get();
+        return new MemberDto(employee.getId(),
+                employee.getName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getEmail(),
+                employee.getCellphone(),
+                areaService.capitalizeAreaName(employee.getArea().getId().getName()),
+                getStringFromCalendar(employee.getBirthday()),
+                employee.getBalance()
+                );
+    }
 }

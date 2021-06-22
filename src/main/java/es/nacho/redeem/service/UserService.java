@@ -38,4 +38,6 @@ public interface UserService extends UserDetailsService {
 
     boolean passwordIsIncorrect(long id, String passwordToTest)throws UserNotFoundException ;
 
+    MemberDto getProfileInfo(long id);
+
 }

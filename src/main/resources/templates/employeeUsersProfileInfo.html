@@ -100,7 +100,7 @@
             <!--| TODO: Agregate Thymeleaf methods | MAIN CONTENT |                                         |-->
             <!------------------------------------------------------------------------------------------------->
             <div class="main-content-columns">
-                <form class="column1" th:action="@{admin/profile}" method="post" th:object="${changePassword}" id="form1">
+                <form class="column1" th:action="@{/emp/profile}" method="post" th:object="${changePassword}" id="form1">
                     <h2>Perfil de Usuario</h2>
                     <div class="main-content-columns2">
                         <div class="items1">
@@ -116,13 +116,13 @@
                             <h3 style="display: none;"class="h3-purple" id="item3">Confirmar contraseña</h3>
                         </div>
                         <div class="items2">
-                            <h3>000000001</h3>
-                            <h3>Marlon Alejandro</h3>
-                            <h3>Barreto Tejada</h3>
-                            <h3>32148229394</h3>
-                            <h3>marlonad@sdodo.com</h3>
-                            <h3>13/09/2001</h3>
-                            <h3>Gerencia (Administrador)</h3>
+                            <h3 th:text="${user.id}"></h3>
+                            <h3 th:text="${user.name}"></h3>
+                            <h3 th:text="${user.lastName}"></h3>
+                            <h3 th:text="${user.cellphone}"></h3>
+                            <h3 th:text="${user.email}"></h3>
+                            <h3 th:text="${user.birthday}"></h3>
+                            <h3 th:text="${user.area}"></h3>
                             <input style="display: none;" type="password" class="selection2" name="oldPassword" id="oldPassword" th:field="*{oldPassword}" required>
                             <input style="display: none;" type="password" class="selection2" name="newPassword" id="newPassword" th:field="*{newPassord}" required>
                             <input style="display: none;" type="password" class="selection2" name="confirmPassword" id="confirmPassword" th:field="*{confirmPassword}" required>
@@ -138,7 +138,7 @@
                     <div style="display: none;" id="inputButtons" class="main-content-columns3">
                         <div class="edit-btn cancel-edit" onclick="return closeChangePassword()" id="cancelChange">Cancelar</div>
                         <div>
-                            <input type="submit" id="cancelPasswordChange" class="submit-button" id="changePassword" value="Confirmar" required>
+                            <input type="submit" class="submit-button" id="changePassword" value="Confirmar" required>
                         </div> 
                     </div>
                     <br>
