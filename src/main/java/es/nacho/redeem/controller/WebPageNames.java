@@ -17,6 +17,8 @@ public interface WebPageNames {
     String ADMIN_HISTORY = "adminTransHistory";
     String EMP_HISTORY = "employeeTransHistory";
     String MEMBERS = "employeeList";
-    String ADMIN_PROFILE = "usersProfileInfo";
+    String ADMIN_PROFILE = "adminUsersProfileInfo";
+    String EMPLOYEE_PROFILE = "employeeUsersProfileInfo";
+
     String ADMIN_STATISTICS = "adminStatistics";
 }

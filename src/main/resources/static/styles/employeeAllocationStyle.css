@@ -39,6 +39,7 @@ main{
     margin-top: 10px;
     margin-bottom: 20px;
     margin-right: 2rem;
+    outline: none;
     /*
     text-transform: none;
     margin-top: 10px;
@@ -52,10 +53,12 @@ main{
     */
 }
 
+/*
 .selection1:focus {
-    box-shadow: 0 0 1pt 1pt black;
+    box-shadow: 0 0 1pt 1pt transparent;
     outline: none;
 }
+ */
 
 .selection2 {
     width: 90%;
@@ -68,6 +71,7 @@ main{
     margin-top: 10px;
     margin-bottom: 20px;
     margin-right: 2rem;
+    outline: none;
     /*
     text-transform: none;
     margin-top: 10px;
@@ -80,11 +84,13 @@ main{
     outline: none;
     */
 }
-
+/*
 .selection2:focus {
-    box-shadow: 0 0 1pt 1pt black;
+    box-shadow: 0 0 1pt 1pt transparent;
     outline: none;
+
 }
+*/
 
 .button-alignment {
     text-align: center;
@@ -109,4 +115,18 @@ main{
 .submit-button:hover {
     background-color: #D474FC;
     cursor: pointer;
+}
+
+.error-message-class {
+    color: firebrick;
+    align-content: center;
+    text-align: center;
+    margin-top: 10px;
+    width: 90%;
+}
+
+.param-success {
+    text-align: center;
+    color: green;
+    width: 90%;
 }

@@ -11,7 +11,7 @@ form.addEventListener('submit', (e) => {
     }
 
     if (/(?=.{8,20}$)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*/.test(password.value) === false) {
-        messages.push('La contraseña debe por lo menos un símbolo, una minúscula, una mayúscula y 8 carácteres.')
+        messages.push('La contraseña debe tener por lo menos un símbolo, una minúscula, una mayúscula y 8 caracteres.')
     }
 
     if (password2.value !== password.value) {
