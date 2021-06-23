@@ -1,7 +1,7 @@
 package es.nacho.redeem.controller;
 
 import es.nacho.redeem.model.Product;
-import es.nacho.redeem.service.ViewProductList;
+import es.nacho.redeem.service.api.ViewProductList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

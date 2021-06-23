@@ -1,4 +1,4 @@
-package es.nacho.redeem.service;
+package es.nacho.redeem.service.api;
 
 import es.nacho.redeem.model.Product;
 
