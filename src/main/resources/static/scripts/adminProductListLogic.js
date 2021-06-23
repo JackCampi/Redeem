@@ -15,16 +15,8 @@ window.onclick = function(event) {
     }
 }
 
-function readURL(input) {
-    if (input.files && input.files[0]) {
-        var reader = new FileReader();
-
-        reader.onload = function (e) {
-            document.getElementById("new-prod-img").src = e.target.result;
-        };
-
-        reader.readAsDataURL(input.files[0]);
-    }
+function readURL(obj){
+    document.getElementById("new-prod-img").src = obj.value;
 }
 
 function selectProduct(id){
