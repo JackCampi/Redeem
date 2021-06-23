@@ -19,6 +19,8 @@ public interface WebPageNames {
     String MEMBERS = "employeeList";
     String ADMIN_PROFILE = "adminUsersProfileInfo";
     String EMPLOYEE_PROFILE = "employeeUsersProfileInfo";
+    String PRODUCTS_LIST = "adminProductList";
+    String PRODUCT_DETAILS = "adminProductDetails";
 
     String ADMIN_STATISTICS = "adminStatistics";
 }
