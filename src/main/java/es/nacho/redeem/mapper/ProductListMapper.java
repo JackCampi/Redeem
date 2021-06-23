@@ -8,8 +8,8 @@ import java.util.Collection;
 public interface ProductListMapper {
     static Collection<ProductDto> toProductListDto(Collection<Product> products){
         Collection<ProductDto> productDtos = new ArrayList<>();
-        products.forEach(p -> {
-            productDtos.add(ProductMapper.toProductDto(p));
+        products.forEach(product -> {
+            productDtos.add(ProductMapper.toProductDto(product));
         });
         return productDtos;
     }

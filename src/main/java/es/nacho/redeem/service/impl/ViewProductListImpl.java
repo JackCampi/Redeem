@@ -7,13 +7,10 @@ import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Product;
 import es.nacho.redeem.repository.CompanyRepository;
 import es.nacho.redeem.repository.ProductRepository;
-import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.service.api.ViewProductList;
 import es.nacho.redeem.web.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
