@@ -7,14 +7,14 @@ public class APurchases extends TransHistoryDto implements AdminDto{
     private ArrayList<ProductInfoDto> productList;
     private String madeBy;
 
-    public APurchases(long amount, String datetime, ArrayList<ProductInfoDto> productList, String madeBy) {
-        super(amount, datetime);
+    public APurchases(String type, long amount, String datetime, ArrayList<ProductInfoDto> productList, String madeBy) {
+        super(type, amount, datetime);
         this.productList = productList;
         this.madeBy = madeBy;
     }
 
     public APurchases() {
-        super(0L, "");
+        super("",0L, "");
     }
 
     public ArrayList<ProductInfoDto> getProductList() {

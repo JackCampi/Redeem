@@ -6,8 +6,8 @@ public class AAllocation extends TransHistoryDto implements AdminDto{
     private String madeBy;
     private String description;
 
-    public AAllocation(long amount, String datetime, String allocationTo, String madeBy, String description) {
-        super(amount, datetime);
+    public AAllocation(String type, long amount, String datetime, String allocationTo, String madeBy, String description) {
+        super(type, amount, datetime);
         this.allocationTo = allocationTo;
         this.madeBy = madeBy;
         this.description = description;
@@ -38,7 +38,7 @@ public class AAllocation extends TransHistoryDto implements AdminDto{
     }
 
     public AAllocation() {
-        super(0L, "");
+        super("",0L, "");
     }
 
     @Override

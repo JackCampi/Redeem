@@ -1,7 +1,12 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.model.Employee;
+import es.nacho.redeem.repository.AllocationRepository;
+import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.AllocationService;
 import es.nacho.redeem.service.CompanyService;
 import es.nacho.redeem.service.TransferService;
 import es.nacho.redeem.service.UserService;
@@ -11,6 +16,7 @@ import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
 import es.nacho.redeem.web.dto.transfer.TransferDto;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
+import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,10 +28,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/emp")
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private UserService userService;
@@ -38,6 +48,9 @@ public class EmployeeController {
 
     @Autowired
     private TransferService transferService;
+
+    @Autowired
+    private AllocationService allocationService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -86,6 +99,15 @@ public class EmployeeController {
 
         Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
         model.addAttribute("transferMessages", transferMessages);
+
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(!employee.isPresent()) return WebPageNames.ERROR_PAGE;
+        Employee employeeObject = employee.get();
+
+        SortedList<EmpDto> sortedList = new SortedList<>();
+
+        sortedList = transferService.getEmployeeTransMessages(employeeObject, sortedList);
+        sortedList = allocationService.getEmployeeAllocations(employeeObject, sortedList);
 
         return WebPageNames.EMP_HISTORY;
     }
