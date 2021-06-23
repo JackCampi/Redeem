@@ -1,9 +1,9 @@
 package es.nacho.redeem.controller;
 
 import es.nacho.redeem.service.api.AddProductService;
-import es.nacho.redeem.service.api.ViewProductDetailsService;
+import es.nacho.redeem.service.api.ViewProductWithDetailsService;
 import es.nacho.redeem.service.api.ViewProductList;
-import es.nacho.redeem.web.dto.ProductDetailsDto;
+import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import es.nacho.redeem.web.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +25,7 @@ public class ProductController {
     @Autowired
     private AddProductService addProductService;
     @Autowired
-    private ViewProductDetailsService viewProductDetailsService;
+    private ViewProductWithDetailsService viewProductWithDetailsService;
 
     @GetMapping()
     public String viewProductList(HttpSession session, Model model) {
@@ -43,24 +43,23 @@ public class ProductController {
     }
 
     @GetMapping(value = "/details")
-    public String viewProductDetails(Long id, Model model){
-        ProductDetailsDto productDetailsDto;
+    public String viewProductWithDetails(Long id, Model model){
+        ProductWithDetailsDto productWithDetailsDto;
         try{
-            productDetailsDto = viewProductDetailsService.get(id);
+            productWithDetailsDto = viewProductWithDetailsService.get(id);
         }catch (Exception e){
             e.printStackTrace();
             return "redirect:/admin/products?error";
         }
-        model.addAttribute("productDetails", productDetailsDto);
+        model.addAttribute("productDetails", productWithDetailsDto);
         return WebPageNames.PRODUCT_DETAILS;
     }
 
     @PostMapping(value = "/addprod")
-    public String addProduct(HttpSession session, @ModelAttribute("product") ProductDto productDto,
-                             @ModelAttribute("productDetails")ProductDetailsDto productDetailsDto){
+    public String addProduct(HttpSession session, @ModelAttribute("productWithDetails") ProductWithDetailsDto productWithDetailsDto){
         Long nit = (long) session.getAttribute("nit");
         try{
-            addProductService.invoke(productDto, productDetailsDto, nit);
+            addProductService.invoke(productDto, productWithDetailsDto, nit);
             return "redirect:/admin/products/addprod?success";
         }catch (Exception e){
             e.printStackTrace();
@@ -73,9 +72,9 @@ public class ProductController {
         return new ProductDto();
     }
 
-    @ModelAttribute("productDetails")
-    public ProductDetailsDto productDetailsDto(){
-        return new ProductDetailsDto();
+    @ModelAttribute("productWithDetails")
+    public ProductWithDetailsDto productDetailsDto(){
+        return new ProductWithDetailsDto();
     }
 
 }

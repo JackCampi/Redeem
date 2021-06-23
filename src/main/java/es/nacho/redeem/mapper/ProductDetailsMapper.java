@@ -1,11 +1,16 @@
 package es.nacho.redeem.mapper;
 
 import es.nacho.redeem.model.Product;
-import es.nacho.redeem.web.dto.ProductDetailsDto;
+import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 
 public interface ProductDetailsMapper {
-    static ProductDetailsDto toProductDetailsDto(Product product){
-        return new ProductDetailsDto(
+    static ProductWithDetailsDto toProductDetailsDto(Product product){
+        return new ProductWithDetailsDto(
+                product.getId(),
+                product.getName(),
+                product.getPrice(),
+                product.getStock(),
+                product.getImageUrl(),
                 product.getType(),
                 ""); //TODO
     }
