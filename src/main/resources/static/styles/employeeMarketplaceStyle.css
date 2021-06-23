@@ -1,0 +1,235 @@
+.product-card{
+    width: 200px;
+    background-color: white;
+    display: flex;
+    padding: 10px;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 15px;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    justify-content: space-around;
+    border: none;
+}
+
+.card-content{
+    width: 198px;
+}
+
+.product-card:hover{
+    background-color: var(--main-color);
+    color: white;
+}
+
+.card-content:hover{
+    cursor: pointer;
+}
+
+.product-card img {
+    width: 65%;
+    height: 130px;
+    object-fit: scale-down;
+    margin: 20px 0;
+}
+
+.product-card h5 {
+    width: 170px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.product-card h6 {
+    font-size: 0.9rem;
+}
+
+.product-cards{
+    padding: 40px 25px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 40px 30px;
+    grid-auto-rows: minmax(100px, 325px);
+}
+
+.prod-name{
+    padding: 0 23px;
+    
+}
+
+button:focus, input:focus{
+    outline: none;
+}
+
+.add-one{
+    background-color: white;
+    border: 2px solid var(--main-color);
+    color: var(--main-color);
+    padding: 5px 15px;
+    display: flex;
+    border-radius: 15px;
+    margin: 10px 0;
+}
+
+.add-one p{
+    margin:0;
+}
+
+.add-one:hover {
+    cursor: pointer;
+    font-weight: 800;
+    background-color: #e0c3ec;
+}
+
+
+/* Modal style*/
+
+/* background */
+.myModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+  }
+  
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: rgb(255, 255, 255);
+    padding: 3% 0;
+    width: 850px;
+    border: 1px solid #888;
+    border-radius: 30px;
+  }
+
+.details-modal{
+    margin: 2.5% auto;
+    padding:  60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.add-one-modal{
+    margin: 2.5% auto;
+    padding:  40px 0;
+    display: flex;
+    align-items: center;
+}
+
+.info1{
+    margin-right: 25px;
+}
+
+.info2{
+    margin-left: 25px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.info1 img {
+    width: 300px;
+    max-height: 300px;
+}
+
+.price{
+    color: var(--main-color);
+}
+
+.add-to-cart{
+    width: 300px;
+    padding: 30px 30px;
+    background-color: rgb(238, 238, 238);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-to-cart h5{
+    font-size: large;
+    margin-bottom: 20px;
+}
+
+.add-to-cart input{
+    width: 70px;
+    padding: 5px 15px;
+    border: none;
+    border-radius: 15px;
+    text-align: center;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.quantity-input button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 15px;
+    border: none;
+    border-radius: 5px;
+    color: rgb(78, 78, 78);
+    background-color: white;
+}
+
+.quantity-input button:hover{
+    color: white;
+    background-color: var(--main-color);
+}
+
+.quantity-input {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.submit-add{
+    padding: 5px 30px;
+    color: white;
+    background-color: var(--main-color);
+    border: none;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.submit-add:hover {
+    background-color: #7d3c99;
+}
+
+.cancel-add{
+    padding: 3px 30px;
+    color: var(--main-color);
+    background-color: white;
+    border: 2px solid var(--main-color);
+    border-radius: 15px;
+}
+
+.cancel-add:hover{
+    font-weight: 900;
+    border: 3px solid var(--main-color);
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 855px){
+    .details-modal{
+        flex-direction: column;
+    }
+
+    .info1{
+        align-items: center;
+    }
+}
