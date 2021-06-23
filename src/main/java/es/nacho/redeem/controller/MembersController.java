@@ -80,12 +80,11 @@ public class MembersController {
     public String editUser(@ModelAttribute("member") MemberDto memberDto, HttpSession session){
 
         long nit = (long) session.getAttribute("nit");
-        String email = (String) session.getAttribute("email");
         try{
-            userService.editUserInformation(nit, email, memberDto);
+            userService.editUserInformation(nit, memberDto);
         }catch (EmailAlreadyRegisteredException e){
             return "redirect:/admin/members?error&emailAlreadyRegistered";
-        }catch (OnlyAdminRemainingException onlyAdminRemainingException){
+        }catch (OnlyAdminRemainingException onlyAdminRemainingException) {
             return "redirect:/admin/members?error&onlyAdminRemaining";
         }
         return "redirect:/admin/members?edit&success";

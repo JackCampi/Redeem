@@ -32,10 +32,12 @@ public interface UserService extends UserDetailsService {
 
     AuthDto fillAuthDto(String email);
 
-    void editUserInformation(long nit,String email, MemberDto memberDto) throws EmailAlreadyRegisteredException;
+    void editUserInformation(long nit, MemberDto memberDto) throws EmailAlreadyRegisteredException;
 
     void changePassword(long id, String currentPassword, String newPassword) throws Exception;
 
     boolean passwordIsIncorrect(long id, String passwordToTest)throws UserNotFoundException ;
+
+    MemberDto getProfileInfo(long id);
 
 }

@@ -148,6 +148,11 @@ a:hover{
     text-decoration: none;
 }
 
+.valid-error {
+    color: red;
+    font-weight: bold;
+}
+
 
 /* Responsive font config */
 

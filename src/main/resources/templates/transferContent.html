@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/redeemIcon.ico">
-    <title>Dashboard - Admin</title>
+    <title>Transferir</title>
 
     <!-- Style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -55,6 +55,13 @@
                     <hr class="solid">
 
                     <li>
+                        <a th:href="@{/emp/profile}" id="admin-profile">
+                            <span class="material-icons">perm_identity</span>
+                            <p>Ver perfil</p>
+                        </a>
+                    </li>
+
+                    <li>
                         <a th:href="@{/logout}">
                             <span class="material-icons">power_settings_new</span>
                             <p>Cerrar sesión</p>
@@ -97,7 +104,7 @@
                 <form class="trans-regform" id="doc-form" th:action="@{/emp/transfer}"  method="post" th:object="${transfer}">
                     <div class="trans-form">
                         <label class="trans-label" for="beneficiary">Usuario al que deseas transferir</label>
-                        <input id="beneficiary" class="trans-input" placeholder="    Ingrese un email o un id." th:field="*{receiverIdentifier}" required autofocus="autofocus" >
+                        <input id="beneficiary" class="trans-input" placeholder="Ingrese un email o un id." th:field="*{receiverIdentifier}" required autofocus="autofocus" >
                     </div>
                     <div  style="display: none" id="email_error"> Por favor, introduzca un correo válido. </div>
                     <div  th:if="${param.userNotFound}">
@@ -105,7 +112,7 @@
                     </div>
                     <div class="trans-form">
                         <label class="trans-label" for="amount">Monto a transferir</label>
-                        <input id="amount" class="trans-input" max="10000000" placeholder="    Ingrese la cantidad a transferir." type="number" th:field="*{amount}" required autofocus="autofocus">
+                        <input id="amount" class="trans-input" max="10000000" placeholder="Ingrese la cantidad a transferir." type="number" th:field="*{amount}" required autofocus="autofocus">
                     </div>
                     <div  style="display: none" id="amount_error"> Como mínimo se deben transferir 10000$. </div>
                     <div  th:if="${param.insufficient}">
