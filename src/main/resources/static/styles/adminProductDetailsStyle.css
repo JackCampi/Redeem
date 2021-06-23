@@ -1,0 +1,38 @@
+.go-back-button{
+    border: 2px solid var(--main-color);
+    border-radius: 35px;
+    background-color: white;
+    color: var(--main-color);
+    padding: 5px 15px;
+    margin-bottom: 50px;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.go-back-button h5 {
+    margin: 0;
+    font-size: medium;
+    font-weight: 800;
+}
+
+.go-back-button:hover{
+    background-color: rgb(253, 253, 253);
+    border: 2.5px solid var(--main-color);
+    cursor: pointer;
+}
+
+.product-info{
+    display: flex;
+}
+
+.info1{
+    padding-right: 50px;
+}
+
+.info1 img{
+    width: 330px;
+    height: 330px;
+    margin-bottom: 30px;
+}
