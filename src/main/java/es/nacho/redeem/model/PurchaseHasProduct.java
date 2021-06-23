@@ -22,7 +22,7 @@ public class PurchaseHasProduct {
     Product product;
 
     @Column(name = "php_quantity", nullable = false)
-    private Long quantity;
+    private int quantity;
 
     public PurchaseHasProductKey getId() {
         return id;
@@ -48,11 +48,11 @@ public class PurchaseHasProduct {
         this.product = product;
     }
 
-    public Long getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
 }

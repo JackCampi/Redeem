@@ -1,6 +1,7 @@
 package es.nacho.redeem.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 
@@ -14,7 +15,7 @@ public class Purchase {
     private Long id;
 
     @Column(name = "pur_datetime", nullable = false)
-    private Calendar dateTime;
+    private LocalDateTime dateTime;
 
     @Column(name = "pur_sent", nullable = false)
     private Boolean isSent;
@@ -26,7 +27,7 @@ public class Purchase {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employee;
 
-    public Purchase(Calendar dateTime) {
+    public Purchase(LocalDateTime dateTime) {
         super();
         this.dateTime = dateTime;
         this.isSent = false;
@@ -60,11 +61,11 @@ public class Purchase {
         this.id = id;
     }
 
-    public Calendar getDateTime() {
+    public LocalDateTime getDateTime() {
         return dateTime;
     }
 
-    public void setDateTime(Calendar dateTime) {
+    public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 

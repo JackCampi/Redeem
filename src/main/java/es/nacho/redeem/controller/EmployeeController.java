@@ -6,10 +6,7 @@ import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.AllocationRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
-import es.nacho.redeem.service.AllocationService;
-import es.nacho.redeem.service.CompanyService;
-import es.nacho.redeem.service.TransferService;
-import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.service.*;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
@@ -51,6 +48,9 @@ public class EmployeeController {
 
     @Autowired
     private AllocationService allocationService;
+
+    @Autowired
+    private PurchaseService purchaseService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -97,9 +97,6 @@ public class EmployeeController {
 
         long id = (long) httpSession.getAttribute("id");
 
-        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
-        model.addAttribute("transferMessages", transferMessages);
-
         Optional<Employee> employee = employeeRepository.findById(id);
         if(!employee.isPresent()) return WebPageNames.ERROR_PAGE;
         Employee employeeObject = employee.get();
@@ -108,7 +105,9 @@ public class EmployeeController {
 
         sortedList = transferService.getEmployeeTransMessages(employeeObject, sortedList);
         sortedList = allocationService.getEmployeeAllocations(employeeObject, sortedList);
+        sortedList = purchaseService.getEmployeePurchases(employeeObject, sortedList);
 
+        model.addAttribute("transferMessages", sortedList);
         return WebPageNames.EMP_HISTORY;
     }
 

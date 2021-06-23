@@ -1,6 +1,7 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.data.SortedList;
+import es.nacho.redeem.format.CalendarFormat;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.Product;
 import es.nacho.redeem.model.PurchaseHasProduct;
@@ -9,9 +10,10 @@ import es.nacho.redeem.web.dto.transfer.history.EPurchases;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import es.nacho.redeem.web.dto.transfer.history.ProductInfoDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-
+@Service
 public class PurchaseServiceImpl implements PurchaseService{
 
     @Autowired
@@ -28,16 +30,23 @@ public class PurchaseServiceImpl implements PurchaseService{
             for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
                 Product product = purchaseHasProduct.getProduct();
                 amount += product.getPrice();
-                /*productInfoDtos.add(new ProductInfoDto(
+                productInfoDtos.add(new ProductInfoDto(
                         product.getName(),
                         purchaseHasProduct.getQuantity(),
                         product.getPrice()
-                ));*/
+                ));
             }
+
+            sortedList.add(new EPurchases(
+                    "EPurchases",
+                    amount,
+                    CalendarFormat.formatLocalDateTime(purchase.getDateTime()),
+                    productInfoDtos
+            ));
 
         });
 
 
-        return null;
+        return sortedList;
     }
 }
