@@ -2,6 +2,7 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.format.CalendarFormat;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.Transfer;
 import es.nacho.redeem.repository.EmployeeRepository;
@@ -73,14 +74,27 @@ public class TransferServiceImpl implements TransferService{
     @Override
     public SortedList<EmpDto> getEmployeeTransMessages(Employee employee, SortedList<EmpDto> sortedList) {
 
-        /*employee.getOutgoinAllocations().forEach(transfer -> {
+        employee.getOutgoingTransfers().forEach(transfer -> {
             sortedList.add(new ETransfer(
+                    "ETransfer",
                     transfer.getAmount(),
-                    transfer
+                    CalendarFormat.formatLocalDateTime(transfer.getDatetime()),
+                    (byte) 0,
+                    transfer.getEmployeeTo().getName()
                     ));
-        });*/
+        });
 
-        return null;
+        employee.getIncomingTransfers().forEach(transfer -> {
+            sortedList.add(new ETransfer(
+                    "ETransfer",
+               transfer.getAmount(),
+               CalendarFormat.formatLocalDateTime(transfer.getDatetime()),
+                    (byte) 1,
+                    transfer.getEmployeeFrom().getName()
+            ));
+        });
+
+        return sortedList;
     }
 
     private String formatLocalDateTime(LocalDateTime localDateTime){

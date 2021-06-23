@@ -12,11 +12,10 @@ public class SortedList<T extends Comparable<T>> extends ArrayList<T> {
         int length = this.size();
 
         for(int i=0; i<length+1;i++){
+
+            if( i == length) return super.add(o);
+
             T prevObject = this.get(i);
-
-            if( i == length+1) return super.add(o);
-
-
             if(o.compareTo(prevObject) <=0) {
                 this.add(i, o);
                 return true;

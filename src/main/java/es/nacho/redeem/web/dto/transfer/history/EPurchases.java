@@ -7,12 +7,12 @@ public class EPurchases extends TransHistoryDto implements EmpDto{
     private ArrayList<ProductInfoDto> productList;
 
     public EPurchases() {
-        super(0L, "");
+        super("",0L, "");
 
     }
 
-    public EPurchases(long amount, String datetime, ArrayList<ProductInfoDto> productList) {
-        super(amount, datetime);
+    public EPurchases(String type, long amount, String datetime, ArrayList<ProductInfoDto> productList) {
+        super(type, amount, datetime);
         this.productList = productList;
     }
 
