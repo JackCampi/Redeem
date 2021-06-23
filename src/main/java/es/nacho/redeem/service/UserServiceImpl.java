@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static es.nacho.redeem.format.CalendarFormat.getStringFromCalendar;
+
 @Service
 public class UserServiceImpl implements UserService{
 
@@ -199,12 +201,13 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void editUserInformation(long nit, String email, MemberDto memberDto) throws EmailAlreadyRegisteredException {
+    public void editUserInformation(long nit, MemberDto memberDto) throws EmailAlreadyRegisteredException {
 
         Optional<Employee> employee = employeeRepository.findById(memberDto.getId());
-        if(!employee.isPresent()) throw new UserNotFoundException();
         //TODO: check if it works :)
         if(!memberDto.getEmail().equals(memberDto.getOldEmail()) && checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
+
+        if(checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
         Employee employeeObject = employee.get();
         employeeObject.setEmail(memberDto.getEmail());
@@ -238,13 +241,6 @@ public class UserServiceImpl implements UserService{
 
     }
 
-    private boolean isTheLastAdmin(long nit, long id){
-
-        Collection<Employee> admins = employeeRepository.findAllByCompanyAndRol(nit, "administrador");
-        if(admins.size() <= 1) return true;
-        return false;
-    }
-
     private Calendar getCalendarFromString(String string) throws InvalidCalendarFormatException {
 
         /*
@@ -259,6 +255,13 @@ public class UserServiceImpl implements UserService{
 
         return new GregorianCalendar(year, month, day);
 
+    }
+
+    private boolean isTheLastAdmin(long nit, long id){
+
+        Collection<Employee> admins = employeeRepository.findAllByCompanyAndRol(nit, "administrador");
+        if(admins.size() <= 1) return true;
+        return false;
     }
 
     private boolean calendarAsStringIsValid(String date){
@@ -282,8 +285,24 @@ public class UserServiceImpl implements UserService{
         Employee employee = possibleEmployee.get();
         String passwordInDatabase = employee.getPassword(),
                passwordToConfirm = passwordEncoder.encode(passwordToTest);
-        return !passwordInDatabase.equals(passwordToConfirm);
+        //return !passwordInDatabase.equals(passwordToConfirm);
+        return !passwordEncoder.matches(passwordToTest, passwordInDatabase);
     }
 
-
+    @Override
+    public MemberDto getProfileInfo(long id) {
+        Optional<Employee> possibleEmployee = employeeRepository.findById(id);
+        if(!possibleEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = possibleEmployee.get();
+        return new MemberDto(employee.getId(),
+                employee.getName(),
+                employee.getLastName(),
+                employee.getEmail(),
+                employee.getEmail(),
+                employee.getCellphone(),
+                areaService.capitalizeAreaName(employee.getArea().getId().getName()),
+                getStringFromCalendar(employee.getBirthday()),
+                employee.getBalance()
+                );
+    }
 }

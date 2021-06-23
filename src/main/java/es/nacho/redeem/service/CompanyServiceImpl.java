@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.*;
 
+import static es.nacho.redeem.format.CalendarFormat.getStringFromCalendar;
+
 @Service
 public class CompanyServiceImpl implements CompanyService{
 
@@ -145,6 +147,7 @@ public class CompanyServiceImpl implements CompanyService{
                             employee.getName(),
                             employee.getLastName(),
                             employee.getEmail(),
+                            employee.getEmail(),
                             employee.getCellphone(),
                             areaService.capitalizeAreaName(employee.getArea().getId().getName()),
                             getStringFromCalendar(employee.getBirthday()),
@@ -172,14 +175,7 @@ public class CompanyServiceImpl implements CompanyService{
         employeeRepository.save(employee);
     }
 
-    private String getStringFromCalendar(Calendar calendar){
 
-        String month = "" + calendar.get(Calendar.MONTH);
-        if(month.length() < 2) month = "0" + month;
-
-        return calendar.get(Calendar.YEAR) + "-" + month + "-" + calendar.get(Calendar.DAY_OF_MONTH);
-
-    }
 
     @Override
     public Company discountCompanyBudget(long nit, long amount) throws InsufficientBalanceException {

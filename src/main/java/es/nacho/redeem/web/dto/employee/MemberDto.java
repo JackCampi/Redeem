@@ -23,21 +23,9 @@ public class MemberDto {
         this.birthday = birthday;
         this.balance = balance;
     }
-    public MemberDto(long id, String name, String lastName, String email, String cellphone, String area, String birthday, long balance) {
-        this.id = id;
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.cellphone = cellphone;
-        this.area = area;
-        this.birthday = birthday;
-        this.balance = balance;
-    }
 
     public MemberDto() {
     }
-
-
 
     public long getId() {
         return id;

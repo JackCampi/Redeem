@@ -16,6 +16,9 @@ public class Purchase {
     @Column(name = "pur_datetime", nullable = false)
     private Calendar dateTime;
 
+    @Column(name = "pur_sent", nullable = false)
+    private Boolean isSent;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "purchase")
     private Collection<PurchaseHasProduct> purchaseHasProducts;
 
@@ -26,6 +29,7 @@ public class Purchase {
     public Purchase(Calendar dateTime) {
         super();
         this.dateTime = dateTime;
+        this.isSent = false;
     }
 
     public Purchase() {
@@ -47,4 +51,13 @@ public class Purchase {
     public void setDateTime(Calendar dateTime) {
         this.dateTime = dateTime;
     }
+
+    public Boolean getIsSent() {
+        return isSent;
+    }
+
+    public void setIsSent(Boolean isSent) {
+        this.isSent = isSent;
+    }
+
 }

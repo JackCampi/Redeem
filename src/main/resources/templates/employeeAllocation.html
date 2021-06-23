@@ -5,14 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="/img/RedeemIcon.ico">
-    <title>Dashboard - Admin</title>
+    <title>Consignar a empleado</title>
 
     <!-- Style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/css/dashboardStyle.css">
     <link rel="stylesheet" href="/css/employeeAllocationStyle.css">
-    <!-- <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
-    <link rel="stylesheet" href="../static/styles/employeeAllocationStyle.css">-->
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeAllocationStyle.css">
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -29,57 +29,70 @@
         <hr class="solid">
 
         <div class="principal-sidebar-menu">
-                <ul>
-                    <li>
-                        <!-- El href vacío hace que se redireccione al dashboard -->
-                        <a href="" id="dash-button">
-                            <span class="material-icons sidebar-icon">analytics</span>
-                            <p>Dashboard</p> 
-                        </a>
-                    </li>
-                    <li>
-                        <a onclick="return transactionsHistoryButton()" id="trans-hist-button">
-                            <span class="material-icons">history_edu</span>
-                            <p>Historial transacciones</p> 
-                        </a>
-                    </li>
+            <ul>
+                <li>
+                    <a id="dash-button" th:href="@{/admin/}">
+                        <span class="material-icons sidebar-icon">analytics</span>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/history}" id="trans-hist-button">
+                        <span class="material-icons">history_edu</span>
+                        <p>Historial transacciones</p>
+                    </a>
+                </li>
 
-                    <hr class="solid">
+                <hr class="solid">
 
-                    <li>
-                        <a onclick="return allocateButton()" id="allocate-button" class="selected">
-                            <span class="material-icons">attach_money</span>
-                            <p>Consignar a empleados</p> 
-                        </a>
-                    </li>
+                <li>
+                    <a th:href="@{/admin/allocation}" class="selected" id="allocate-button">
+                        <span class="material-icons">attach_money</span>
+                        <p>Consignar a empleados</p>
+                    </a>
+                </li>
 
-                    <li>
-                        <a th:href="@{/admin/addemp}">
-                            <span class="material-icons sidebar-icon">
-                                person_add_alt
-                                </span>
-                            <span> <p>Añadir empleado</p> </span>
-                        </a>
-                    </li>
+                <li>
+                    <a th:href="@{/admin/addemp}">
+                        <span class="material-icons sidebar-icon">
+                            person_add_alt
+                        </span>
+                        <span>
+                            <p>Añadir empleado</p>
+                        </span>
+                    </a>
+                </li>
 
-                    <li>
-                        <a onclick="return empListButton()" id="empl-list-button">
-                            <span class="material-icons">groups</span>
-                            <p>Ver empleados</p> 
-                        </a>
-                    </li>
+                <li>
+                    <a th:href="@{/admin/members}" id="empl-list-button">
+                        <span class="material-icons">groups</span>
+                        <p>Ver empleados</p>
+                    </a>
+                </li>
 
-                    <hr class="solid">
+                <li>
+                      <a th:href="@{/admin/statistics}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                      </a>
+                </li>
 
-                    <li>
-                        <a th:href="@{/logout}">
-                            <span class="material-icons">power_settings_new</span>
-                            <p>Cerrar sesión</p>
-                        </a>
-                    </li>
+                <hr class="solid">
 
+                <li>
+                    <a th:href="@{/admin/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
 
-                </ul>
+                <li>
+                    <a th:href="@{/logout}">
+                        <span class="material-icons">power_settings_new</span>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+            </ul>
         </div>
     </div>
 
@@ -109,7 +122,7 @@
             <!--| TODO: Agregate Thymeleaf methods | MAIN CONTENT |                                         |-->
             <!------------------------------------------------------------------------------------------------->
             <div class="main-content-columns">
-
+                <div class="column1">
                 <h2>Consignar a empleados</h2>
                 <h3>¿Qué tipo de consignación deseas realizar?</h3>
                 <select  class="selection1" name="cars" id="transferOption" onchange="changeSelection()" required>
@@ -119,7 +132,7 @@
                     <option value="individual">Individual</option>
                 </select>
                     <!---------------------------- OPTION 1: Empresa ---------------------------------->
-                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/comp}">
+                <form method="post" th:object="${allocation}" th:action="@{/admin/allocation/comp}" id="form1">
                     <div style="display: none;" id="empresaInput">
 
                         <h3 id="empresaInput1">Ingresa la cantidad que deseas consignar:</h3>
@@ -135,7 +148,7 @@
                     </div>
                 </form>
                     <!------------------------------ OPTION 2: Área ----------------------------------->
-                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/area}">
+                <form method="post" th:object="${allocation}" th:action="@{/admin/allocation/area}" id="form2">
                     <div style="display: none;" id="areaInput">
 
                         <h3 id="areaInput1">Seleccione el área de interés:</h3>
@@ -159,12 +172,13 @@
                     </div>
                 </form>
                     <!--------------------------- OPTION 3: Individual -------------------------------->
-                <form class="column1" method="post" th:object="${allocation}" th:action="@{/admin/allocation/emp}">
+                <form method="post" th:object="${allocation}" th:action="@{/admin/allocation/emp}" id="form3">
                     <div style="display: none;" id="individualInput">
                         <h3 id="individualInput1">Introduzca la información del empleado:</h3>
 
                         <!-- User info -->
-                        <input type="text" class="selection2" name="userInfo" id="userInfo" th:field="*{employee}" placeholder="Inserte correo o ID del empleado" required>
+
+                        <input type="text" class="selection2" name="userInfo" id="userInfo" th:field="*{employee}" placeholder="Inserte correo del empleado" required>
 
                         <h3 id="individualInput2">Ingresa la cantidad que deseas consignar:</h3>
 
@@ -178,7 +192,14 @@
 
                     </div>
                 </form>
-                <div class="column2">
+                <div id="errorMessage" class="error-message-class"></div>
+                <div th:if="${param.userNotFound}" id="errorMessageUser" class="error-message-class">El correo introducido no existe en Redeem</div>
+                <div  th:if="${param.success}" id="param-success-label">
+                    <div id="param-success" class="param-success">Consignación realizada con éxito. </div>
+                </div>
+                </div>
+
+                <div class="column1">
                     <img class = "image1" src="/img/AllocateImage.png">
                 </div>
             </div>
@@ -186,7 +207,7 @@
     </div>
     <script src="/scripts/adminDashboardLogic.js"></script>
     <script src="/scripts/employeeAllocationLogic.js"></script>
-    <!-- <script src="../static/scripts/adminDashboardLogic.js"></script>
-    <script src="../static/scripts/employeeAllocationLogic.js"></script>-->
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeAllocationLogic.js"></script>
 </body>
 </html>

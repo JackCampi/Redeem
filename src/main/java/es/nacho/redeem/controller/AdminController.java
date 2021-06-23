@@ -13,6 +13,7 @@ import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
+import es.nacho.redeem.web.dto.employee.MemberDto;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,7 +23,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -242,16 +242,45 @@ public class AdminController {
     }
     
     @GetMapping(value = "/profile")
-    public String getProfileView(HttpSession session){
+    public String getProfileView(Model model, HttpSession session){
+
+        long id = (long) session.getAttribute("id");
+
+        MemberDto memberDto = userService.getProfileInfo(id);
+        model.addAttribute("user",memberDto);
+
         return WebPageNames.ADMIN_PROFILE;
 
     }
 
     @PostMapping(value = "/profile")
     public String changePassword(@ModelAttribute ChangePasswordDto changePasswordDto, HttpSession session){
-       return null;
+
+        if(!changePasswordDto.getNewPassord().equals(changePasswordDto.getConfirmPassword())) return "redirect:/admin/profile?error";
+
+        long id = (long) session.getAttribute("id");
+
+        try {
+            userService.changePassword(id,changePasswordDto.getOldPassword(),changePasswordDto.getNewPassord());
+        } catch (Exception e) {
+            return "redirect:/admin/profile?error";
+        }
+
+        return "redirect:/admin/profile?success";
 
     }
+
+    @GetMapping(value = "/statistics")
+    public String getStatisticsView(Model model, HttpSession session){
+
+        long id = (long) session.getAttribute("id");
+
+
+        return WebPageNames.ADMIN_STATISTICS;
+
+    }
+
+
 
     @ModelAttribute("changePassword")
     public ChangePasswordDto changePasswordDto(){

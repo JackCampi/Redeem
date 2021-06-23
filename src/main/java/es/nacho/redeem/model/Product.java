@@ -16,13 +16,16 @@ public class Product {
     private String name;
 
     @Column(name = "prod_price", nullable = false)
-    private String price;
+    private Long price;
 
     @Column(name = "prod_type", nullable = false)
     private String type;
 
     @Column(name = "prod_stock", nullable = false)
-    private Long stock;
+    private Integer stock;
+
+    @Column(name = "prod_available", nullable = false)
+    private Boolean available;
 
     @Column(name = "prod_image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
@@ -34,13 +37,15 @@ public class Product {
     @JoinColumn(name = "company_comp_id", nullable = false)
     private Company company;
 
-    public Product(String name, String price, String type, Long stock, String imageUrl) {
+    public Product(String name, Long price, String type, Integer stock, Boolean available, String imageUrl, Company company) {
         super();
         this.name = name;
         this.price = price;
         this.type = type;
         this.stock = stock;
+        this.available = available;
         this.imageUrl = imageUrl;
+        this.company = company;
     }
 
     public Product() {
@@ -63,11 +68,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 
@@ -79,11 +84,11 @@ public class Product {
         this.type = type;
     }
 
-    public Long getStock() {
+    public Integer getStock() {
         return stock;
     }
 
-    public void setStock(Long stock) {
+    public void setStock(Integer stock) {
         this.stock = stock;
     }
 
@@ -93,5 +98,21 @@ public class Product {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
+    }
+
+    public Company getCompany() {
+        return company;
+    }
+
+    public void setCompany(Company company) {
+        this.company = company;
     }
 }
