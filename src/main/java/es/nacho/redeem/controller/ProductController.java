@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -32,11 +33,11 @@ public class ProductController {
             productList = viewProductList.get(nit);
         }catch (Exception e){
             e.printStackTrace();
-            return WebPageNames.ERROR_PAGE;
+            productList = new ArrayList<>();
         }
         model.addAttribute("productList", productList);
 
-        return WebPageNames.PRODUCTS_LIST; //TODO
+        return WebPageNames.PRODUCTS_LIST;
     }
 
     @GetMapping(value = "/details")
