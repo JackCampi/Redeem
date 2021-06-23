@@ -4,7 +4,7 @@ import es.nacho.redeem.model.Product;
 import es.nacho.redeem.web.dto.ProductDto;
 
 public interface ProductMapper {
-    default ProductDto toProductDto(Product product){
+    static ProductDto toProductDto(Product product){
         return new ProductDto(
                 product.getId(),
                 product.getName(),
