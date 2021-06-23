@@ -1,9 +1,8 @@
 package es.nacho.redeem.service.api;
 
-import es.nacho.redeem.model.Product;
-
+import es.nacho.redeem.web.dto.ProductDto;
 import java.util.Collection;
 
 public interface ViewProductList {
-    Collection<Product> get(long companyNIT) throws Exception;
+    Collection<ProductDto> get(long companyNIT) throws Exception;
 }
