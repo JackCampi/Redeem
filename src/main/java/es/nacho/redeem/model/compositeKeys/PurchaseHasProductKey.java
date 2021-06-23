@@ -15,4 +15,19 @@ public class PurchaseHasProductKey implements Serializable {
     @Column(name = "product_prod_id")
     private Long productId;
 
+    public Long getPurchaseId() {
+        return purchaseId;
+    }
+
+    public void setPurchaseId(Long purchaseId) {
+        this.purchaseId = purchaseId;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
 }

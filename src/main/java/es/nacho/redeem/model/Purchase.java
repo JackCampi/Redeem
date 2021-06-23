@@ -32,6 +32,22 @@ public class Purchase {
 
     }
 
+    public Collection<PurchaseHasProduct> getPurchaseHasProducts() {
+        return purchaseHasProducts;
+    }
+
+    public void setPurchaseHasProducts(Collection<PurchaseHasProduct> purchaseHasProducts) {
+        this.purchaseHasProducts = purchaseHasProducts;
+    }
+
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
     public Long getId() {
         return id;
     }

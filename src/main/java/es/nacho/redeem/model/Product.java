@@ -16,7 +16,7 @@ public class Product {
     private String name;
 
     @Column(name = "prod_price", nullable = false)
-    private String price;
+    private long price;
 
     @Column(name = "prod_type", nullable = false)
     private String type;
@@ -34,7 +34,7 @@ public class Product {
     @JoinColumn(name = "company_comp_id", nullable = false)
     private Company company;
 
-    public Product(String name, String price, String type, Long stock, String imageUrl) {
+    public Product(String name, long price, String type, Long stock, String imageUrl) {
         super();
         this.name = name;
         this.price = price;
@@ -63,11 +63,11 @@ public class Product {
         this.name = name;
     }
 
-    public String getPrice() {
+    public long getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(long price) {
         this.price = price;
     }
 
