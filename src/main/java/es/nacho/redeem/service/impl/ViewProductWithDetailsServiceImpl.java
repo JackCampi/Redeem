@@ -7,7 +7,6 @@ import es.nacho.redeem.service.api.ViewProductWithDetailsService;
 import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.Optional;
 
 @Service
@@ -19,7 +18,8 @@ public class ViewProductWithDetailsServiceImpl implements ViewProductWithDetails
     @Override
     public ProductWithDetailsDto get(Long id) throws Exception{
         Optional<Product> product = productRepository.findById(id);
-        if(!product.isPresent()) throw new Exception("Product no exists");
-        return ProductDetailsMapper.toProductDetailsDto(product.get());
+        if(product.isPresent()) {
+            return ProductDetailsMapper.toProductDetailsDto(product.get());
+        }else throw new Exception("Product no exists");
     }
 }

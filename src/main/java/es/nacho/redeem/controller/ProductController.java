@@ -8,10 +8,7 @@ import es.nacho.redeem.web.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
@@ -43,7 +40,7 @@ public class ProductController {
     }
 
     @GetMapping(value = "/details")
-    public String viewProductWithDetails(Long id, Model model){
+    public String viewProductWithDetails(@RequestParam Long id, Model model){
         ProductWithDetailsDto productWithDetailsDto;
         try{
             productWithDetailsDto = viewProductWithDetailsService.get(id);
@@ -51,7 +48,7 @@ public class ProductController {
             e.printStackTrace();
             return "redirect:/admin/products?error";
         }
-        model.addAttribute("productDetails", productWithDetailsDto);
+        model.addAttribute("productWithDetails", productWithDetailsDto);
         return WebPageNames.PRODUCT_DETAILS;
     }
 
@@ -59,11 +56,11 @@ public class ProductController {
     public String addProduct(HttpSession session, @ModelAttribute("productWithDetails") ProductWithDetailsDto productWithDetailsDto){
         Long nit = (long) session.getAttribute("nit");
         try{
-            addProductService.invoke(productDto, productWithDetailsDto, nit);
-            return "redirect:/admin/products/addprod?success";
+            addProductService.invoke(productWithDetailsDto, nit);
+            return "redirect:/admin/products?success";
         }catch (Exception e){
             e.printStackTrace();
-            return "redirect:/admin/products/addprod?error";
+            return "redirect:/admin/products?error";
         }
     }
 

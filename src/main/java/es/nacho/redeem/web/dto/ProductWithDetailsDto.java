@@ -8,8 +8,8 @@ import lombok.*;
 public class ProductWithDetailsDto {
     private Long id;
     private String name;
-    private String price;
-    private Long stock;
+    private Long price;
+    private Integer stock;
     private String imageUrl;
     private String type;
     private String details;

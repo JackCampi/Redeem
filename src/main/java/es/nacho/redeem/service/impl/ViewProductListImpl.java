@@ -2,7 +2,6 @@ package es.nacho.redeem.service.impl;
 
 import es.nacho.redeem.exception.CompanyNotFoundException;
 import es.nacho.redeem.mapper.ProductListMapper;
-import es.nacho.redeem.mapper.ProductMapper;
 import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Product;
 import es.nacho.redeem.repository.CompanyRepository;
@@ -25,8 +24,9 @@ public class ViewProductListImpl implements ViewProductList {
     @Override
     public Collection<ProductDto> get(long companyNIT) throws CompanyNotFoundException {
         Optional<Company> company =  companyRepository.findById(companyNIT);
-        if(!company.isPresent()) throw new CompanyNotFoundException();
-        Collection<Product> products = productRepository.findAllByCompany(company.get());
-        return ProductListMapper.toProductListDto(products);
+        if(company.isPresent()) {
+            Collection<Product> products = productRepository.findAllByCompany(company.get());
+            return ProductListMapper.toProductListDto(products);
+        }else throw new CompanyNotFoundException();
     }
 }
