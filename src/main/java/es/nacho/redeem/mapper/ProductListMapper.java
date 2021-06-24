@@ -9,7 +9,8 @@ public interface ProductListMapper {
     static Collection<ProductDto> toProductListDto(Collection<Product> products){
         Collection<ProductDto> productDtos = new ArrayList<>();
         products.forEach(product -> {
-            productDtos.add(ProductMapper.toProductDto(product));
+            if(product.getAvailable())
+                productDtos.add(ProductMapper.toProductDto(product));
         });
         return productDtos;
     }

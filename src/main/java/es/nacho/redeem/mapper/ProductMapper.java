@@ -1,5 +1,6 @@
 package es.nacho.redeem.mapper;
 
+import es.nacho.redeem.model.Company;
 import es.nacho.redeem.model.Product;
 import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import es.nacho.redeem.web.dto.ProductDto;
@@ -13,12 +14,14 @@ public interface ProductMapper {
                 product.getStock(),
                 product.getImageUrl());
     }
-    static Product toProduct(ProductWithDetailsDto product){
+    static Product toProduct(ProductWithDetailsDto product, Company company){
         return new Product(
                 product.getName(),
                 product.getPrice(),
                 product.getType(),
                 product.getStock(),
-                product.getImageUrl()); //TODO add productDetailsDto.setDetails
+                product.getImageUrl(),
+                product.getDetails(),
+                company);
     }
 }
