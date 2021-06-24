@@ -6,6 +6,9 @@ import java.util.Collection;
 
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.format.CalendarFormat;
+import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.web.dto.transfer.history.AAllocation;
+import es.nacho.redeem.web.dto.transfer.history.AdminDto;
 import es.nacho.redeem.web.dto.transfer.history.EAllocation;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +23,9 @@ public class AllocationServiceImpl implements AllocationService{
 
     @Autowired
     private AllocationRepository allocationRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Override
     public Allocation saveAllocation(String company, long amount, String description, Employee admin, Employee employee) {
@@ -39,6 +45,30 @@ public class AllocationServiceImpl implements AllocationService{
                     allocation.getAdmin().getName()
             ));
         });
+
+        return sortedList;
+    }
+
+    @Override
+    public SortedList<AdminDto> getAdminAllocations(long nit, SortedList<AdminDto> sortedList) {
+
+        employeeRepository.findAllByCompanyAndRol(nit, "administrador").forEach(admin -> {
+
+            admin.getOutgoinAllocations().forEach(allocation -> {
+
+                sortedList.add(new AAllocation(
+                        "AAllocation",
+                        allocation.getAmount(),
+                        CalendarFormat.formatLocalDateTime(allocation.getDatetime()),
+                        allocation.getEmployee().getName(),
+                        allocation.getAdmin().getName(),
+                        allocation.getDescription()
+                ));
+
+            });
+
+        });
+
 
         return sortedList;
     }

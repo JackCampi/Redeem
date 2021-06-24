@@ -1,13 +1,12 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
-import es.nacho.redeem.service.AreaService;
+import es.nacho.redeem.model.Purchase;
+import es.nacho.redeem.service.*;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.EmployeeRepository;
-import es.nacho.redeem.service.CompanyService;
-import es.nacho.redeem.service.TransferService;
-import es.nacho.redeem.service.UserService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
@@ -15,6 +14,8 @@ import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
+import es.nacho.redeem.web.dto.transfer.history.AdminDto;
+import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -48,6 +50,12 @@ public class AdminController {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AllocationService allocationService;
+
+    @Autowired
+    private PurchaseService purchaseService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -233,10 +241,13 @@ public class AdminController {
     @GetMapping(value = "/history")
     public String getHistoryView(HttpSession httpSession, Model model){
 
-        long id = (long) httpSession.getAttribute("id");
+        long nit = (long) httpSession.getAttribute("nit");
 
-        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
-        model.addAttribute("transferMessages", transferMessages);
+        SortedList<AdminDto> sortedList = new SortedList<>();
+
+        sortedList = allocationService.getAdminAllocations(nit, sortedList);
+        sortedList = purchaseService.getAdminPurchases(nit, sortedList);
+        model.addAttribute("transferMessages", sortedList);
 
         return WebPageNames.ADMIN_HISTORY;
     }
