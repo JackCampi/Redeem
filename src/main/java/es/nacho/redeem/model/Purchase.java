@@ -20,6 +20,9 @@ public class Purchase {
     @Column(name = "pur_sent", nullable = false)
     private Boolean isSent;
 
+    @Column(name = "pur_value", nullable = false)
+    private Long value;
+
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL, mappedBy = "purchase")
     private Collection<PurchaseHasProduct> purchaseHasProducts;
 
@@ -77,4 +80,11 @@ public class Purchase {
         this.isSent = isSent;
     }
 
+    public Long getValue() {
+        return value;
+    }
+
+    public void setValue(Long value) {
+        this.value = value;
+    }
 }

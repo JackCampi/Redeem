@@ -3,28 +3,27 @@ package es.nacho.redeem.service;
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.CompanyNotFoundException;
 import es.nacho.redeem.format.CalendarFormat;
-import es.nacho.redeem.model.Company;
-import es.nacho.redeem.model.Employee;
-import es.nacho.redeem.model.Product;
-import es.nacho.redeem.model.PurchaseHasProduct;
+import es.nacho.redeem.model.*;
 import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.CompanyRepository;
+import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.repository.PurchaseRepository;
 import es.nacho.redeem.web.dto.transfer.history.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService{
 
     @Autowired
-    private PurchaseRepository purchaseRepository;
+    private AreaRepository areaRepository;
 
     @Autowired
-    private AreaRepository areaRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -103,5 +102,19 @@ public class PurchaseServiceImpl implements PurchaseService{
 
 
         return sortedList;
+    }
+
+    public Collection<Purchase> getPurchasesToSend(Long nit){
+
+        Collection<Purchase> purchasesToSend = new ArrayList<>();
+        employeeRepository.findAllByCompanyAndRol(nit,"empleado").forEach(employee ->
+                employee.getPurchases().forEach(purchase ->
+                {
+                    if (!purchase.getIsSent()) {
+                        purchasesToSend.add(purchase);
+                    }
+                })
+        );
+        return purchasesToSend;
     }
 }
