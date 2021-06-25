@@ -147,6 +147,7 @@ button:focus, input:focus{
 .add-to-cart{
     width: 300px;
     padding: 30px 30px;
+    margin-bottom: 30px;
     background-color: rgb(238, 238, 238);
     border-radius: 20px;
     display: flex;
@@ -227,6 +228,27 @@ button:hover{
 
 button.add-one-button{
     margin-bottom: 25px;
+}
+
+#add-error-1, #add-error-2{
+    color: red;
+    display: none;
+    text-align: center;
+}
+
+.success-message{
+    display: none;
+    position: fixed;
+    z-index: 1;
+    right: 0;
+    bottom: 0;
+    padding: 5px 40px;
+    margin: 50px;
+    overflow: auto;
+    border-radius: 15px;
+    border: 2px solid green;
+    background-color: rgb(246, 255, 246);
+    color: green;
 }
 
 @media only screen and (max-width: 855px){

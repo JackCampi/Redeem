@@ -111,12 +111,12 @@
             <div id="addProductModal" class="myModal">
                 <div class="modal-content add-modal">
                     <h3>Añadir un producto</h3>
-                    <form th:action="${products/addprod}" method="post">
+                    <form th:action="${products/addprod}" method="post" name="add-product-form" th:object="${productDetails}">
                         <div class="form-column1">
                             <div class="form-img">
                                 <img class="new-prod-img" id="new-prod-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAA1BMVEXk5OSU5FUvAAAAR0lEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBgxUwAAU+n3sIAAAAASUVORK5CYII=" alt="">
                                 <label for="image">URL de la imagen</label>
-                                <input type="text" id="image" onchange="readURL(this);" autocomplete="off" required>
+                                <input type="text" id="image" onchange="readURL(this);" autocomplete="off" th:field="*{imageUrl}" required>
                             </div>
                             <div class="add-options">
                                 <input type="submit" value="Agregar" class="add-button">
@@ -126,19 +126,19 @@
                         <div class="form-column2">
                             <div class="form-label-input">
                                 <label for="name">Nombre</label>
-                                <input type="text" id="name" required>
+                                <input type="text" id="name" th:field="*{name}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="price">Precio</label>
-                                <input type="number" id="price" required>
+                                <input type="number" id="price" th:field="*{price}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="quantity">Cantidad</label>
-                                <input type="number" id="quantity" value="0" required>
+                                <input type="number" id="quantity" th:field="*{stock}" value="0" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="type">Categoría</label>
-                                <select name="type" id="type" required>
+                                <select name="type" id="type" th:field="*{type}" required>
                                     <option value="Vehículos">Vehículos</option>
                                     <option value="Supermercado">Supermercado</option>
                                     <option value="Tecnología">Tecnología</option>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="form-textarea">
                                 <label for="description">Descripción</label>
-                                <textarea name="description" id="description" cols="30" rows="10" maxlength="250" required></textarea>
+                                <textarea name="description" id="description" cols="30" rows="10" maxlength="250" th:field="*{details}" required></textarea>
                             </div>
                         </div>
                     </form>
@@ -174,12 +174,12 @@
                         <span class="material-icons">add</span>
                         <span>Añadir producto</span>
                     </button>
-                    <h5 class="success-msg">Se ha añadido el producto</h5>
+                    <h5 th:if="${param.success}" class="success-msg">Se ha añadido el producto</h5>
                 </div>
                 
 
-                <form th:action="" method="post">
-                    <input type="hidden" id="product-id">
+                <form th:action="@{/admin/products/details}" method="get">
+                    <input type="hidden" id="product-id" name="id" readonly>
                     <div class="product-cards">
 
                         <!-- Foreach -->
