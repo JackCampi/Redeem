@@ -82,7 +82,7 @@
     margin: 20px 0;
 }
 
-.product-card h5 {
+.product-card h5, .product-card span {
     width: 170px;
     font-size: 1.1rem;
     font-weight: 800;
