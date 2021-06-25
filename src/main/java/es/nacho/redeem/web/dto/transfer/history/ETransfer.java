@@ -19,8 +19,12 @@ public class ETransfer extends TransHistoryDto implements EmpDto{
         return isArrival;
     }
 
-    public void setArrival(byte arrival) {
-        isArrival = arrival;
+    public byte getIsArrival() {
+        return isArrival;
+    }
+
+    public void setIsArrival(byte isArrival) {
+        this.isArrival = isArrival;
     }
 
     public String getName() {

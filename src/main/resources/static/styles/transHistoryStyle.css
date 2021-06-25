@@ -221,7 +221,7 @@ h1{
     background-color: #CAC7D2;
     border-radius: 15px;
     width: 40%;
-    height: 80px;
+    height: auto;
     display: flex;
 }
 
@@ -229,7 +229,7 @@ h1{
     margin-left: 2%;
 }
 
-.name{
+.general-message{
     font-family: Nunito Sans;
     font-style: normal;
     font-weight: 600;

@@ -106,7 +106,8 @@
                     <td>
                         <div class="row-container" th:object="${transaction}">
                             <div class="user-date">
-                                <p class="name"></p>
+                                <p class="type"></p>
+                                <p class="general-message"></p>
                                 <p class="date"></p>
                             </div>
                             <p class="amount"></p>
@@ -126,29 +127,64 @@
 
 
 <script th:inline="javascript">
-    var registros = document.getElementsByClassName("row-container");
-    var nombres = document.getElementsByClassName("name");
-    var fechas = document.getElementsByClassName("date");
-    var cantidades = document.getElementsByClassName("amount");
-    let listado =  [[${transferMessages}]];
-    var valores;
-    var pos, inverse;
-    for(var i=listado.length-1;i>=0;i--){
-        inverse = listado.length-1-i;
-        valores = listado[inverse];
-        pos = Object.values(valores);
-        fechas[i].innerHTML = dateFormat(pos[1]);
-        cantidades[i].innerHTML = "$" + pos[2]+",00";
-        if(pos[3] == 0){
-            registros[i].style.marginLeft = "40%";
-            nombres[i].innerHTML = "Para: "+ pos[0];
-            nombres[i].style.color = "#85342A";
-            cantidades[i].style.color = "#85342A";
-        }else{
-            nombres[i].innerHTML = "De: "+pos[0];
-            nombres[i].style.color = "#36852A";
-            cantidades[i].style.color = "#36852A";
+
+    let rows = document.getElementsByClassName("row-container");
+    let types = document.getElementsByClassName("type");
+    let generalMessages = document.getElementsByClassName("general-message");
+    let dates = document.getElementsByClassName("date");
+    let amounts = document.getElementsByClassName("amount");
+    let transferMessages =  [[${transferMessages}]];
+    let rowsValues;
+    let posValues, inversePosition;
+    for(var i=transferMessages.length-1;i>=0;i--){
+        inversePosition = transferMessages.length-1-i;
+        rowsValues = transferMessages[inversePosition];
+        posValues = Object.values(rowsValues);
+        if(posValues[0]=="ETransfer"){
+            transferType(i);
+        }else if(posValues[0]=="EAllocation"){
+            allocationType(i);
+        }else if(posValues[0]=="EPurchases"){
+            purchaseType(i);
         }
+
+    }
+
+    function transferType(i){
+        types[i].innerHTML = "Transferencia";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        amounts[i].innerHTML = "$" + posValues[1]+",00";
+        if(posValues[3] == 0){
+            rows[i].style.marginLeft = "40%";
+            generalMessages[i].innerHTML = "Para: "+ posValues[4];
+            generalMessages[i].style.color = "#85342A";
+            amounts[i].style.color = "#85342A";
+        }else{
+            generalMessages[i].innerHTML = "De: "+posValues[4];
+            generalMessages[i].style.color = "#36852A";
+            amounts[i].style.color = "#36852A";
+        }
+    }
+
+    function allocationType(i){
+        types[i].innerHTML = "Depósito";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        amounts[i].innerHTML = "$" + posValues[1]+",00";
+        generalMessages[i].innerHTML = "De: "+posValues[3];
+        generalMessages[i].style.color = "#36852A";
+        amounts[i].style.color = "#36852A";
+    }
+
+    function purchaseType(i){
+        types[i].innerHTML = "Compra";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        rows[i].style.marginLeft = "40%";
+        var generalMessagesText="Producto     Cantidad     Precio ", buyedProduct;
+        for(var j=0; j<posValues[3].length; j++){
+            buyedProduct = Object.values(posValues[3][j]);
+            generalMessagesText+= tab(buyedProduct);
+        }
+        generalMessages[i].innerHTML = generalMessagesText+ "Total:........."+posValues[1];
     }
 
     function dateFormat(date){
@@ -167,6 +203,19 @@
         if(hour.length==1){hour="0"+hour;}
         newDate += hour+":"+date.slice(14,16)+" "+dayPart;
         return newDate ;
+    }
+
+    function tab(purchase){
+        return purchase[0]+Concatenar_String(".",15-purchase[0].length)+purchase[1]+Concatenar_String(".",10-purchase[1].toString().length)+purchase[2]+"<br\>";
+    }
+
+    function Concatenar_String(A_Repetir, Num_Veces){
+        var valorFinal="";
+        for(var k = 0; k < Num_Veces; k ++)
+        {
+            valorFinal += A_Repetir;
+        }
+        return valorFinal;
     }
 
 </script>
