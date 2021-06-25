@@ -24,6 +24,16 @@ public class PurchaseHasProduct {
     @Column(name = "php_quantity", nullable = false)
     private int quantity;
 
+    public PurchaseHasProduct(PurchaseHasProductKey id, Purchase purchase, Product product, int quantity) {
+        this.id = id;
+        this.purchase = purchase;
+        this.product = product;
+        this.quantity = quantity;
+    }
+
+    public PurchaseHasProduct() {
+    }
+
     public PurchaseHasProductKey getId() {
         return id;
     }
