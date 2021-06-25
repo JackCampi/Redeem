@@ -270,6 +270,18 @@ public class AdminController {
 
     }
 
+    @GetMapping(value = "/statistics")
+    public String getStatisticsView(Model model, HttpSession session){
+
+        long id = (long) session.getAttribute("id");
+
+
+        return WebPageNames.ADMIN_STATISTICS;
+
+    }
+
+
+
     @ModelAttribute("changePassword")
     public ChangePasswordDto changePasswordDto(){
         return new ChangePasswordDto();

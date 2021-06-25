@@ -1,16 +1,18 @@
 package es.nacho.redeem.controller;
 
-import es.nacho.redeem.service.api.AddProductService;
-import es.nacho.redeem.service.api.ViewProductWithDetailsService;
-import es.nacho.redeem.service.api.ViewProductList;
+import es.nacho.redeem.model.Employee;
+import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.api.*;
 import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import es.nacho.redeem.web.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -22,6 +24,10 @@ public class ProductController {
     @Autowired
     private AddProductService addProductService;
     @Autowired
+    private UpdateProductService updateProductService;
+    @Autowired
+    private DisableProductService disableProductService;
+    @Autowired
     private ViewProductWithDetailsService viewProductWithDetailsService;
 
     @GetMapping()
@@ -32,11 +38,11 @@ public class ProductController {
             productList = viewProductList.get(nit);
         }catch (Exception e){
             e.printStackTrace();
-            return WebPageNames.ERROR_PAGE;
+            productList = new ArrayList<>();
         }
         model.addAttribute("productList", productList);
 
-        return WebPageNames.PRODUCTS_LIST; //TODO
+        return WebPageNames.PRODUCTS_LIST;
     }
 
     @GetMapping(value = "/details")
@@ -57,6 +63,29 @@ public class ProductController {
         Long nit = (long) session.getAttribute("nit");
         try{
             addProductService.invoke(productWithDetailsDto, nit);
+            return "redirect:/admin/products?success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/admin/products?error";
+        }
+    }
+
+    @PostMapping(value = "/details/edit")
+    public String editProduct(HttpSession session, @ModelAttribute("productWithDetails") ProductWithDetailsDto productWithDetailsDto) {
+        Long nit = (long) session.getAttribute("nit");
+        try{
+            updateProductService.invoke(productWithDetailsDto, nit);
+            return "redirect:/admin/products/details?success";
+        }catch (Exception e){
+            e.printStackTrace();
+            return "redirect:/admin/products/details?error";
+        }
+    }
+
+    @PostMapping(value = "/details/disable")
+    public String disableProduct(@RequestParam Long productId) {
+        try{
+            disableProductService.invoke(productId);
             return "redirect:/admin/products?success";
         }catch (Exception e){
             e.printStackTrace();
