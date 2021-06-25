@@ -13,5 +13,6 @@ public interface PurchaseService {
     SortedList<EmpDto> getEmployeePurchases(Employee employee, SortedList<EmpDto> sortedList);
     SortedList<AdminDto> getAdminPurchases(long nit, SortedList<AdminDto> sortedList);
     Collection<Purchase> getPurchasesToSend(Long nit);
+    void setSentPurchase(Long purchaseId) throws Exception;
 
 }

@@ -2,6 +2,7 @@ package es.nacho.redeem.service;
 
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.CompanyNotFoundException;
+import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.format.CalendarFormat;
 import es.nacho.redeem.model.*;
 import es.nacho.redeem.repository.AreaRepository;
@@ -24,6 +25,9 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     @Autowired
     private CompanyRepository companyRepository;
@@ -116,5 +120,15 @@ public class PurchaseServiceImpl implements PurchaseService{
                 })
         );
         return purchasesToSend;
+    }
+
+    @Override
+    public void setSentPurchase(Long purchaseId) throws Exception {
+        Optional<Purchase> possiblePurchase = purchaseRepository.findById(purchaseId);
+        if(!possiblePurchase.isPresent()) throw new Exception();
+        Purchase purchase = possiblePurchase.get();
+
+        purchase.setIsSent(true);
+        purchaseRepository.save(purchase);
     }
 }
