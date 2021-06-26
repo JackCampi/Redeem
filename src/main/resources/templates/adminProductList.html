@@ -98,7 +98,7 @@
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h4 th:text="${adminDashboardInfo.name}"></h4>
+                    <h4 th:text="${session.name}"></h4>
                     <small>Administrador</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
@@ -111,7 +111,7 @@
             <div id="addProductModal" class="myModal">
                 <div class="modal-content add-modal">
                     <h3>Añadir un producto</h3>
-                    <form th:action="${products/addprod}" method="post" name="add-product-form" th:object="${productDetails}">
+                    <form th:action="@{/admin/products/addprod}" method="post" name="add-product-form" th:object="${productWithDetails}">
                         <div class="form-column1">
                             <div class="form-img">
                                 <img class="new-prod-img" id="new-prod-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAA1BMVEXk5OSU5FUvAAAAR0lEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBgxUwAAU+n3sIAAAAASUVORK5CYII=" alt="">
