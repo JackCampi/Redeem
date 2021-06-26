@@ -46,7 +46,7 @@ public class ProductController {
     public String viewProductWithDetails(@RequestParam Long id, Model model){
         ProductWithDetailsDto productWithDetailsDto;
         try{
-            productWithDetailsDto = viewProductWithDetailsService.get(id);
+            productWithDetailsDto = viewProductWithDetailsService.getProduct(id);
         }catch (Exception e){
             e.printStackTrace();
             return "redirect:/admin/products?error";
