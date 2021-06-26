@@ -13,6 +13,7 @@ import es.nacho.redeem.web.dto.transfer.history.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
@@ -31,6 +32,12 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Override
+    public void savePurchase(Employee employee) {
+
+        purchaseRepository.save(new Purchase(LocalDateTime.now(), employee));
+    }
 
     @Override
     public SortedList<EmpDto> getEmployeePurchases(Employee employee, SortedList<EmpDto> sortedList) {

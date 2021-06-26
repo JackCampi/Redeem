@@ -10,6 +10,7 @@ import java.util.Collection;
 
 public interface PurchaseService {
 
+    void savePurchase(Employee employee);
     SortedList<EmpDto> getEmployeePurchases(Employee employee, SortedList<EmpDto> sortedList);
     SortedList<AdminDto> getAdminPurchases(long nit, SortedList<AdminDto> sortedList);
     Collection<Purchase> getPurchasesToSend(Long nit);

@@ -1,8 +1,6 @@
 package es.nacho.redeem.service;
 
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Collection;
 
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.format.CalendarFormat;
@@ -28,10 +26,11 @@ public class AllocationServiceImpl implements AllocationService{
     private EmployeeRepository employeeRepository;
 
     @Override
-    public Allocation saveAllocation(String company, long amount, String description, Employee admin, Employee employee) {
+    public void saveAllocation(String company, long amount, String description, Employee admin, Employee employee) {
         
-        description = String.format("El administrador %s %s de la empresa %s abonó $%d al empleado %s %s", admin.getName(),admin.getLastName(), company, amount, employee.getName(),employee.getLastName());
-        return allocationRepository.save(new Allocation(LocalDateTime.now(), amount, description, admin, employee));
+        description = String.format("El administrador %s %s de la empresa %s abonó $%d al empleado %s %s",
+                admin.getName(),admin.getLastName(), company, amount, employee.getName(),employee.getLastName());
+        allocationRepository.save(new Allocation(LocalDateTime.now(), amount, description, admin, employee));
     }
 
     @Override
