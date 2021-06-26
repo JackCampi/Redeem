@@ -1,7 +1,7 @@
 package es.nacho.redeem.controller;
 
-import es.nacho.redeem.service.api.ViewProductList;
-import es.nacho.redeem.web.dto.ProductDto;
+import es.nacho.redeem.service.api.ViewProductWithDetailsService;
+import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -16,21 +17,20 @@ import java.util.Collection;
 public class MarketplaceController {
 
     @Autowired
-    private ViewProductList viewProductList;
+    private ViewProductWithDetailsService viewProductWithDetailsService;
 
     @GetMapping()
     public String viewProductList(HttpSession session, Model model) {
         long nit = (long)  session.getAttribute("nit");
-        Collection<ProductDto> productList;
+        Collection<ProductWithDetailsDto> productList;
         try{
-            productList = viewProductList.get(nit);
+            productList = viewProductWithDetailsService.getList(nit);
         }catch (Exception e){
             e.printStackTrace();
-            return WebPageNames.ERROR_PAGE;
+            productList = new ArrayList<>();
+            return WebPageNames.MARKETPLACE + "?empty";
         }
-
         model.addAttribute("productList", productList);
-
-        return WebPageNames.ERROR_PAGE; //TODO
+        return WebPageNames.MARKETPLACE;
     }
 }
