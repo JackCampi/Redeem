@@ -10,7 +10,6 @@ products or services of the company will be displayed with their respective data
 something similar to a virtual store.
 ***
 ## Technologies
-***
 A list of technologies used within the project:
 * Java
 * Spring Boot (https://spring.io/projects/spring-boot): Version 2.4.5 
