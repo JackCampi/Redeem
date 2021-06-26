@@ -27,3 +27,8 @@ window.onclick = function(event) {
 function readURL(obj){
     document.getElementById("prod-img").src = obj.value;
 }
+
+function productList(){
+    var newURL = window.location.protocol + "//" + window.location.host + "/admin/products";
+    window.location = newURL;
+}
