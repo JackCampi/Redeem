@@ -8,10 +8,10 @@ public interface ProductDetailsMapper {
         return new ProductWithDetailsDto(
                 product.getId(),
                 product.getName(),
-                Long.getLong(product.getPrice()), //TODO delete Long cast
-                Integer.getInteger(product.getStock().toString()), //TODO delete String Integer cast
+                product.getPrice(),
+                product.getStock(),
                 product.getImageUrl(),
                 product.getType(),
-                ""); //TODO product.getDetails()
+                product.getDetails());
     }
 }

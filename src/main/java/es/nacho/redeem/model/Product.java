@@ -31,7 +31,7 @@ public class Product {
     @Column(name = "prod_available", nullable = false)
     private Boolean available;
 
-    @Column(name = "prod_image_url", nullable = false, columnDefinition = "TEXT")
+    @Column(name = "prod_image_url", nullable = false, columnDefinition = "TEXT", length = 10000)
     private String imageUrl;
 
     @Column(name = "prod_details", nullable = false, columnDefinition = "TEXT")
