@@ -8,7 +8,6 @@ public interface WebPageNames {
     String EMPLOYEE_DASHBOARD = "employeeDashboard";
     String ERROR_PAGE = "error";
     String LOGIN = "login";
-    //TODO: write the html correct name
     String USER_TO_USER_TRANSFER = "transferContent";
     String ADMIN_ALLOCATION = "employeeAllocation";
     String ADMIN_ALLOCATION_EMPLOYEE = "employeeAllocation";
@@ -21,6 +20,6 @@ public interface WebPageNames {
     String EMPLOYEE_PROFILE = "employeeUsersProfileInfo";
     String PRODUCTS_LIST = "adminProductList";
     String PRODUCT_DETAILS = "adminProductDetails";
-
+    String MARKETPLACE = "employeeMarketplace";
     String ADMIN_STATISTICS = "adminStatistics";
 }
