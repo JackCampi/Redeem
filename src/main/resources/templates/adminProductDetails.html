@@ -98,7 +98,7 @@
             
             <div class="user-info">
                 <div class="name-rol">
-                    <h4 th:text="${adminDashboardInfo.name}"></h4>
+                    <h4 th:text="${session.name}"></h4>
                     <small>Administrador</small>
                 </div>
                 <div><span class="material-icons">account_circle</span></div>
@@ -111,12 +111,12 @@
             <div id="editModal" class="myModal">
                 <div class="modal-content edit-modal">
                     <h3>Añadir un producto</h3>
-                    <form th:action="@{/details/edit}" method="POST" th:object="${productDetails}">
+                    <form th:action="@{/details/edit}" method="POST" th:object="${productWithDetails}">
                         <div class="form-column1">
                             <div class="form-img">
                                 <img class="prod-img" id="prod-img" src="data:image/jpeg;base64,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" alt="">
                                 <label for="image">URL de la imagen</label>
-                                <input type="text" id="image" th:value="${productDetails.imageUrl}" th:field="*{imageUrl}" onchange="readURL(this);" autocomplete="off" required>
+                                <input type="text" id="image" th:value="${productWithDetails.imageUrl}" th:field="*{imageUrl}" onchange="readURL(this);" autocomplete="off" required>
                             </div>
                             <div class="add-options">
                                 <input type="submit" value="Guardar cambios" class="add-button">
@@ -126,19 +126,19 @@
                         <div class="form-column2">
                             <div class="form-label-input">
                                 <label for="name">Nombre</label>
-                                <input type="text" id="name" autocomplete="off" th:field="*{name}" th:value="${productDetails.name}" required>
+                                <input type="text" id="name" autocomplete="off" th:field="*{name}" th:value="${productWithDetails.name}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="price">Precio</label>
-                                <input type="number" id="price" autocomplete="off" th:field="*{price}" th:value="${productDetails.price}" required>
+                                <input type="number" id="price" autocomplete="off" th:field="*{price}" th:value="${productWithDetails.price}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="quantity">Cantidad</label>
-                                <input type="number" id="quantity" value="0" autocomplete="off" th:field="*{stock}" th:value="${productDetails.stock}" required>
+                                <input type="number" id="quantity" value="0" autocomplete="off" th:field="*{stock}" th:value="${productWithDetails.stock}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="type">Categoría</label>
-                                <select name="type" id="type" th:field="*{type}" th:value="${productDetails.type}" required>
+                                <select name="type" id="type" th:field="*{type}" th:value="${productWithDetails.type}" required>
                                     <option value="Vehículos">Vehículos</option>
                                     <option value="Supermercado">Supermercado</option>
                                     <option value="Tecnología">Tecnología</option>
@@ -161,7 +161,7 @@
                             </div>
                             <div class="form-textarea">
                                 <label for="description">Descripción</label>
-                                <textarea name="description" id="description" th:field="*{details}" th:value="${productDetails.details}" cols="30" rows="10" maxlength="250" required></textarea>
+                                <textarea name="description" id="description" th:field="*{details}" th:value="${productWithDetails.details}" cols="30" rows="10" maxlength="250" required></textarea>
                             </div>
                         </div>
                     </form>
@@ -174,9 +174,9 @@
                     <h3>Eliminar producto</h3>
                     <br>
                     <h6 class="removeMessage">¿Desea <span id="desactivar">eliminar</span> el producto "<span
-                            th:text="${productDetails.name}"></span>" de la tienda de <span id="company">tu empresa</span>?</h6>
+                            th:text="${productWithDetails.name}"></span>" de la tienda de <span id="company">tu empresa</span>?</h6>
                     <form th:action="@{/details/disable}" class="remove-buttons" method="post" id="remove-form" name="remove-form">
-                        <input class="remove-id-field" id="removeId" th:value="${productDetails.id}" name="id" required readonly />
+                        <input class="remove-id-field" id="removeId" th:value="${productWithDetails.id}" name="id" required readonly />
                         <div class="remove-btn cancel-remove" onclick="return closeModal()">Cancelar</div>
                         <input type="submit" class="remove-btn save-remove" value="Sí, eliminar">
                     </form>
@@ -192,16 +192,16 @@
            </div>
            <div class="product-info">
                <div class="info1">
-                    <img th:src="${productDetails.imageUrl}" alt="">
-                    <h3><span th:text="${productDetails.name}"></span></h3>
-                    <h5><span th:text="${productDetails.type}"></span></h5>
-                    <h5 class="price">$<span th:text="${productDetails.price}"></span></h5>
-                    <h6><span th:text="${productDetails.stock}"></span> unidades disponibles</h6>
+                    <img th:src="${productWithDetails.imageUrl}" alt="">
+                    <h3><span th:text="${productWithDetails.name}"></span></h3>
+                    <h5><span th:text="${productWithDetails.type}"></span></h5>
+                    <h5 class="price">$<span th:text="${productWithDetails.price}"></span></h5>
+                    <h6><span th:text="${productWithDetails.stock}"></span> unidades disponibles</h6>
                </div>
 
                <div class="info2"> 
                    
-                   <p><span th:text="${productDetails.details}"></span></p>
+                   <p><span th:text="${productWithDetails.details}"></span></p>
 
                    <h6 th:if="${param.success}" class="message edited">Se ha editado exitosamente</h6>
                    <h6 th:if="${param.error}" class="message not-edited">No se pudo editar el producto</h6>
