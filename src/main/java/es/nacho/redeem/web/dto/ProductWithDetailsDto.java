@@ -6,7 +6,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ProductWithDetailsDto {
-    private Long id;
     private String name;
     private Long price;
     private Integer stock;

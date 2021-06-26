@@ -21,8 +21,7 @@ public class AddProductServiceImpl implements AddProductService {
 
     @Override
     public void invoke(ProductWithDetailsDto productWithDetailsDto, Long companyNIT) throws Exception{
-        boolean productExists = productRepository.findById(productWithDetailsDto.getId()).isPresent();
-        if(validateProductWithDetailsDto(productWithDetailsDto) && productExists) {
+        if(validateProductWithDetailsDto(productWithDetailsDto)) {
             Company company = getCompanyByNitService.invoke(companyNIT);
             Product product = ProductMapper.toProduct(productWithDetailsDto, company);
             productRepository.save(product);
