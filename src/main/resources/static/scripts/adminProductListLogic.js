@@ -19,6 +19,6 @@ function readURL(obj){
     document.getElementById("new-prod-img").src = obj.value;
 }
 
-function selectProduct(id){
-    document.getElementById("product-id").vaule = id;
+function selectProduct(element){
+    document.getElementById("product-id").vaule = element.getAttribute('product-id');
 }
