@@ -24,7 +24,7 @@
   }
 
   .add-modal{
-    margin: 2.5% auto;
+    margin: 2.5% auto 0 auto;
     padding:  40px 0;
     display: flex;
     align-items: center;
@@ -113,8 +113,10 @@
 }
 
 .new-prod-img{
-    width: 270px;
-    height: 270px;
+    max-width: 270px;
+    max-height: 250px;
+    min-height: 120px;
+    margin-bottom: 30px;
 }
 
 .form-img{
@@ -260,6 +262,16 @@ textarea {
     border-radius: 15px;
 }
 
+.error-msg{
+    font-size: medium;
+    color: rgb(231, 63, 63);
+    margin: 0 0 0 30px;
+    padding: 10px 40px;
+    background-color: rgb(255, 225, 225);
+    border: 2px solid red;
+    border-radius: 15px;
+}
+
 .form-img input{
     border: none;
     border-radius: 25px;
@@ -267,6 +279,39 @@ textarea {
     box-shadow: inset 2px 2px 10px 1px rgba(0, 0, 0, 0.137);
 }
 
+.quantity-button{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0;
+    border: none;
+    border-radius: 5px;
+    color: rgb(78, 78, 78);
+    background-color: white;
+}
+
+.quantity-button:hover{
+    color: white;
+    background-color: var(--main-color);
+}
+
+.quantity-label-input{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#quantity{
+    width: 70px;
+    border-radius: 15px;
+    height: 40px;
+    text-align: center;
+    padding: 0;
+}
+
+#image{
+    margin-bottom: 30px;
+}
 
 @media only screen and (max-width: 1245px) {
     .product-cards{

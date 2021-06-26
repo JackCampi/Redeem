@@ -23,3 +23,15 @@ function selectProduct(element){
     var newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + "/details" + "?id=" + element.getAttribute('product-id');
     window.location = newURL;
 }
+
+function increase(){
+    document.getElementById("quantity").value++;
+}
+
+function decrease(){
+    var amount = document.getElementById("quantity").value;
+    if (amount > 0){
+        amount--;
+        document.getElementById("quantity").value = amount;
+    }
+}

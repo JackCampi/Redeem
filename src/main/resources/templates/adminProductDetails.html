@@ -127,15 +127,15 @@
                         <div class="form-column2">
                             <div class="form-label-input">
                                 <label for="name">Nombre</label>
-                                <input type="text" id="name" autocomplete="off" th:field="*{name}" th:value="${productWithDetails.name}" required>
+                                <input type="text" id="name" autocomplete="off" th:field="*{name}" th:value="${productWithDetails.name}" autocomplete="off" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="price">Precio</label>
-                                <input type="number" id="price" autocomplete="off" th:field="*{price}" th:value="${productWithDetails.price}" required>
+                                <input type="number" id="price" autocomplete="off" th:field="*{price}" th:value="${productWithDetails.price}" autocomplete="off" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="quantity">Cantidad</label>
-                                <input type="number" id="quantity" value="0" autocomplete="off" th:field="*{stock}" th:value="${productWithDetails.stock}" required>
+                                <input type="number" id="quantity" value="0" autocomplete="off" th:field="*{stock}" th:value="${productWithDetails.stock}" autocomplete="off" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="type">Categoría</label>
@@ -186,7 +186,7 @@
 
 
            <div>
-               <button class="go-back-button" onclick='javascript:window.history.back()'>
+               <button class="go-back-button" onclick="productList()">
                 <span class="material-icons">arrow_back</span>
                 <h5>Volver atrás</h5>
                </button>
@@ -204,8 +204,8 @@
                    
                    <p><span th:text="${productWithDetails.details}"></span></p>
 
-                   <h6 th:if="${param.success}" class="message edited">Se ha editado exitosamente</h6>
-                   <h6 th:if="${param.error}" class="message not-edited">No se pudo editar el producto</h6>
+                   <h6 th:if="${param.success}" class="success-msg">Se ha editado exitosamente</h6>
+                   <h6 th:if="${param.error}" class="error-msg">No se pudo editar el producto</h6>
                    <button onclick="editModal()">
                     <span class="material-icons">edit</span>
                     <h5>Editar</h5>

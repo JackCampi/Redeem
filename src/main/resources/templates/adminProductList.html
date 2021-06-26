@@ -129,12 +129,18 @@
                                 <input type="text" id="name" th:field="*{name}" required>
                             </div>
                             <div class="form-label-input">
-                                <label for="price">Precio</label>
+                                <label for="price" pattern="\d*">Precio</label>
                                 <input type="number" id="price" th:field="*{price}" required>
                             </div>
-                            <div class="form-label-input">
-                                <label for="quantity">Cantidad</label>
-                                <input type="number" id="quantity" th:field="*{stock}" value="0" required>
+                            <div class="form-label-input quantity-label-input">
+                                <label for="quantity" pattern="\d*">Cantidad</label>
+                                <button type="button" class="quantity-button" onclick="decrease()">
+                                    <span class="material-icons">remove</span>
+                                </button>
+                                <input type="number" id="quantity" th:field="*{stock}" pattern="\d*" value="0" required>
+                                <button type="button" id="product-limit" class="quantity-button" onclick="increase()">
+                                    <span class="material-icons">add</span>
+                                </button>
                             </div>
                             <div class="form-label-input">
                                 <label for="type">Categoría</label>
@@ -175,9 +181,9 @@
                         <span>Añadir producto</span>
                     </button>
                     <h5 th:if="${param.success}" class="success-msg">Se ha añadido el producto</h5>
-                    <h5 th:if="${param.error}" class="success-msg">No se ha añadido el producto</h5>
+                    <h5 th:if="${param.error}" class="error-msg">No se ha añadido el producto</h5>
                     <h5 th:if="${param.successDelete}" class="success-msg">Se ha borrado el producto</h5>
-                    <h5 th:if="${param.errorDelete}" class="success-msg">No se pudo borrar el producto</h5>
+                    <h5 th:if="${param.errorDelete}" class="error-msg">No se pudo borrar el producto</h5>
                 </div>
                 
 

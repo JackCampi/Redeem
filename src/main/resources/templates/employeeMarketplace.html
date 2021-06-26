@@ -145,35 +145,6 @@
             </div>
 
             <div class="product-cards">
-                <!--div th:each="product : ${productList}">
-                    <div class="product-card">
-                        <div class="card-content"
-                                th:product-id="${product.id}"
-                                th:product-imgURL="${product.imageUrl}"
-                                th:product-name="${product.name}"
-                                th:product-type="${product.type}"
-                                th:product-price="${product.price}"
-                                th:product-units="${product.stock}"
-                                th:product-description="${product.details}"
-                                th:onclick="detailsModal(this)">
-                            <img class="prod-img" th:src="${product.imageUrl}" alt="product">
-                            <div class="prod-info">
-                                <div class="prod-name">
-                                    <h5><span th:text="${product.name}"></span></h5>
-                                </div>
-                                <h6><span th:text="${product.stock}"></span> unidades</h6>
-                                <h6>$<span th:text="${product.price}"></span></h6>
-                            </div>
-                        </div>
-                        <div class="add-one"
-                            th:product-id="${product.id}"
-                            th:product-name="${product.name}"
-                            th:onclick="addOneModal(this)">
-                                <span class="material-icons">shopping_cart</span>
-                                <p>+1</p>
-                        </div>
-                    </div>
-                </div-->
 
                 <div th:each="product : ${productList}">
                     <div class="product-card">
