@@ -10,7 +10,7 @@ function closeModal(){
 }
   
 window.onclick = function(event) {
-    if (event.target == addProductModal) {
+    if (event.target === addProductModal) {
         addProductModal.style.display = "none";
     }
 }
@@ -20,5 +20,6 @@ function readURL(obj){
 }
 
 function selectProduct(element){
-    document.getElementById("product-id").vaule = element.getAttribute('product-id');
+    var newURL = window.location.protocol + "//" + window.location.host + window.location.pathname + "/details" + "?id=" + element.getAttribute('product-id');
+    window.location = newURL;
 }

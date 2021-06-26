@@ -44,8 +44,20 @@ public class Product {
     @JoinColumn(name = "company_comp_id", nullable = false)
     private Company company;
 
-    public Product(String name, Long price, String type, Integer stock, String imageUrl, String details, Company company) {
+    public Product(String name, Long price, String type, Integer stock, String imageUrl, String details, Company company, Boolean available) {
         super();
+        this.name = name;
+        this.available = available;
+        this.price = price;
+        this.type = type;
+        this.stock = stock;
+        this.imageUrl = imageUrl;
+        this.details = details;
+        this.company = company;
+    }
+
+    public Product(Long id, String name, Long price, String type, Integer stock, String imageUrl, String details, Company company) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.type = type;

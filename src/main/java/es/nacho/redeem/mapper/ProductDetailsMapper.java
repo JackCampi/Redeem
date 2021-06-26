@@ -6,7 +6,7 @@ import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 public interface ProductDetailsMapper {
     static ProductWithDetailsDto toProductDetailsDto(Product product){
         return new ProductWithDetailsDto(
-                product.getId(),
+                product.getId(), 
                 product.getName(),
                 product.getPrice(),
                 product.getStock(),

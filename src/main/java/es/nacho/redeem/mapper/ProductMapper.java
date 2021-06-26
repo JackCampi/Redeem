@@ -24,11 +24,20 @@ public interface ProductMapper {
                 product.getStock(),
                 product.getImageUrl(),
                 product.getDetails(),
-                company);
+                company,
+                true);
+    }
+    static Product toProductToUpdate(Product product, ProductWithDetailsDto productDto, Company company){
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setType(productDto.getType());
+        product.setStock(productDto.getStock());
+        product.setImageUrl(productDto.getImageUrl());
+        product.setDetails(productDto.getDetails());
+        return product;
     }
     static boolean validateProductWithDetailsDto(ProductWithDetailsDto product){
-        return Objects.nonNull(product.getId()) &&
-                Objects.nonNull(product.getName()) &&
+        return Objects.nonNull(product.getName()) &&
                 Objects.nonNull(product.getStock()) &&
                 Objects.nonNull(product.getImageUrl()) &&
                 Objects.nonNull(product.getType()) &&

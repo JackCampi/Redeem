@@ -175,10 +175,13 @@
                         <span>Añadir producto</span>
                     </button>
                     <h5 th:if="${param.success}" class="success-msg">Se ha añadido el producto</h5>
+                    <h5 th:if="${param.error}" class="success-msg">No se ha añadido el producto</h5>
+                    <h5 th:if="${param.successDelete}" class="success-msg">Se ha borrado el producto</h5>
+                    <h5 th:if="${param.errorDelete}" class="success-msg">No se pudo borrar el producto</h5>
                 </div>
                 
 
-                <form th:action="@{/admin/products/details}" method="get">
+                <!-- form id="edit-form" th:action="@{/admin/products/details}" method="get"-->
                     <input type="hidden" id="product-id" name="id" readonly>
                     <div class="product-cards">
 
@@ -186,7 +189,7 @@
                         <div th:each="product : ${productList}">
                             <button class="product-card" 
                                     th:product-id="${product.id}"
-                                    th:onclick="selectProduct(this)"> 
+                                    onclick="selectProduct(this)">
                                 <img class="prod-img" th:src="${product.imageUrl}" alt="prueba">
                                 <div class="prod-info">
                                     <div class="prod-name">
@@ -199,7 +202,7 @@
                         </div>
                         
                     </div>
-                </form>
+                <!--/form-->
 
             </div>
 

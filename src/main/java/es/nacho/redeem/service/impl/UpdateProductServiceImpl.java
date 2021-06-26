@@ -10,6 +10,8 @@ import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 import static es.nacho.redeem.mapper.ProductMapper.validateProductWithDetailsDto;
 
 @Service
@@ -24,7 +26,8 @@ public class UpdateProductServiceImpl implements UpdateProductService {
     public void invoke(ProductWithDetailsDto productWithDetailsDto, Long companyNIT) throws Exception {
         if(validateProductWithDetailsDto(productWithDetailsDto)) {
             Company company = getCompanyByNitService.invoke(companyNIT);
-            Product product = ProductMapper.toProduct(productWithDetailsDto, company);
+            Optional<Product> productOptional = productRepository.findById(productWithDetailsDto.getId());
+            Product product = ProductMapper.toProductToUpdate(productOptional.get(),productWithDetailsDto, company);
             productRepository.save(product);
         }else throw new Exception("Null params");
     }

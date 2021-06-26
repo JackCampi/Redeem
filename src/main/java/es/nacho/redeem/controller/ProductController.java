@@ -1,12 +1,9 @@
 package es.nacho.redeem.controller;
 
-import es.nacho.redeem.model.Employee;
-import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.service.api.*;
 import es.nacho.redeem.web.dto.ProductWithDetailsDto;
 import es.nacho.redeem.web.dto.ProductDto;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -75,10 +72,10 @@ public class ProductController {
         Long nit = (long) session.getAttribute("nit");
         try{
             updateProductService.invoke(productWithDetailsDto, nit);
-            return "redirect:/admin/products/details?success";
+            return "redirect:/admin/products/details?success&id="+productWithDetailsDto.getId();
         }catch (Exception e){
             e.printStackTrace();
-            return "redirect:/admin/products/details?error";
+            return "redirect:/admin/products/details?error&id="+productWithDetailsDto.getId();
         }
     }
 
@@ -86,10 +83,10 @@ public class ProductController {
     public String disableProduct(@RequestParam Long productId) {
         try{
             disableProductService.invoke(productId);
-            return "redirect:/admin/products?success";
+            return "redirect:/admin/products?successDelete";
         }catch (Exception e){
             e.printStackTrace();
-            return "redirect:/admin/products?error";
+            return "redirect:/admin/products?errorDelete";
         }
     }
 
