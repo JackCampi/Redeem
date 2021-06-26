@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/admin/shipping")
@@ -31,7 +33,10 @@ public class ShippingController {
 
         Collection<Purchase> purchasesToSend= purchaseService.getPurchasesToSend(nit);
 
-        model.addAttribute("purchasesToSend", purchasesToSend);
+        Collection<Purchase> purchasesToSendSorted = purchasesToSend.stream().
+                sorted(Comparator.comparing(Purchase::getDateTime)).collect(Collectors.toList());
+
+        model.addAttribute("purchasesToSend", purchasesToSendSorted);
         return WebPageNames.ADMIN_SHIPPING;
     }
 

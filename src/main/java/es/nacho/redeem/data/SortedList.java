@@ -21,6 +21,6 @@ public class SortedList<T extends Comparable<T>> extends ArrayList<T> {
                 return true;
             }
         }
-        throw new RuntimeException("The SortedList cannont add the element");
+        throw new RuntimeException("The SortedList cannot add the element");
     }
 }
