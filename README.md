@@ -1,5 +1,4 @@
 # Redeem
-***
 ## General Info
 Redeem is a software product that allows a company to register itself and its workers
 in order to be able to assign to these certain amounts of money (which can be considered
@@ -8,7 +7,6 @@ the own products of the company. The process of redeeming the amount of money ca
 out within the application in a section specially designed for it in which the list of
 products or services of the company will be displayed with their respective data, simulating
 something similar to a virtual store.
-***
 ## Technologies
 A list of technologies used within the project:
 * Java
