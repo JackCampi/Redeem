@@ -239,7 +239,7 @@ button.add-one-button{
 .success-message{
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     right: 0;
     bottom: 0;
     padding: 5px 40px;
@@ -254,7 +254,7 @@ button.add-one-button{
 .error-message{
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 2;
     right: 0;
     bottom: 0;
     padding: 5px 40px;
@@ -264,6 +264,15 @@ button.add-one-button{
     border: 2px solid red;
     background-color: rgb(255, 218, 213);
     color: rgb(155, 46, 46);
+}
+
+#to-shopping-cart{
+    width: 40px;
+    margin-right: 25px;
+}
+
+#to-shopping-cart:hover{
+    cursor: pointer;
 }
 
 @media only screen and (max-width: 855px){
