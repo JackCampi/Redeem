@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="/img/redeemIcon.ico">
+    <title>Marketplace</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="/css/employeeMarketplaceStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeMarketplaceStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+            <div>
+                <ul>
+                    <li>
+                        <!-- El href vacío hace que se redireccione al dashboard -->
+                        <a th:href="@{/emp/}" class="selected" id="dash-button">
+                            <span class="material-icons sidebar-icon">analytics</span>
+                            <p>Dashboard</p> 
+                        </a>
+                    </li>
+                    <li>
+                        <a th:href="@{/emp/history}" id="trans-hist-button">
+                            <span class="material-icons">history_edu</span>
+                            <p>Historial transacciones</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/emp/transfer}" id="transfer-button">
+                            <span class="material-icons">connect_without_contact</span>
+                            <p>Transferir</p> 
+                        </a>
+                    </li>
+
+                    <hr class="solid">
+
+                    <li>
+                        <a th:href="@{/emp/profile}" id="admin-profile">
+                            <span class="material-icons">perm_identity</span>
+                            <p>Ver perfil</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/logout}">
+                            <span class="material-icons">power_settings_new</span>
+                            <p>Cerrar sesión</p>
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h4>Marketplace</h4></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h5 th:text="${session.name}"></h5>
+                    <small>Empleado</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+
+            <!-- Product Details Modal-->
+            <div id="details-modal" class="myModal">
+                <div class="modal-content details-modal">
+                    <div class="info1">
+                        <img id="product-img" src="" alt="">
+                        <h3 id="product-name"></h3>
+                        <h5 id="product-type"></h5>
+                        <h5 class="price">$<span id="product-price">24000</span></h5>
+                        <h6> <span id="product-units">24</span> unidades disponibles</h6>
+                    </div>
+                    <div class="info2">
+                        <p id="product-description"></p>
+                        <div class="add-to-cart">
+                            <h5>Agregar al carrito</h5>
+                            <div class="quantity-input">
+                                <button class="quantity-button" onclick="decrease()">
+                                    <span class="material-icons">remove</span>
+                                </button>
+                                <input type="number" id="quantity" value="0">
+                                <button id="product-limit" class="quantity-button" onclick="increase()">
+                                    <span class="material-icons">add</span>
+                                </button>
+                            </div>
+
+                            <p id="add-error-messages">
+                                <span id="add-error-1"></span>
+                                <span id="add-error-2"></span>
+                            </p>
+                            
+                            <button class="submit-add" onclick="addToCart()">Añadir</button>
+                        </div>
+                        <button class="cancel-add" onclick="closeModal()">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add One Modal-->
+            <div id="add-one-modal" class="myModal">
+                <div class="modal-content add-one-modal">
+                    <h4>Añadir un producto</h4>
+                    <p>¿Desea añadir un (1) producto de "<span id="one-product-name">Nombre de producto</span>" a su carrito?</p>
+                    <button class="submit-add add-one-button" onclick="addOneToCart()">Sí, añadir</button>
+                    <button class="cancel-add" onclick="closeModal()">Cancelar</button>
+                </div>
+            </div>
+
+            <div class="product-cards">
+
+                <div th:each="product : ${productList}">
+                    <div class="product-card">
+                        <div class="card-content"
+                                th:product-id="${product.id}"
+                                th:product-imgURL="${product.imageUrl}"
+                                th:product-name="${product.name}"
+                                th:product-type="${product.type}"
+                                th:product-price="${product.price}"
+                                th:product-units="${product.stock}"
+                                th:product-description="${product.details}"
+                                onclick="detailsModal(this)">
+                            <img class="prod-img" th:src="${product.imageUrl}" alt="product">
+                            <div class="prod-info">
+                                <div class="prod-name">
+                                    <h5><span th:text="${product.name}"></span></h5>
+                                </div>
+                                <h6><span th:text="${product.stock}"></span> unidades</h6>
+                                <h6>$<span th:text="${product.price}"></span></h6>
+                            </div>
+                        </div>
+                        <div class="add-one"
+                            th:product-id="${product.id}"
+                            th:product-imgURL="${product.imageUrl}"
+                            th:product-name="${product.name}"
+                            th:product-price="${product.price}"
+                            th:product-units="${product.stock}"
+                            onclick="addOneModal(this)">
+                                <span class="material-icons">shopping_cart</span>
+                                <p>+1</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="success-message" id="success-message">
+                <h6 id="success-message-text"></h6>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        var productId = "-1";
+        var limit = 10;
+    </script>
+    <script src="/scripts/employeeDashboardLogic.js"></script>
+    <script src="/scripts/employeeMarketplaceLogic.js"></script>
+    <script src="../static/scripts/employeeDashboardLogic.js"></script>
+    <script src="../static/scripts/employeeMarketplaceLogic.js"></script>
+    
+</body>
+</html>
