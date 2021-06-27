@@ -68,7 +68,7 @@ public class MembersController {
 
         long amount = companyService.disableEmployee(id);
         try{
-            balanceTransaction.returnDisabledUserBalanceToCompany(nit, id, amount);
+            balanceTransaction.returnBalanceToCompany(nit, id, amount);
         }catch (InsufficientBalanceException e){
             return "redirect:/error";
         }

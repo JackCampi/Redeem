@@ -1,18 +1,17 @@
 package es.nacho.redeem.service;
 
 import es.nacho.redeem.data.SortedList;
-import es.nacho.redeem.exception.CompanyNotFoundException;
-import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.exception.*;
 import es.nacho.redeem.format.CalendarFormat;
 import es.nacho.redeem.model.*;
-import es.nacho.redeem.repository.AreaRepository;
-import es.nacho.redeem.repository.CompanyRepository;
-import es.nacho.redeem.repository.EmployeeRepository;
-import es.nacho.redeem.repository.PurchaseRepository;
+import es.nacho.redeem.model.compositeKeys.PurchaseHasProductKey;
+import es.nacho.redeem.repository.*;
+import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.transfer.history.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -33,10 +32,45 @@ public class PurchaseServiceImpl implements PurchaseService{
     @Autowired
     private CompanyRepository companyRepository;
 
-    @Override
-    public void savePurchase(Employee employee) {
+    @Autowired
+    private ProductRepository productRepository;
 
-        purchaseRepository.save(new Purchase(LocalDateTime.now(), employee));
+    @Autowired
+    private PurchaseHasProductRepository purchaseHasProductRepository;
+
+    @Autowired
+    private ProductService productService;
+
+    @Autowired
+    private BalanceTransaction balanceTransaction;
+
+    @Override
+    @Transactional(rollbackOn = {ProductNotFoundException.class, InsufficientStockException.class, InsufficientBalanceException.class})
+    public void accomplishPurchase(Employee employee, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
+        throws ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
+
+        Purchase purchase = new Purchase(LocalDateTime.now(), employee, purchaseValue);
+        purchaseRepository.save(purchase);
+
+        Collection<PurchaseHasProduct> purchasesHaveProducts = new ArrayList<>();
+
+        for (ArrayList<Long> productAndQuantity : productsAndQuantities) {
+            Optional<Product> OpProduct = productRepository.findById(productAndQuantity.get(0));
+            int quantity = productAndQuantity.get(1).intValue();
+
+            if(!OpProduct.isPresent()) throw new ProductNotFoundException();
+            Product product = OpProduct.get();
+
+            product = productService.reduceProductStock(product, quantity);
+
+            purchasesHaveProducts.add(new PurchaseHasProduct(
+                    new PurchaseHasProductKey(purchase.getId(), product.getId()),
+                    purchase, product, quantity));
+
+            purchasesHaveProducts.forEach(purchaseHasProduct -> purchaseHasProductRepository.save(purchaseHasProduct));
+        }
+        balanceTransaction.returnBalanceToCompany(employee.getArea().getCompany().getId(),employee.getId(),purchaseValue);
+        employeeRepository.save(employee);
     }
 
     @Override
@@ -63,10 +97,7 @@ public class PurchaseServiceImpl implements PurchaseService{
                     CalendarFormat.formatLocalDateTime(purchase.getDateTime()),
                     productInfoDtos
             ));
-
         });
-
-
         return sortedList;
     }
 
@@ -77,41 +108,29 @@ public class PurchaseServiceImpl implements PurchaseService{
         if(!companyOptional.isPresent()) throw new CompanyNotFoundException();
         Company company = companyOptional.get();
 
-        areaRepository.findByCompany(company).forEach(area -> {
+        areaRepository.findByCompany(company).forEach(area -> area.getEmployees().forEach(employee -> employee.getPurchases().forEach(purchase -> {
 
-            area.getEmployees().forEach(employee -> {
+            long amount = 0L;
+            ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
 
-                employee.getPurchases().forEach(purchase -> {
+            for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
+                Product product = purchaseHasProduct.getProduct();
+                amount += product.getPrice();
+                productInfoDtos.add(new ProductInfoDto(
+                        product.getName(),
+                        purchaseHasProduct.getQuantity(),
+                        product.getPrice()
+                ));
+            }
 
-                    long amount = 0L;
-                    ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
-
-                    for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
-                        Product product = purchaseHasProduct.getProduct();
-                        amount += product.getPrice();
-                        productInfoDtos.add(new ProductInfoDto(
-                                product.getName(),
-                                purchaseHasProduct.getQuantity(),
-                                product.getPrice()
-                        ));
-                    }
-
-                    sortedList.add(new APurchases(
-                            "APurchases",
-                            amount,
-                            CalendarFormat.formatLocalDateTime(purchase.getDateTime()),
-                            productInfoDtos,
-                            employee.getName()
-                            ));
-
-                });
-
-            });
-
-        });
-
-
-
+            sortedList.add(new APurchases(
+                    "APurchases",
+                    amount,
+                    CalendarFormat.formatLocalDateTime(purchase.getDateTime()),
+                    productInfoDtos,
+                    employee.getName()
+                    ));
+        })));
         return sortedList;
     }
 

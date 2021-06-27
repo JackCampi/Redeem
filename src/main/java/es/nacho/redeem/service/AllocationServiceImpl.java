@@ -44,7 +44,6 @@ public class AllocationServiceImpl implements AllocationService{
                     allocation.getAdmin().getName()
             ));
         });
-
         return sortedList;
     }
 
@@ -63,13 +62,8 @@ public class AllocationServiceImpl implements AllocationService{
                         allocation.getAdmin().getName(),
                         allocation.getDescription()
                 ));
-
             });
-
         });
-
-
         return sortedList;
     }
-
 }

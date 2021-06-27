@@ -30,11 +30,12 @@ public class Purchase {
     @JoinColumn(name = "emp_id", nullable = false)
     private Employee employee;
 
-    public Purchase(LocalDateTime dateTime, Employee employee) {
+    public Purchase(LocalDateTime dateTime, Employee employee, Long value) {
         super();
         this.dateTime = dateTime;
         this.isSent = false;
         this.employee = employee;
+        this.value = value;
     }
 
     public Purchase() {

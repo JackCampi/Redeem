@@ -260,8 +260,7 @@ public class UserServiceImpl implements UserService{
     private boolean isTheLastAdmin(long nit, long id){
 
         Collection<Employee> admins = employeeRepository.findAllByCompanyAndRol(nit, "administrador");
-        if(admins.size() <= 1) return true;
-        return false;
+        return admins.size() <= 1;
     }
 
     private boolean calendarAsStringIsValid(String date){

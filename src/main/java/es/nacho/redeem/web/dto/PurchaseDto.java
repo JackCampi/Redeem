@@ -1,17 +1,18 @@
 package es.nacho.redeem.web.dto;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class PurchaseDto {
 
     private String employee;
     private Long value;
-    private Collection<Long> productsId;
+    private Collection<ArrayList<Long>> productsAndQuantities;
 
-    public PurchaseDto(String employee, Long value, Collection<Long> productsId) {
+    public PurchaseDto(String employee, Long value, Collection<ArrayList<Long>> productsAndQuantities) {
         this.employee = employee;
         this.value = value;
-        this.productsId = productsId;
+        this.productsAndQuantities = productsAndQuantities;
     }
 
     public PurchaseDto() {
@@ -33,11 +34,11 @@ public class PurchaseDto {
         this.value = value;
     }
 
-    public Collection<Long> getProductsId() {
-        return productsId;
+    public Collection<ArrayList<Long>> getProductsAndQuantities() {
+        return productsAndQuantities;
     }
 
-    public void setProductsId(Collection<Long> productsId) {
-        this.productsId = productsId;
+    public void setProductsAndQuantities(Collection<ArrayList<Long>> productsAndQuantities) {
+        this.productsAndQuantities = productsAndQuantities;
     }
 }

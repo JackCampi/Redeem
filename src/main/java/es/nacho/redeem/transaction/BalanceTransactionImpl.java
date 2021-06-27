@@ -70,7 +70,7 @@ public class BalanceTransactionImpl implements BalanceTransaction{
 
     @Override
     @Transactional(rollbackOn = {Exception.class, InsufficientBalanceException.class})
-    public void returnDisabledUserBalanceToCompany(long nit, long userId, long amount) throws InsufficientBalanceException {
+    public void returnBalanceToCompany(long nit, long userId, long amount) throws InsufficientBalanceException {
 
         userService.discountToUserBalance(userId, amount);
 
