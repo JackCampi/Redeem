@@ -191,6 +191,29 @@
         generalMessages[i].innerHTML = generalMessagesText+ "Total:........."+posValues[1];
     }
 
+
+    function allocationType(i){
+        types[i].innerHTML = "Depósito";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        amounts[i].innerHTML = "$" + posValues[1]+",00";
+        generalMessages[i].innerHTML = "Para: "+posValues[3]+"<br\>"+ "De: "+posValues[4];
+
+        amounts[i].style.color = "#85342A";
+        rows[i].style.marginLeft = "40%";
+    }
+
+    function purchaseType(i){
+
+        types[i].innerHTML = "Compra<br\>Hecha por "+posValues[4];
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        var generalMessagesText="Producto     Cantidad     Precio ", buyedProduct;
+        for(var j=0; j<posValues[3].length; j++){
+            buyedProduct = Object.values(posValues[3][j]);
+            generalMessagesText+= tab(buyedProduct);
+        }
+        generalMessages[i].innerHTML = generalMessagesText+ "Total:........."+posValues[1];
+    }
+
     function dateFormat(date){
         var newDate = "";
         for(var i=0; i<11;i++){
