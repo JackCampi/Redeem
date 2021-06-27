@@ -7,6 +7,7 @@ import es.nacho.redeem.model.Purchase;
 import es.nacho.redeem.service.*;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
@@ -57,6 +58,9 @@ public class AdminController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    private ReportService reportService;
+
     @GetMapping
     public String dashboard(Model model, HttpSession session){
 
@@ -64,6 +68,10 @@ public class AdminController {
         long nit = (long)  session.getAttribute("nit");
 
         AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
+        reportService.getPendingShipments(nit);
+        reportService.getCompanyMostPurchasedProducts(nit);
+        reportService.getBestBuyers(nit);
+        reportService.getMostPurchasedCategory(nit);
 
         try{
              adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
