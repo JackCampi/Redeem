@@ -20,6 +20,7 @@ public class ProductDto {
     }
 
     public ProductDto() {
+
     }
 
     public String getName() {

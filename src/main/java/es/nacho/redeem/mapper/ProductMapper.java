@@ -10,11 +10,13 @@ import java.util.Objects;
 public interface ProductMapper {
     static ProductDto toProductDto(Product product){
         return new ProductDto(
-                product.getId(),
                 product.getName(),
                 product.getPrice(),
+                product.getType(),
                 product.getStock(),
-                product.getImageUrl());
+                product.getAvailable(),
+                product.getImageUrl(),
+                product.getDetails());
     }
     static Product toProduct(ProductWithDetailsDto product, Company company){
         return new Product(
