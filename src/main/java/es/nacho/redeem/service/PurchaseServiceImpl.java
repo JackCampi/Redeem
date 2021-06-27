@@ -83,7 +83,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
             for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
                 Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice();
+                amount += product.getPrice() * purchaseHasProduct.getQuantity();
                 productInfoDtos.add(new ProductInfoDto(
                         product.getName(),
                         purchaseHasProduct.getQuantity(),
@@ -115,7 +115,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
             for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
                 Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice();
+                amount += product.getPrice() * purchaseHasProduct.getQuantity();
                 productInfoDtos.add(new ProductInfoDto(
                         product.getName(),
                         purchaseHasProduct.getQuantity(),

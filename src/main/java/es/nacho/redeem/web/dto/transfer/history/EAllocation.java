@@ -27,6 +27,6 @@ public class EAllocation extends TransHistoryDto implements EmpDto{
 
     @Override
     public int compareTo(EmpDto o) {
-        return this.getDatetime().compareTo(o.getDateTime()) * -1;
+        return this.getDatetime().compareTo(o.getDateTime());
     }
 }

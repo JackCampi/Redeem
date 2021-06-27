@@ -48,6 +48,6 @@ public class AAllocation extends TransHistoryDto implements AdminDto{
 
     @Override
     public int compareTo(AdminDto o) {
-        return this.getDatetime().compareTo(o.getDateTime()) * -1;
+        return this.getDatetime().compareTo(o.getDateTime());
     }
 }
