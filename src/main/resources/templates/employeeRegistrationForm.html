@@ -9,6 +9,7 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="/css/employeeRegistrationFormStyle.css">
+    <link rel="stylesheet" href="../static/styles/employeeRegistrationFormStyle.css">
 
 </head>
 <body>
@@ -17,7 +18,7 @@
         <img src="/img/redeemLogo.png" alt="redeem_logo" class="redeem-logo">
         <h3>Nuevo empleado</h3>
 
-        <div style="color:darkblue;" th:if="${param.success}"  id="reg_success"> Empleado registrado correctamente. </div>
+        <div th:if="${param.success}"  id="reg-success"> Empleado registrado correctamente. </div>
 
         <form th:action="@{/admin/addemp}" class="reg-form" method="post" th:object="${employee}"
               name="reg-form" id="reg-form" onsubmit="return validation();">
@@ -87,11 +88,12 @@
             </div>
             <div class="options">
                 <input type="submit" class="submit-button" name="reg-submit" id="reg-submit" value="Registrar">
-                <button type="button" class="cancel-button"><a th:href="@{/admin}">Cancelar</a></button>
+                <button type="button" class="cancel-button"><a th:href="@{/admin/members}">Salir</a></button>
             </div>
         </form>
     </div>
 </div>
 <script src="/scripts/employeeRegistrationFormValidation.js"></script>
+<script src="../static/scripts/employeeRegistrationFormValidation.js"></script>
 </body>
 </html>

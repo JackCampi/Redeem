@@ -20,7 +20,7 @@
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-    <div class="custom-sidebar">
+    <div class="custom-sidebar">    
         <div class="sidebar-brand">
             <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
             <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
@@ -33,7 +33,7 @@
                 <ul>
                     <li>
                         <!-- El href vacío hace que se redireccione al dashboard -->
-                        <a th:href="@{/emp/}" class="selected" id="dash-button">
+                        <a th:href="@{/emp/}" id="dash-button">
                             <span class="material-icons sidebar-icon">analytics</span>
                             <p>Dashboard</p> 
                         </a>
@@ -54,6 +54,17 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a class="selected" th:href="@{/emp/marketplace}">
+                            <span class="material-icons sidebar-icon">
+                                store
+                            </span>
+                            <span>
+                                <p>Marketplace</p>
+                            </span>
+                        </a>
+                    </li>
+
                     <hr class="solid">
 
                     <li>
@@ -64,7 +75,7 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                             <span class="material-icons">power_settings_new</span>
                             <p>Cerrar sesión</p>
                         </a>

@@ -31,7 +31,7 @@
         <div class="principal-sidebar-menu">
             <ul>
                 <li>
-                    <a id="dash-button"  class="selected" th:href="@{/admin/}">
+                    <a id="dash-button" th:href="@{/admin/}">
                         <span class="material-icons sidebar-icon">analytics</span>
                         <p>Dashboard</p>
                     </a>
@@ -53,34 +53,46 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                        <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
                     <a th:href="@{/admin/members}" id="empl-list-button">
                         <span class="material-icons">groups</span>
                         <p>Ver empleados</p>
                     </a>
                 </li>
 
+                <li>
+                    <a class="selected" th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                    </a>
+                </li>
+
                 <hr class="solid">
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/admin/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>
                 </li>
-
-
-            </ul>   
+            </ul>  
         </div>
     </div>
 
@@ -120,7 +132,7 @@
                             </div>
                             <div class="add-options">
                                 <input type="submit" value="Agregar" class="add-button">
-                                <button class="cancel-button" onclick="closeModal()">Cancelar</button>
+                                <button type="button" class="cancel-button" onclick="closeModal()">Cancelar</button>
                             </div>
                         </div>
                         <div class="form-column2">
