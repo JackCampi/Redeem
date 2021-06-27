@@ -14,6 +14,7 @@ import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
+import es.nacho.redeem.web.dto.report.*;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import es.nacho.redeem.web.dto.transfer.history.AdminDto;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;
@@ -68,10 +69,6 @@ public class AdminController {
         long nit = (long)  session.getAttribute("nit");
 
         AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
-        reportService.getPendingShipments(nit);
-        reportService.getCompanyMostPurchasedProducts(nit);
-        reportService.getBestBuyers(nit);
-        reportService.getMostPurchasedCategory(nit);
 
         try{
              adminDashboardInfoDto = userService.fillAdminDashboardInfoDto(email, adminDashboardInfoDto);
@@ -82,9 +79,14 @@ public class AdminController {
             return WebPageNames.ERROR_PAGE;
         }
 
+        Collection<PendingShipmentsDto> pendingShipmentsDtos = reportService.getPendingShipments(nit);
+        Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit);
+        Collection<EmployeeDto> bestByers = reportService.getBestBuyers(nit);
+
         model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
-
-
+        model.addAttribute("pendingToSend", pendingShipmentsDtos);
+        model.addAttribute("mostPurchasedProducts", mostPurchasedProducts);
+        model.addAttribute("bestBuyers", bestByers);
 
         return WebPageNames.ADMIN_DASHBOARD;
     }
@@ -292,7 +294,21 @@ public class AdminController {
     @GetMapping(value = "/statistics")
     public String getStatisticsView(Model model, HttpSession session){
 
-        long id = (long) session.getAttribute("id");
+        long nit = (long) session.getAttribute("nit");
+
+        int outgoingBudgetMean = reportService.getOutgoingBudgetMean(nit);
+        int incomingBudgetMean = reportService.getIncomingBudgetMean(nit);
+        Collection<CategoryDto> mostPurchasedCategories = reportService.getMostPurchasedCategory(nit);
+        AllocationByAdminDto allocationByAdminDto = reportService.getAllocationByAdmin(nit);
+        EmpCountByAreasDto empCountByAreasDto = reportService.getEmployeeAmountByAreas(nit);
+
+        model.addAttribute("outgoingBudgetMean", outgoingBudgetMean);
+        model.addAttribute("incomingBudgetMean", incomingBudgetMean);
+        model.addAttribute("mostPurchasedCategories", mostPurchasedCategories);
+        model.addAttribute("adminNames", allocationByAdminDto.getAdminNames());
+        model.addAttribute("adminAllocationCount", allocationByAdminDto.getAllocationAmounts());
+        model.addAttribute("areaNames", empCountByAreasDto.getAreaNames());
+        model.addAttribute("employeeCount", empCountByAreasDto.getEmpCount());
 
 
         return WebPageNames.ADMIN_STATISTICS;

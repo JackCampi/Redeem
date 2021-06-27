@@ -7,17 +7,16 @@ import es.nacho.redeem.mapper.EmployeeDtoMapper;
 import es.nacho.redeem.mapper.PendingShipmentDtoMapper;
 import es.nacho.redeem.mapper.ProductDtoMapper;
 import es.nacho.redeem.model.*;
+import es.nacho.redeem.repository.AreaRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.repository.ProductRepository;
 import es.nacho.redeem.repository.PurchaseRepository;
 import es.nacho.redeem.service.api.ReportService;
-import es.nacho.redeem.web.dto.report.CategoryDto;
-import es.nacho.redeem.web.dto.report.EmployeeDto;
-import es.nacho.redeem.web.dto.report.PendingShipmentsDto;
-import es.nacho.redeem.web.dto.report.ProductDto;
+import es.nacho.redeem.web.dto.report.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -35,6 +34,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private PurchaseRepository purchaseRepository;
+
+    @Autowired
+    private AreaRepository areaRepository;
 
     @Override
     public Collection<PendingShipmentsDto> getPendingShipments(long nit) {
@@ -122,12 +124,43 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Collection<Collection> getAllocationByAdmin(long nit) {
-        return null;
+    public AllocationByAdminDto getAllocationByAdmin(long nit) {
+
+        Collection<String> adminNames = new ArrayList<>();
+        Collection<Integer> allocationAmounts = new ArrayList<>();
+
+        Collection<Object[]> properties = employeeRepository.findAllocationByAdmin(nit);
+
+        properties.forEach(objects -> {
+
+            adminNames.add((String) objects[0]);
+            BigInteger amount = (BigInteger) objects[1];
+            allocationAmounts.add(amount.intValue());
+
+        });
+
+        return new AllocationByAdminDto(
+                adminNames,
+                allocationAmounts
+        );
     }
 
     @Override
-    public Collection<Collection> getEmployeeAmountByAreas(long nit) {
-        return null;
+    public EmpCountByAreasDto getEmployeeAmountByAreas(long nit) {
+
+        Collection<String> areaNames = new ArrayList<>();
+        Collection<Integer> empCounts = new ArrayList<>();
+
+        Collection<Object[]> properties= areaRepository.findEmpCountByAreas(nit);
+        properties.forEach(objects -> {
+
+            areaNames.add((String) objects[0]);
+            BigInteger count = (BigInteger) objects[1];
+            empCounts.add(count.intValue());
+
+        });
+
+
+        return new EmpCountByAreasDto(areaNames,empCounts);
     }
 }

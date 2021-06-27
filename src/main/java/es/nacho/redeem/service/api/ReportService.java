@@ -1,9 +1,6 @@
 package es.nacho.redeem.service.api;
 
-import es.nacho.redeem.web.dto.report.CategoryDto;
-import es.nacho.redeem.web.dto.report.EmployeeDto;
-import es.nacho.redeem.web.dto.report.PendingShipmentsDto;
-import es.nacho.redeem.web.dto.report.ProductDto;
+import es.nacho.redeem.web.dto.report.*;
 
 import java.util.Collection;
 
@@ -16,8 +13,8 @@ public interface ReportService {
     int getOutgoingBudgetMean(long nit);
     int getIncomingBudgetMean(long nit);
     Collection<CategoryDto> getMostPurchasedCategory(long nit);
-    Collection<Collection> getAllocationByAdmin(long nit);
-    Collection<Collection> getEmployeeAmountByAreas(long nit);
+    AllocationByAdminDto getAllocationByAdmin(long nit);
+    EmpCountByAreasDto getEmployeeAmountByAreas(long nit);
 
 
 }
