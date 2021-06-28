@@ -31,7 +31,7 @@
         <div class="principal-sidebar-menu">
             <ul>
                 <li>
-                    <a id="dash-button"  class="selected" th:href="@{/admin/}">
+                    <a id="dash-button" th:href="@{/admin/}">
                         <span class="material-icons sidebar-icon">analytics</span>
                         <p>Dashboard</p>
                     </a>
@@ -53,34 +53,46 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                        <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
                     <a th:href="@{/admin/members}" id="empl-list-button">
                         <span class="material-icons">groups</span>
                         <p>Ver empleados</p>
                     </a>
                 </li>
 
+                <li>
+                    <a  class="selected" th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                    </a>
+                </li>
+
                 <hr class="solid">
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/admin/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>
                 </li>
-
-
-            </ul>   
+            </ul>  
         </div>
     </div>
 
@@ -117,25 +129,25 @@
                             <div class="form-img">
                                 <img class="prod-img" id="prod-img" th:src="${productWithDetails.imageUrl}" alt="">
                                 <label for="image">URL de la imagen</label>
-                                <input type="text" id="image" th:value="${productWithDetails.imageUrl}" th:field="*{imageUrl}" onchange="readURL(this);" autocomplete="off" required>
+                                <input type="text" id="image" th:value="${productWithDetails.imageUrl}" th:field="*{imageUrl}" autocomplete="off" onchange="readURL(this);" required>
                             </div>
                             <div class="add-options">
                                 <input type="submit" value="Guardar cambios" class="add-button">
-                                <button class="cancel-button" onclick="closeModal()">Cancelar</button>
+                                <button type="button" class="cancel-button" onclick="closeModal()">Cancelar</button>
                             </div>
                         </div>
                         <div class="form-column2">
                             <div class="form-label-input">
                                 <label for="name">Nombre</label>
-                                <input type="text" id="name" autocomplete="off" th:field="*{name}" th:value="${productWithDetails.name}" autocomplete="off" required>
+                                <input type="text" id="name" th:field="*{name}" th:value="${productWithDetails.name}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="price">Precio</label>
-                                <input type="number" id="price" autocomplete="off" th:field="*{price}" th:value="${productWithDetails.price}" autocomplete="off" required>
+                                <input type="number" id="price" th:field="*{price}" th:value="${productWithDetails.price}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="quantity">Cantidad</label>
-                                <input type="number" id="quantity" value="0" autocomplete="off" th:field="*{stock}" th:value="${productWithDetails.stock}" autocomplete="off" required>
+                                <input type="number" id="quantity" value="0" th:field="*{stock}" th:value="${productWithDetails.stock}" required>
                             </div>
                             <div class="form-label-input">
                                 <label for="type">Categoría</label>

@@ -20,7 +20,7 @@
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
-    <div class="custom-sidebar">
+    <div class="custom-sidebar">    
         <div class="sidebar-brand">
             <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
             <img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
@@ -33,7 +33,7 @@
                 <ul>
                     <li>
                         <!-- El href vacío hace que se redireccione al dashboard -->
-                        <a th:href="@{/emp/}" class="selected" id="dash-button">
+                        <a th:href="@{/emp/}" id="dash-button">
                             <span class="material-icons sidebar-icon">analytics</span>
                             <p>Dashboard</p> 
                         </a>
@@ -54,6 +54,17 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a class="selected" th:href="@{/emp/marketplace}">
+                            <span class="material-icons sidebar-icon">
+                                store
+                            </span>
+                            <span>
+                                <p>Marketplace</p>
+                            </span>
+                        </a>
+                    </li>
+
                     <hr class="solid">
 
                     <li>
@@ -64,7 +75,7 @@
                     </li>
 
                     <li>
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                             <span class="material-icons">power_settings_new</span>
                             <p>Cerrar sesión</p>
                         </a>
@@ -88,6 +99,12 @@
             </div>
             
             <div class="user-info">
+                <!---------------------------------------->
+                <!------------ Mapeo al carro ------------>
+                <!---------------------------------------->
+                <a th:href="@{/emp/cart}">
+                    <img src="/img/shoppingCart.png" id="to-shopping-cart" alt="Carrito">
+                </a>
                 <div class="name-rol">
                     <h5 th:text="${session.name}"></h5>
                     <small>Empleado</small>
@@ -121,11 +138,6 @@
                                     <span class="material-icons">add</span>
                                 </button>
                             </div>
-
-                            <p id="add-error-messages">
-                                <span id="add-error-1"></span>
-                                <span id="add-error-2"></span>
-                            </p>
                             
                             <button class="submit-add" onclick="addToCart()">Añadir</button>
                         </div>
@@ -182,6 +194,9 @@
 
             <div class="success-message" id="success-message">
                 <h6 id="success-message-text"></h6>
+            </div>
+            <div class="error-message" id="error-message">
+                <h6 id="error-message-text"></h6>
             </div>
         </main>
     </div>

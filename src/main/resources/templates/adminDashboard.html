@@ -51,20 +51,20 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                        <span>
-                            <p>Añadir empleado</p>
-                        </span>
+                    <a th:href="@{/admin/members}" id="empl-list-button">
+                        <span class="material-icons">groups</span>
+                        <p>Ver empleados</p>
                     </a>
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/members}" id="empl-list-button">
-                        <span class="material-icons">groups</span>
-                        <p>Ver empleados</p>
+                    <a th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
                     </a>
                 </li>
 
@@ -85,7 +85,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>

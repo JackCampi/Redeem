@@ -36,13 +36,13 @@
                     <!-- El href vacío hace que se redireccione al dashboard -->
                     <a th:href="@{/emp/}" id="dash-button">
                         <span class="material-icons sidebar-icon">analytics</span>
-                        <p>Dashboard</p>
+                        <p>Dashboard</p> 
                     </a>
                 </li>
                 <li>
-                    <a th:href="@{/emp/history}"  class="selected" id="trans-hist-button">
+                    <a class="selected" th:href="@{/emp/history}" id="trans-hist-button">
                         <span class="material-icons">history_edu</span>
-                        <p>Historial transacciones</p>
+                        <p>Historial transacciones</p> 
                     </a>
                 </li>
 
@@ -51,7 +51,18 @@
                 <li>
                     <a th:href="@{/emp/transfer}" id="transfer-button">
                         <span class="material-icons">connect_without_contact</span>
-                        <p>Transferir</p>
+                        <p>Transferir</p> 
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/emp/marketplace}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Marketplace</p>
+                        </span>
                     </a>
                 </li>
 
@@ -65,7 +76,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>

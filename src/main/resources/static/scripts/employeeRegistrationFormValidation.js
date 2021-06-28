@@ -8,6 +8,9 @@ const email_error = document.getElementById('email_error');
 const password_error = document.getElementById('pass_error');
 const password_confirm_error = document.getElementById('password_confirm_error');
 
+setTimeout(function() { 
+    document.getElementById("reg-success").style.display = "none";
+  }, 4500);
 
 form.addEventListener( 'submit', (event) => {
     password_confirm.style.border = 'none';

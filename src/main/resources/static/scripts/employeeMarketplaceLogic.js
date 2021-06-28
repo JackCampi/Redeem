@@ -58,17 +58,27 @@ function addProcess(amount){
         amount += cart[productId]["quantity"];
     }
 
-    if (amount > limit){
-
-        document.getElementById("add-error-2").innerText = "No puedes superar el límite en stock";
+    if(amount > 10){
+        document.getElementById("error-message-text").innerText = "No puedes añadir más de 10 productos";
         if (cart[productId] != null) {
-            document.getElementById("add-error-2").innerText += " (Tienes: "+ cart[productId]["quantity"].toString() +")";
+            document.getElementById("error-message-text").innerText += " (Tienes: "+ cart[productId]["quantity"].toString() +")";
         }
-        document.getElementById("add-error-2").style.display = "block";
-    }
-    else if(amount > 10){
-        document.getElementById("add-error-1").innerText = "No puedes añadir más de 10 productos";
-        document.getElementById("add-error-1").style.display = "block";
+        document.getElementById("error-message").style.display = "block";
+        setTimeout(function() { 
+            document.getElementById("error-message").style.display = "none";
+         }, 4500);
+
+    }else if (amount > limit){
+
+        document.getElementById("error-message-text").innerText = "No puedes superar el límite en stock";
+        if (cart[productId] != null) {
+            document.getElementById("error-message-text").innerText += " (Tienes: "+ cart[productId]["quantity"].toString() +")";
+        }
+        
+        document.getElementById("error-message").style.display = "block";
+        setTimeout(function() { 
+            document.getElementById("error-message").style.display = "none";
+         }, 4500);
     } else {
         cart[productId] = {"name": document.getElementById("product-name").innerText,
                         "image" : document.getElementById("product-img").src,
@@ -79,8 +89,8 @@ function addProcess(amount){
         document.getElementById("success-message-text").innerText = "Ahora tienes "+ amount.toString() + " unidades en el carrito.";
         document.getElementById("success-message").style.display = "block";
         setTimeout(function() { 
-            document.getElementById("success-message").style.display = "none"
-         }, 5500);
+            document.getElementById("success-message").style.display = "none";
+         }, 4500);
     }
 
 }

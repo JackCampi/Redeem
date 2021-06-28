@@ -4,6 +4,11 @@ const form = document.getElementById('edit-form');
 const error = document.getElementById("email-error");
 const email = document.getElementById("email");
 
+setTimeout(function() { 
+  document.getElementById("success-message").style.display = "none";
+  document.getElementById("error-message").style.display = "none";
+}, 4500);
+
 form.addEventListener( 'submit', (event) => {
   
   if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value))){
