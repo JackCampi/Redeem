@@ -83,18 +83,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         employee.getPurchases().forEach(purchase -> {
 
-            long amount = 0L;
-            ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
-
-            for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
-                Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice() * purchaseHasProduct.getQuantity();
-                productInfoDtos.add(new ProductInfoDto(
-                        product.getName(),
-                        purchaseHasProduct.getQuantity(),
-                        product.getPrice()
-                ));
-            }
+            long amount = purchase.getValue();
+            ArrayList<ProductInfoDto> productInfoDtos = getProductInfoDtos(purchase);
 
             sortedList.add(new EPurchases(
                     "EPurchases",
@@ -115,18 +105,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         areaRepository.findByCompany(company).forEach(area -> area.getEmployees().forEach(employee -> employee.getPurchases().forEach(purchase -> {
 
-            long amount = 0L;
-            ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
-
-            for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
-                Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice() * purchaseHasProduct.getQuantity();
-                productInfoDtos.add(new ProductInfoDto(
-                        product.getName(),
-                        purchaseHasProduct.getQuantity(),
-                        product.getPrice()
-                ));
-            }
+            long amount = purchase.getValue();
+            ArrayList<ProductInfoDto> productInfoDtos = getProductInfoDtos(purchase);
 
             sortedList.add(new APurchases(
                     "APurchases",
@@ -161,5 +141,20 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         purchase.setIsSent(true);
         purchaseRepository.save(purchase);
+    }
+
+    public ArrayList<ProductInfoDto> getProductInfoDtos(Purchase purchase){
+
+        ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
+
+        for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
+            Product product = purchaseHasProduct.getProduct();
+            productInfoDtos.add(new ProductInfoDto(
+                    product.getName(),
+                    purchaseHasProduct.getQuantity(),
+                    product.getPrice()
+            ));
+        }
+        return productInfoDtos;
     }
 }
