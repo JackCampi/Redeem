@@ -23,4 +23,21 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "order by sum(PHP.php_quantity) desc\n" +
             "limit ?2", nativeQuery = true)
     Collection<Object[]> findMostPurchasedCategories(long nit, int limit);
+
+    @Query(value = "select date(P.pur_datetime), sum(PHP.php_quantity)\n" +
+            "from purchase P \n" +
+            "join purchase_has_product PHP on P.pur_id = PHP.purchase_pur_id\n" +
+            "join employee E on P.emp_id = E.emp_id\n" +
+            "where month(P.pur_datetime) = month(now())\n" +
+            "and E.area_company_comp_id = ?1\n" +
+            "group by date(P.pur_datetime)", nativeQuery = true)
+    Collection<Object[]> findPurchasedProductsByDay(long nit);
+
+    @Query(value = "select sum(P.pur_value)\n" +
+            "from purchase P \n" +
+            "join employee E on P.emp_id = E.emp_id\n" +
+            "where month(P.pur_datetime) = month(now())\n" +
+            "and E.area_company_comp_id = ?1", nativeQuery = true)
+    long findOutgoingBudget(long nit);
+
 }

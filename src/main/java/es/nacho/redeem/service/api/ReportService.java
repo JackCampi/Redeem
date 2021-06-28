@@ -8,13 +8,13 @@ public interface ReportService {
 
     Collection<PendingShipmentsDto> getPendingShipments(long nit);
     Collection<ProductDto> getCompanyMostPurchasedProducts(long nit);
-    Collection<Collection> getDailyPurchases(long nig);
+    ReportGraphValuesDto getDailyPurchases(long nit);
     Collection<EmployeeDto> getBestBuyers(long nit);
-    int getOutgoingBudgetMean(long nit);
-    int getIncomingBudgetMean(long nit);
+    double getOutgoingBudgetMean(long nit);
+    double getIncomingBudgetMean(long nit);
     Collection<CategoryDto> getMostPurchasedCategory(long nit);
-    AllocationByAdminDto getAllocationByAdmin(long nit);
-    EmpCountByAreasDto getEmployeeAmountByAreas(long nit);
+    ReportGraphValuesDto getAllocationByAdmin(long nit);
+    ReportGraphValuesDto getEmployeeAmountByAreas(long nit);
 
 
 }

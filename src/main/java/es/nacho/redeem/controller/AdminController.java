@@ -76,11 +76,14 @@ public class AdminController {
         Collection<PendingShipmentsDto> pendingShipmentsDtos = reportService.getPendingShipments(nit);
         Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit);
         Collection<EmployeeDto> bestByers = reportService.getBestBuyers(nit);
+        ReportGraphValuesDto productsPerDay = reportService.getDailyPurchases(nit);
 
         model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
         model.addAttribute("pendingToSend", pendingShipmentsDtos);
         model.addAttribute("mostPurchasedProducts", mostPurchasedProducts);
         model.addAttribute("bestBuyers", bestByers);
+        model.addAttribute("days", productsPerDay.getTags());
+        model.addAttribute("productsCount", productsPerDay.getValues());
 
         return WebPageNames.ADMIN_DASHBOARD;
     }
@@ -290,19 +293,19 @@ public class AdminController {
 
         long nit = (long) session.getAttribute("nit");
 
-        int outgoingBudgetMean = reportService.getOutgoingBudgetMean(nit);
-        int incomingBudgetMean = reportService.getIncomingBudgetMean(nit);
+        double outgoingBudgetMean = reportService.getOutgoingBudgetMean(nit);
+        double incomingBudgetMean = reportService.getIncomingBudgetMean(nit);
         Collection<CategoryDto> mostPurchasedCategories = reportService.getMostPurchasedCategory(nit);
-        AllocationByAdminDto allocationByAdminDto = reportService.getAllocationByAdmin(nit);
-        EmpCountByAreasDto empCountByAreasDto = reportService.getEmployeeAmountByAreas(nit);
+        ReportGraphValuesDto allocationByAdminDto = reportService.getAllocationByAdmin(nit);
+        ReportGraphValuesDto empCountByAreasDto = reportService.getEmployeeAmountByAreas(nit);
 
         model.addAttribute("outgoingBudgetMean", outgoingBudgetMean);
         model.addAttribute("incomingBudgetMean", incomingBudgetMean);
         model.addAttribute("mostPurchasedCategories", mostPurchasedCategories);
-        model.addAttribute("adminNames", allocationByAdminDto.getAdminNames());
-        model.addAttribute("adminAllocationCount", allocationByAdminDto.getAllocationAmounts());
-        model.addAttribute("areaNames", empCountByAreasDto.getAreaNames());
-        model.addAttribute("employeeCount", empCountByAreasDto.getEmpCount());
+        model.addAttribute("adminNames", allocationByAdminDto.getTags());
+        model.addAttribute("adminAllocationCount", allocationByAdminDto.getValues());
+        model.addAttribute("areaNames", empCountByAreasDto.getTags());
+        model.addAttribute("employeeCount", empCountByAreasDto.getValues());
 
 
         return WebPageNames.ADMIN_STATISTICS;
