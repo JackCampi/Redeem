@@ -81,12 +81,12 @@ public class AdminController {
 
         Collection<PendingShipmentsDto> pendingShipmentsDtos = reportService.getPendingShipments(nit);
         Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit);
-        Collection<EmployeeDto> bestByers = reportService.getBestBuyers(nit);
+        Collection<EmployeeDto> bestBuyers = reportService.getBestBuyers(nit);
 
         model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
         model.addAttribute("pendingToSend", pendingShipmentsDtos);
         model.addAttribute("mostPurchasedProducts", mostPurchasedProducts);
-        model.addAttribute("bestBuyers", bestByers);
+        model.addAttribute("bestBuyers", bestBuyers);
 
         return WebPageNames.ADMIN_DASHBOARD;
     }

@@ -129,9 +129,11 @@
             <div class="admin-lists">
                 <h3>Pendientes por envío</h3>
                 <ul>
-                   <li class="shippment-list">
+                   <li class="shippment-list" th:each="pendingPurchase : ${pendingToSend}">
                        <div class="shippment-card">
-
+                           <div class="dataText" th:text="'Para: '+${pendingPurchase.name}"></div>
+                           <div class="dataText" th:text="'Código de compra: '+${pendingPurchase.purchaseId}"></div>
+                           <div class="dataText" th:text="'Total: '+${pendingPurchase.totalCost}"></div>
                        </div>
                    </li>
                 </ul>
@@ -139,21 +141,15 @@
             <div class="products-container">
                 <h3>Productos mas comprados</h3>
                 <ul>
-                    <li class="buyed-products">
+                    <li class="buyed-products" th:each="mostProduct : ${mostPurchasedProducts}">
                         <div class="buyed-card">
                             <div class="inside-image">
-
+                                <img th:src="${mostProduct.imageUrl}">
                             </div>
-                            <h4>1. Arroz roa</h4>
+                            <div class="dataText" th:text="${mostProduct.name}"></div>
+                            <div class="dataText" th:text="'Cantidad: '+${mostProduct.sales}"></div>
                         </div>
-                    </li><li class="buyed-products">
-                    <div class="buyed-card">
-                        <div class="inside-image">
-
-                        </div>
-                        <h4>1. Arroz roa</h4>
-                    </div>
-                </li>
+                    </li>
                 </ul>
             </div>
             <div class="day-graph">
@@ -165,8 +161,11 @@
             <div class="admin-lists" id="div-canvas">
                 <h3>Empleados que mas compraron</h3>
                 <ul>
-                    <li class="shippment-list">
+                    <li class="shippment-list" th:each="bestBuyer : ${bestBuyers}">
                         <div class="shippment-card">
+                            <div class="dataText" th:text="'Nombre: '+${bestBuyer.name}"></div>
+                            <div class="dataText" th:text="'Dinero gastado: '+${bestBuyer.amount}"></div>
+                            <div class="dataText" th:text="'Productos comprados: '+${bestBuyer.purchasedProductsAmount}"></div>
 
                         </div>
                     </li>
@@ -174,7 +173,9 @@
             </div>
         </main>
     </div>
-    <script src="../static/scripts/adminDashboardLogic.js"></script>
-    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script th:inline="javascript">
+
+    </script>
+
 </body>
 </html>

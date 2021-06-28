@@ -43,7 +43,7 @@ public class ReportServiceImpl implements ReportService {
 
         Collection<PendingShipmentsDto> pendingShipmentsDtos = new ArrayList<>();
 
-        Collection<Object[]> query = purchaseRepository.findPendingShipments(nit, 4);
+        Collection<Object[]> query = purchaseRepository.findPendingShipments(nit,20);
 
         query.forEach(objects -> {
             pendingShipmentsDtos.add(PendingShipmentDtoMapper.toPendingShipmentDto(objects));

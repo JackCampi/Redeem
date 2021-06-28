@@ -219,10 +219,11 @@ main{
     align-items: center;
 }
 
+
 .admin-lists{
     height: 11rem;
     margin: 1rem 0;
-    overflow: auto ;
+    overflow-y: auto ;
 }
 
 
@@ -238,7 +239,7 @@ main{
     background: #ffffff;
     border-radius: 15px;
     height: 7rem;
-    width: 15rem;
+    width: 16rem;
     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.212);
     margin: 0 0 1rem ;
 }
@@ -283,6 +284,18 @@ canvas{
     width: 70%;
     height: 10rem;
     margin-left: 15%;
+}
+
+.dataText{
+    margin-left: 2%;
+    font-family: Nunito Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 20px;
+    line-height: 41px;
+    color: #424242;
+    padding: 0;
+
 }
 
 @media only screen and (max-width: 1200px) {
