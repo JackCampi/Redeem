@@ -6,7 +6,6 @@ import es.nacho.redeem.exception.InsufficientStockException;
 import es.nacho.redeem.exception.ProductNotFoundException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
-import es.nacho.redeem.model.Product;
 import es.nacho.redeem.model.Purchase;
 import es.nacho.redeem.web.dto.transfer.history.AdminDto;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;

@@ -26,10 +26,6 @@ public class AreaKey implements Serializable {
         return companyId;
     }
 
-    public void setCompanyId(Long companyId) {
-        this.companyId = companyId;
-    }
-
     public String getName() {
         return name;
     }

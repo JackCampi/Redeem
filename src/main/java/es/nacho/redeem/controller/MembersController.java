@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -38,8 +37,8 @@ public class MembersController {
         long nit = (long)  session.getAttribute("nit");
 
         AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
-        Collection<MemberDto> employees = new ArrayList<>();
-        Collection<String> areaNames = new ArrayList<>();
+        Collection<MemberDto> employees;
+        Collection<String> areaNames;
 
 
         try{

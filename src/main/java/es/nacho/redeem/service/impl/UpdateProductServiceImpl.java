@@ -27,7 +27,7 @@ public class UpdateProductServiceImpl implements UpdateProductService {
         if(validateProductWithDetailsDto(productWithDetailsDto)) {
             Company company = getCompanyByNitService.invoke(companyNIT);
             Optional<Product> productOptional = productRepository.findById(productWithDetailsDto.getId());
-            Product product = ProductMapper.toProductToUpdate(productOptional.get(),productWithDetailsDto, company);
+            Product product = ProductMapper.toProductToUpdate(productOptional.get(),productWithDetailsDto);
             productRepository.save(product);
         }else throw new Exception("Null params");
     }

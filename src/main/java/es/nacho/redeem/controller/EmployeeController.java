@@ -4,7 +4,6 @@ import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
-import es.nacho.redeem.repository.AllocationRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.service.*;
 import es.nacho.redeem.transaction.BalanceTransaction;
@@ -12,7 +11,6 @@ import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
 import es.nacho.redeem.web.dto.transfer.TransferDto;
-import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -24,7 +22,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.util.Collection;
 import java.util.Optional;
 
 @Controller

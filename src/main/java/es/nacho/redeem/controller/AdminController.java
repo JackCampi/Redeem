@@ -130,9 +130,8 @@ public class AdminController {
     @GetMapping(value = "/allocation")
     public String getAllocationView(Model model, HttpSession session){
 
-        Long nit = (long) session.getAttribute("nit");
-
         Collection<String> areaNames = new ArrayList<>();
+        Long nit = (long) session.getAttribute("nit");
 
         try{
             areaNames = companyService.getAreasNames(true, nit);
@@ -150,7 +149,7 @@ public class AdminController {
     public String getEmployeeAllocationView(){return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;}
 
     @GetMapping(value = "/allocation/comp")
-    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION;}
+    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION_COMPANY;}
 
     @GetMapping(value = "/allocation/area")
     public String getAreaAllocationView(HttpSession session, Model model){
