@@ -207,8 +207,6 @@ public class UserServiceImpl implements UserService{
         //TODO: check if it works :)
         if(!memberDto.getEmail().equals(memberDto.getOldEmail()) && checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
-        if(checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
-
         Employee employeeObject = employee.get();
         employeeObject.setEmail(memberDto.getEmail());
         employeeObject.setName(memberDto.getName());
