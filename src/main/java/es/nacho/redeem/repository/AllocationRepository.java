@@ -20,4 +20,6 @@ public interface AllocationRepository extends JpaRepository<Allocation, Long> {
             "and E.area_company_comp_id = ?1", nativeQuery = true)
     long findIncomingBudget(long nit);
 
+
+
 }

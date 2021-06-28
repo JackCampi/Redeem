@@ -74,7 +74,7 @@ public class AdminController {
         }
 
         Collection<PendingShipmentsDto> pendingShipmentsDtos = reportService.getPendingShipments(nit);
-        Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit);
+        Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit, 10000);
         Collection<EmployeeDto> bestByers = reportService.getBestBuyers(nit);
         ReportGraphValuesDto productsPerDay = reportService.getDailyPurchases(nit);
 

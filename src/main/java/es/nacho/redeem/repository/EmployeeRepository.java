@@ -28,4 +28,26 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             "group by E.emp_id", nativeQuery = true)
     Collection<Object[]> findAllocationByAdmin(long nit);
 
+    @Query(value = "select PR.prod_image_url, PR.prod_name, sum(PHP.php_quantity)\n" +
+            "from employee E\n" +
+            "join purchase P on E.emp_id = P.emp_id\n" +
+            "join purchase_has_product PHP on P.pur_id = PHP.purchase_pur_id\n" +
+            "join product PR on PHP.product_prod_id = PR.prod_id\n" +
+            "where E.emp_id = ?1\n" +
+            "group by PR.prod_id\n" +
+            "order by sum(PHP.php_quantity) desc\n" +
+            "limit 1", nativeQuery = true)
+    Object[] findMostPurchasedProductByMe(long id);
+
+    @Query(value = "select PR.prod_image_url, PR.prod_name, sum(PHP.php_quantity)\n" +
+            "from employee E\n" +
+            "join purchase P on E.emp_id = P.emp_id\n" +
+            "join purchase_has_product PHP on P.pur_id = PHP.purchase_pur_id\n" +
+            "join product PR on PHP.product_prod_id = PR.prod_id\n" +
+            "where E.emp_id = ?1\n" +
+            "group by PR.prod_id\n" +
+            "order by sum(P.pur_datetime) desc\n" +
+            "limit 4", nativeQuery = true)
+    Collection<Object[]> findLastFourPurchases(long id);
+
 }
