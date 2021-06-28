@@ -7,18 +7,15 @@ import es.nacho.redeem.mapper.EmployeeDtoMapper;
 import es.nacho.redeem.mapper.PendingShipmentDtoMapper;
 import es.nacho.redeem.mapper.ProductDtoMapper;
 import es.nacho.redeem.model.*;
-import es.nacho.redeem.repository.AreaRepository;
-import es.nacho.redeem.repository.EmployeeRepository;
-import es.nacho.redeem.repository.ProductRepository;
-import es.nacho.redeem.repository.PurchaseRepository;
+import es.nacho.redeem.repository.*;
 import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.web.dto.report.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.*;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -28,6 +25,9 @@ public class ReportServiceImpl implements ReportService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+
+    @Autowired
+    private AllocationRepository allocationRepository;
 
     @Autowired
     private ProductRepository productRepository;
@@ -42,38 +42,21 @@ public class ReportServiceImpl implements ReportService {
     public Collection<PendingShipmentsDto> getPendingShipments(long nit) {
 
         Collection<PendingShipmentsDto> pendingShipmentsDtos = new ArrayList<>();
-
-        Collection<Object[]> query = purchaseRepository.findPendingShipments(nit,20);
+        Collection<Object[]> query = purchaseRepository.findPendingShipments(nit, 4);
 
         query.forEach(objects -> {
             pendingShipmentsDtos.add(PendingShipmentDtoMapper.toPendingShipmentDto(objects));
         });
-
-        /*for(Area area: company.getAreas()){
-            for(Employee employee: area.getEmployees()){
-                for(Purchase purchase: employee.getPurchases()){
-
-                    pendingShipmentsDtos.add(new PendingShipmentsDto(
-                            employee.getName(),
-                            purchase.getId(),
-                            purchase.getValue(),
-                            CalendarFormat.formatLocalDateTime(purchase.getDateTime())
-                    ));
-
-                    if(pendingShipmentsDtos.size() > 3) break;
-                }
-            }
-        }*/
 
         return pendingShipmentsDtos;
 
     }
 
     @Override
-    public Collection<ProductDto> getCompanyMostPurchasedProducts(long nit) {
-        Collection<ProductDto> productDtos = new ArrayList<>();
+    public Collection<ProductDto> getCompanyMostPurchasedProducts(long nit, int limit) {
 
-        Collection<Object[]> query = productRepository.findMostPurchasedProducts(nit, 4);
+        Collection<ProductDto> productDtos = new ArrayList<>();
+        Collection<Object[]> query = productRepository.findMostPurchasedProducts(nit, limit);
 
         query.forEach(objects -> {
             productDtos.add(ProductDtoMapper.toProductDto(objects));
@@ -83,8 +66,39 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public Collection<Collection> getDailyPurchases(long nig) {
-        return null;
+    public ReportGraphValuesDto getDailyPurchases(long nit) {
+
+        Calendar calendar = new GregorianCalendar();
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
+        String month = Integer.toString(calendar.get(Calendar.MONTH) + 1);
+        if(month.length() < 2) month = "0" + month;
+        String year = Integer.toString(calendar.get(Calendar.YEAR));
+
+        Map<String, Integer> productCountPerDay = new TreeMap<String, Integer>();
+
+        for(int i = 1; i<= today; i++){
+
+            String todayString = Integer.toString(i);
+            if(todayString.length() < 2 ) todayString = "0" + todayString;
+            productCountPerDay.put(year+"-"+month+"-"+todayString, 0);
+
+        }
+
+        Collection<Object[]> properties = productRepository.findPurchasedProductsByDay(nit);
+
+        properties.forEach(objects -> {
+
+            String dateKey = CalendarFormat.formatDate((Date) objects[0]);
+            BigDecimal productCountValue = (BigDecimal) objects[1];
+            productCountPerDay.put(dateKey, productCountValue.intValue());
+
+        });
+
+        Collection<String> dates = productCountPerDay.keySet();
+        Collection<Integer> productCount = productCountPerDay.values();
+
+
+        return new ReportGraphValuesDto(dates, productCount);
     }
 
     @Override
@@ -101,13 +115,23 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public int getOutgoingBudgetMean(long nit) {
-        return 0;
+    public double getOutgoingBudgetMean(long nit) {
+
+        long outgoingBudget = productRepository.findOutgoingBudget(nit);
+        Calendar calendar = new GregorianCalendar();
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return outgoingBudget / today;
+
     }
 
     @Override
-    public int getIncomingBudgetMean(long nit) {
-        return 0;
+    public double getIncomingBudgetMean(long nit) {
+        long ingoingBudget = allocationRepository.findIncomingBudget(nit);
+        Calendar calendar = new GregorianCalendar();
+        int today = calendar.get(Calendar.DAY_OF_MONTH);
+
+        return ingoingBudget / today;
     }
 
     @Override
@@ -124,7 +148,7 @@ public class ReportServiceImpl implements ReportService {
     }
 
     @Override
-    public AllocationByAdminDto getAllocationByAdmin(long nit) {
+    public ReportGraphValuesDto getAllocationByAdmin(long nit) {
 
         Collection<String> adminNames = new ArrayList<>();
         Collection<Integer> allocationAmounts = new ArrayList<>();
@@ -139,14 +163,14 @@ public class ReportServiceImpl implements ReportService {
 
         });
 
-        return new AllocationByAdminDto(
+        return new ReportGraphValuesDto(
                 adminNames,
                 allocationAmounts
         );
     }
 
     @Override
-    public EmpCountByAreasDto getEmployeeAmountByAreas(long nit) {
+    public ReportGraphValuesDto getEmployeeAmountByAreas(long nit) {
 
         Collection<String> areaNames = new ArrayList<>();
         Collection<Integer> empCounts = new ArrayList<>();
@@ -161,6 +185,34 @@ public class ReportServiceImpl implements ReportService {
         });
 
 
-        return new EmpCountByAreasDto(areaNames,empCounts);
+        return new ReportGraphValuesDto(areaNames,empCounts);
+    }
+
+    @Override
+    public ProductDto getMostPurchasedProductByMe(long id) {
+
+        Object[] properties = employeeRepository.findMostPurchasedProductByMe(id);
+        return ProductDtoMapper.toProductDto((Object[]) properties[0]);
+    }
+
+    @Override
+    public Collection<ProductDto> getLastPurchases(long id) {
+
+        Collection<ProductDto> lastPurchases = new ArrayList<>();
+        Collection<Object[]> properties = employeeRepository.findLastFourPurchases(id);
+        properties.forEach(objects -> {
+            lastPurchases.add(ProductDtoMapper.toProductDto(objects));
+        });
+
+        return lastPurchases;
+    }
+
+    @Override
+    public ProductDto getCompanyMostPurchasedProductsLastMonth(long nit) {
+
+        Collection<Object[]> query = productRepository.findMostPurchasedProductLastMonth(nit);
+        Object[] properties = (Object[]) query.toArray()[0];
+
+        return ProductDtoMapper.toProductDto(properties);
     }
 }

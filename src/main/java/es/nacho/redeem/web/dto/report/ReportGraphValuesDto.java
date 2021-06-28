@@ -11,9 +11,9 @@ import java.util.Collection;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class EmpCountByAreasDto {
+public class ReportGraphValuesDto {
 
-    private Collection<String> areaNames;
-    private Collection<Integer> empCount;
+    private Collection<String> tags;
+    private Collection<Integer> values;
 
 }

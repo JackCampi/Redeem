@@ -5,12 +5,12 @@ import java.util.Collection;
 
 public class PurchaseDto {
 
-    private String employee;
+    private Long employeeId;
     private Long value;
     private Collection<ArrayList<Long>> productsAndQuantities;
 
-    public PurchaseDto(String employee, Long value, Collection<ArrayList<Long>> productsAndQuantities) {
-        this.employee = employee;
+    public PurchaseDto(Long employeeId, Long value, Collection<ArrayList<Long>> productsAndQuantities) {
+        this.employeeId = employeeId;
         this.value = value;
         this.productsAndQuantities = productsAndQuantities;
     }
@@ -18,12 +18,12 @@ public class PurchaseDto {
     public PurchaseDto() {
     }
 
-    public String getEmployee() {
-        return employee;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setEmployee(String employee) {
-        this.employee = employee;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public Long getValue() {
