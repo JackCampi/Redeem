@@ -3,19 +3,18 @@ package es.nacho.redeem.controller;
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
-import es.nacho.redeem.model.Purchase;
-import es.nacho.redeem.service.*;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.*;
+import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
 import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
-import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
+import es.nacho.redeem.web.dto.report.*;
 import es.nacho.redeem.web.dto.transfer.history.AdminDto;
-import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -24,10 +23,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,9 +45,6 @@ public class AdminController {
     private BalanceTransaction balanceTransaction;
 
     @Autowired
-    private TransferService transferService;
-
-    @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
@@ -56,6 +52,9 @@ public class AdminController {
 
     @Autowired
     private PurchaseService purchaseService;
+
+    @Autowired
+    private ReportService reportService;
 
     @GetMapping
     public String dashboard(Model model, HttpSession session){
@@ -74,9 +73,17 @@ public class AdminController {
             return WebPageNames.ERROR_PAGE;
         }
 
+        Collection<PendingShipmentsDto> pendingShipmentsDtos = reportService.getPendingShipments(nit);
+        Collection<ProductDto> mostPurchasedProducts = reportService.getCompanyMostPurchasedProducts(nit, 10000);
+        Collection<EmployeeDto> bestByers = reportService.getBestBuyers(nit);
+        ReportGraphValuesDto productsPerDay = reportService.getDailyPurchases(nit);
+
         model.addAttribute("adminDashboardInfo", adminDashboardInfoDto);
-
-
+        model.addAttribute("pendingToSend", pendingShipmentsDtos);
+        model.addAttribute("mostPurchasedProducts", mostPurchasedProducts);
+        model.addAttribute("bestBuyers", bestByers);
+        model.addAttribute("days", productsPerDay.getTags());
+        model.addAttribute("productsCount", productsPerDay.getValues());
 
         return WebPageNames.ADMIN_DASHBOARD;
     }
@@ -123,9 +130,8 @@ public class AdminController {
     @GetMapping(value = "/allocation")
     public String getAllocationView(Model model, HttpSession session){
 
-        Long nit = (long) session.getAttribute("nit");
-
         Collection<String> areaNames = new ArrayList<>();
+        Long nit = (long) session.getAttribute("nit");
 
         try{
             areaNames = companyService.getAreasNames(true, nit);
@@ -140,10 +146,10 @@ public class AdminController {
     }
 
     @GetMapping(value = "/allocation/emp")
-    public String getEmployeeAllocationView(){return "redirect:/allocation";}
+    public String getEmployeeAllocationView(){return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;}
 
     @GetMapping(value = "/allocation/comp")
-    public String getCompanyAllocationView(){return "redirect:/allocation";}
+    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION_COMPANY;}
 
     @GetMapping(value = "/allocation/area")
     public String getAreaAllocationView(HttpSession session, Model model){
@@ -284,7 +290,21 @@ public class AdminController {
     @GetMapping(value = "/statistics")
     public String getStatisticsView(Model model, HttpSession session){
 
-        long id = (long) session.getAttribute("id");
+        long nit = (long) session.getAttribute("nit");
+
+        double outgoingBudgetMean = reportService.getOutgoingBudgetMean(nit);
+        double incomingBudgetMean = reportService.getIncomingBudgetMean(nit);
+        Collection<CategoryDto> mostPurchasedCategories = reportService.getMostPurchasedCategory(nit);
+        ReportGraphValuesDto allocationByAdminDto = reportService.getAllocationByAdmin(nit);
+        ReportGraphValuesDto empCountByAreasDto = reportService.getEmployeeAmountByAreas(nit);
+
+        model.addAttribute("outgoingBudgetMean", outgoingBudgetMean);
+        model.addAttribute("incomingBudgetMean", incomingBudgetMean);
+        model.addAttribute("mostPurchasedCategories", mostPurchasedCategories);
+        model.addAttribute("adminNames", allocationByAdminDto.getTags());
+        model.addAttribute("adminAllocationCount", allocationByAdminDto.getValues());
+        model.addAttribute("areaNames", empCountByAreasDto.getTags());
+        model.addAttribute("employeeCount", empCountByAreasDto.getValues());
 
 
         return WebPageNames.ADMIN_STATISTICS;

@@ -1,9 +1,7 @@
 package es.nacho.redeem.controller;
 
 import es.nacho.redeem.model.Purchase;
-import es.nacho.redeem.service.ProductService;
 import es.nacho.redeem.service.PurchaseService;
-import es.nacho.redeem.web.dto.AllocationDto;
 import es.nacho.redeem.web.dto.PurchaseShippingDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -41,7 +39,7 @@ public class ShippingController {
     }
 
     @PostMapping
-    public String SendPurchase(@ModelAttribute PurchaseShippingDto purchaseShippingDto){
+    public String SendPurchase(@ModelAttribute("purchaseShippingDto") PurchaseShippingDto purchaseShippingDto){
 
         try{
             purchaseService.setSentPurchase(purchaseShippingDto.getPurchaseId());
@@ -49,5 +47,10 @@ public class ShippingController {
             return "redirect:/admin/shipping?error";
         }
         return "redirect:/admin/shipping?success";
+    }
+
+    @ModelAttribute("purchaseShippingDto")
+    public PurchaseShippingDto purchaseShippingDto(){
+        return new PurchaseShippingDto();
     }
 }

@@ -8,6 +8,9 @@ public class PurchaseShippingDto {
         this.purchaseId = purchaseId;
     }
 
+    public PurchaseShippingDto() {
+    }
+
     public Long getPurchaseId() {
         return purchaseId;
     }

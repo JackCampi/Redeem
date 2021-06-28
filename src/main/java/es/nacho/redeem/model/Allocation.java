@@ -56,10 +56,6 @@ public class Allocation {
         return datetime;
     }
 
-    public void setDatetime(LocalDateTime datetime) {
-        this.datetime = datetime;
-    }
-
     public Long getAmount() {
         return amount;
     }
@@ -70,10 +66,6 @@ public class Allocation {
 
     public String getDescription() {
         return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public Employee getAdmin() {

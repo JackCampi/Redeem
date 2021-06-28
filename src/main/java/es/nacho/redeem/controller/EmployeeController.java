@@ -4,15 +4,15 @@ import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
 import es.nacho.redeem.model.Employee;
-import es.nacho.redeem.repository.AllocationRepository;
 import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.service.*;
+import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
+import es.nacho.redeem.web.dto.report.ProductDto;
 import es.nacho.redeem.web.dto.transfer.TransferDto;
-import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,11 +52,15 @@ public class EmployeeController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    ReportService reportService;
+
     @GetMapping
     public String dashboard(Model model, HttpSession session){
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         long nit = (long)  session.getAttribute("nit");
+        long id = (long) session.getAttribute("id");
 
         EmployeeDashboardInfoDto employeeDashboardInfoDto = new EmployeeDashboardInfoDto();
 
@@ -69,7 +73,17 @@ public class EmployeeController {
             return WebPageNames.ERROR_PAGE;
         }
 
+        ProductDto mostPurchasedProductByMe =  reportService.getMostPurchasedProductByMe(id);
+        ProductDto mostPurchasedProduct = (ProductDto) reportService.getCompanyMostPurchasedProducts(nit, 1).toArray()[0];
+        Collection<ProductDto> lastPurchases = reportService.getLastPurchases(id);
+        ProductDto mostPurchasedProductLastMonth = reportService.getCompanyMostPurchasedProductsLastMonth(nit);
+
         model.addAttribute("employeeDashboardInfo", employeeDashboardInfoDto);
+        model.addAttribute("mostPurchasedProductByMe", mostPurchasedProductByMe);
+        model.addAttribute("mostPurchasedProduct", mostPurchasedProduct);
+        model.addAttribute("lastPurchases", lastPurchases);
+        model.addAttribute("mostPurchasedProductLastMonth", mostPurchasedProductLastMonth);
+
 
         return WebPageNames.EMPLOYEE_DASHBOARD;
     }

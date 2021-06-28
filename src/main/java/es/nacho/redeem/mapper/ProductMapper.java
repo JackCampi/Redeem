@@ -29,7 +29,7 @@ public interface ProductMapper {
                 company,
                 true);
     }
-    static Product toProductToUpdate(Product product, ProductWithDetailsDto productDto, Company company){
+    static Product toProductToUpdate(Product product, ProductWithDetailsDto productDto){
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setType(productDto.getType());

@@ -46,8 +46,13 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     @Transactional(rollbackOn = {ProductNotFoundException.class, InsufficientStockException.class, InsufficientBalanceException.class})
-    public void accomplishPurchase(Employee employee, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
-        throws ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
+    public void accomplishPurchase(Long employeeId, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
+        throws UserNotFoundException, ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
+
+        Optional<Employee> OpEmployee = employeeRepository.findById(employeeId);
+
+        if (!OpEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = OpEmployee.get();
 
         Purchase purchase = new Purchase(LocalDateTime.now(), employee, purchaseValue);
         purchaseRepository.save(purchase);
@@ -78,18 +83,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         employee.getPurchases().forEach(purchase -> {
 
-            long amount = 0L;
-            ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
-
-            for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
-                Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice();
-                productInfoDtos.add(new ProductInfoDto(
-                        product.getName(),
-                        purchaseHasProduct.getQuantity(),
-                        product.getPrice()
-                ));
-            }
+            long amount = purchase.getValue();
+            ArrayList<ProductInfoDto> productInfoDtos = getProductInfoDtos(purchase);
 
             sortedList.add(new EPurchases(
                     "EPurchases",
@@ -110,18 +105,8 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         areaRepository.findByCompany(company).forEach(area -> area.getEmployees().forEach(employee -> employee.getPurchases().forEach(purchase -> {
 
-            long amount = 0L;
-            ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
-
-            for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
-                Product product = purchaseHasProduct.getProduct();
-                amount += product.getPrice();
-                productInfoDtos.add(new ProductInfoDto(
-                        product.getName(),
-                        purchaseHasProduct.getQuantity(),
-                        product.getPrice()
-                ));
-            }
+            long amount = purchase.getValue();
+            ArrayList<ProductInfoDto> productInfoDtos = getProductInfoDtos(purchase);
 
             sortedList.add(new APurchases(
                     "APurchases",
@@ -156,5 +141,20 @@ public class PurchaseServiceImpl implements PurchaseService{
 
         purchase.setIsSent(true);
         purchaseRepository.save(purchase);
+    }
+
+    public ArrayList<ProductInfoDto> getProductInfoDtos(Purchase purchase){
+
+        ArrayList<ProductInfoDto> productInfoDtos = new ArrayList<>();
+
+        for(PurchaseHasProduct purchaseHasProduct : purchase.getPurchaseHasProducts()){
+            Product product = purchaseHasProduct.getProduct();
+            productInfoDtos.add(new ProductInfoDto(
+                    product.getName(),
+                    purchaseHasProduct.getQuantity(),
+                    product.getPrice()
+            ));
+        }
+        return productInfoDtos;
     }
 }
