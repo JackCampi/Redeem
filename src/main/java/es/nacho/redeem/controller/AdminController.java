@@ -3,10 +3,9 @@ package es.nacho.redeem.controller;
 import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
-import es.nacho.redeem.model.Purchase;
-import es.nacho.redeem.service.*;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.*;
 import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.AdminDashboardInfoDto;
@@ -15,9 +14,7 @@ import es.nacho.redeem.web.dto.EmployeeRegistrationDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
 import es.nacho.redeem.web.dto.report.*;
-import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
 import es.nacho.redeem.web.dto.transfer.history.AdminDto;
-import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -26,10 +23,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Optional;
 
 @Controller
 @RequestMapping("/admin")
@@ -46,9 +43,6 @@ public class AdminController {
 
     @Autowired
     private BalanceTransaction balanceTransaction;
-
-    @Autowired
-    private TransferService transferService;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -150,10 +144,10 @@ public class AdminController {
     }
 
     @GetMapping(value = "/allocation/emp")
-    public String getEmployeeAllocationView(){return "redirect:/allocation";}
+    public String getEmployeeAllocationView(){return WebPageNames.ADMIN_ALLOCATION_EMPLOYEE;}
 
     @GetMapping(value = "/allocation/comp")
-    public String getCompanyAllocationView(){return "redirect:/allocation";}
+    public String getCompanyAllocationView(){return WebPageNames.ADMIN_ALLOCATION;}
 
     @GetMapping(value = "/allocation/area")
     public String getAreaAllocationView(HttpSession session, Model model){

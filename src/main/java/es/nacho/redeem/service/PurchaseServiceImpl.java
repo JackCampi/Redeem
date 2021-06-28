@@ -46,8 +46,13 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     @Transactional(rollbackOn = {ProductNotFoundException.class, InsufficientStockException.class, InsufficientBalanceException.class})
-    public void accomplishPurchase(Employee employee, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
-        throws ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
+    public void accomplishPurchase(Long employeeId, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
+        throws UserNotFoundException, ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
+
+        Optional<Employee> OpEmployee = employeeRepository.findById(employeeId);
+
+        if (!OpEmployee.isPresent()) throw new UserNotFoundException();
+        Employee employee = OpEmployee.get();
 
         Purchase purchase = new Purchase(LocalDateTime.now(), employee, purchaseValue);
         purchaseRepository.save(purchase);
