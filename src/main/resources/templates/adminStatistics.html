@@ -54,17 +54,6 @@
             </li>
 
             <li>
-                <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                    <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                </a>
-            </li>
-
-            <li>
                 <a th:href="@{/admin/members}" id="empl-list-button">
                     <span class="material-icons">groups</span>
                     <p>Ver empleados</p>
@@ -72,7 +61,18 @@
             </li>
 
             <li>
-                <a th:href="@{/admin/history}" class="selected" id="comp-statistics">
+                <a th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                    <span>
+                            <p>Lista de productos</p>
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/statistics}" class="selected" id="comp-statistics">
                     <span class="material-icons">trending_up</span>
                     <p>Estadísticas</p>
                 </a>
