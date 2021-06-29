@@ -15,6 +15,7 @@
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.js"></script>
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
@@ -128,6 +129,7 @@
             </div>
             <div class="admin-lists">
                 <h3>Pendientes por envío</h3>
+                <div id="NoShippment"></div>
                 <ul>
                    <li class="shippment-list" th:each="pendingPurchase : ${pendingToSend}">
                        <div class="shippment-card">
@@ -140,26 +142,28 @@
             </div>
             <div class="products-container">
                 <h3>Productos mas comprados</h3>
+                <div id="noProduct"></div>
                 <ul>
                     <li class="buyed-products" th:each="mostProduct : ${mostPurchasedProducts}">
                         <div class="buyed-card">
                             <div class="inside-image">
-                                <img th:src="${mostProduct.imageUrl}">
+                                <img class="product-image" th:src="${mostProduct.imageUrl}">
                             </div>
                             <div class="dataText" th:text="${mostProduct.name}"></div>
-                            <div class="dataText" th:text="'Cantidad: '+${mostProduct.sales}"></div>
+                            <div class="dataText" th:text="'Cantidad: '+${mostProduct.amount}"></div>
                         </div>
                     </li>
                 </ul>
             </div>
             <div class="day-graph">
                 <h3>Productos vendidos diariamente</h3>
-                <canvas>
+                <canvas id="dash-canvas">
 
                 </canvas>
             </div>
-            <div class="admin-lists" id="div-canvas">
+            <div class="admin-lists">
                 <h3>Empleados que mas compraron</h3>
+                <div id="noEmployee"></div>
                 <ul>
                     <li class="shippment-list" th:each="bestBuyer : ${bestBuyers}">
                         <div class="shippment-card">
@@ -175,6 +179,34 @@
     </div>
     <script th:inline="javascript">
 
+        if([[${pendingToSend}]].length==0){
+            var pendingEmpty = document.getElementById("NoShippment");
+            pendingEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        if([[${mostPurchasedProducts}]].length==0){
+            var productEmpty = document.getElementById("noProduct");
+            productEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        if([[${bestBuyers}]].length==0){
+            var employeeEmpty = document.getElementById("noEmployee");
+            employeeEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        let days = [[${days}]];
+        let productsCount = [[${productsCount}]];
+        let productsCountCanvas = document.getElementById("dash-canvas").getContext("2d");
+        let chartProductsCount = new Chart(productsCountCanvas,{
+            type:"bar",
+            data:{
+                labels: days,
+                datasets:[
+                    {
+                        label:"",
+                        data: productsCount,
+                        backgroundColor: "#C496D7"
+                    }
+                ]
+            }
+        })
     </script>
 
 </body>

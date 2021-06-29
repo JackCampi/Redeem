@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/css/transHistoryStyle.css">
     <link rel="stylesheet" href="../static/styles/transHistoryStyle.css">
 
+
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
@@ -153,7 +154,10 @@
     let dates = document.getElementsByClassName("date");
     let amounts = document.getElementsByClassName("amount");
     let transferMessages =  [[${transferMessages}]];
-
+    let transContainer = document.getElementsByClassName("trans-container")[0];
+    if(transferMessages.length==0){
+        transContainer.innerHTML = "No hay elementos para mostrar";
+    }
     let rowsValues;
     let posValues, inversePosition;
     for(var i=transferMessages.length-1;i>=0;i--){
