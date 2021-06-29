@@ -74,7 +74,12 @@ public class EmployeeController {
         }
 
         ProductDto mostPurchasedProductByMe =  reportService.getMostPurchasedProductByMe(id);
-        ProductDto mostPurchasedProduct = (ProductDto) reportService.getCompanyMostPurchasedProducts(nit, 1).toArray()[0];
+        ProductDto mostPurchasedProduct;
+        try {
+            mostPurchasedProduct = (ProductDto) reportService.getCompanyMostPurchasedProducts(nit, 1).toArray()[0];
+        }catch (Exception e){
+            mostPurchasedProduct = null;
+        }
         Collection<ProductDto> lastPurchases = reportService.getLastPurchases(id);
         ProductDto mostPurchasedProductLastMonth = reportService.getCompanyMostPurchasedProductsLastMonth(nit);
 
