@@ -46,7 +46,7 @@ public class PurchaseServiceImpl implements PurchaseService{
 
     @Override
     @Transactional(rollbackOn = {ProductNotFoundException.class, InsufficientStockException.class, InsufficientBalanceException.class})
-    public void accomplishPurchase(Long employeeId, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
+    public void accomplishPurchase(Long employeeId, String productsAndQuantities, Long purchaseValue)
         throws UserNotFoundException, ProductNotFoundException, InsufficientStockException, InsufficientBalanceException{
 
         Optional<Employee> OpEmployee = employeeRepository.findById(employeeId);
@@ -57,11 +57,21 @@ public class PurchaseServiceImpl implements PurchaseService{
         Purchase purchase = new Purchase(LocalDateTime.now(), employee, purchaseValue);
         purchaseRepository.save(purchase);
 
+        String[] numbers = productsAndQuantities.split(",");
+        Long[] pair = new Long[2];
+        ArrayList<Long[]> productsAndQuantitiesList = new ArrayList<>();
+
+        for (int i = 0; i< numbers.length; i = i + 2){
+            pair[0] = Long.parseLong(numbers[i]);
+            pair[1] = Long.parseLong(numbers[i+1]);
+            productsAndQuantitiesList.add(pair);
+        }
+
         Collection<PurchaseHasProduct> purchasesHaveProducts = new ArrayList<>();
 
-        for (ArrayList<Long> productAndQuantity : productsAndQuantities) {
-            Optional<Product> OpProduct = productRepository.findById(productAndQuantity.get(0));
-            int quantity = productAndQuantity.get(1).intValue();
+        for (Long[] productAndQuantity : productsAndQuantitiesList) {
+            Optional<Product> OpProduct = productRepository.findById(productAndQuantity[0]);
+            int quantity = productAndQuantity[1].intValue();
 
             if(!OpProduct.isPresent()) throw new ProductNotFoundException();
             Product product = OpProduct.get();
