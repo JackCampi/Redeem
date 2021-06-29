@@ -117,7 +117,12 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public double getOutgoingBudgetMean(long nit) {
 
-        long outgoingBudget = productRepository.findOutgoingBudget(nit);
+        long outgoingBudget;
+        try{
+            outgoingBudget = productRepository.findOutgoingBudget(nit);
+        }catch (Exception e){
+            outgoingBudget = 0L;
+        }
         Calendar calendar = new GregorianCalendar();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -127,7 +132,12 @@ public class ReportServiceImpl implements ReportService {
 
     @Override
     public double getIncomingBudgetMean(long nit) {
-        long ingoingBudget = allocationRepository.findIncomingBudget(nit);
+        long ingoingBudget;
+        try{
+            ingoingBudget = allocationRepository.findIncomingBudget(nit);
+        }catch (Exception e){
+            ingoingBudget = 0L;
+        }
         Calendar calendar = new GregorianCalendar();
         int today = calendar.get(Calendar.DAY_OF_MONTH);
 
@@ -192,6 +202,7 @@ public class ReportServiceImpl implements ReportService {
     public ProductDto getMostPurchasedProductByMe(long id) {
 
         Object[] properties = employeeRepository.findMostPurchasedProductByMe(id);
+        if(properties.length < 1) return null;
         return ProductDtoMapper.toProductDto((Object[]) properties[0]);
     }
 
@@ -211,8 +222,8 @@ public class ReportServiceImpl implements ReportService {
     public ProductDto getCompanyMostPurchasedProductsLastMonth(long nit) {
 
         Collection<Object[]> query = productRepository.findMostPurchasedProductLastMonth(nit);
+        if(query.size() < 1) return null;
         Object[] properties = (Object[]) query.toArray()[0];
-
         return ProductDtoMapper.toProductDto(properties);
     }
 }
