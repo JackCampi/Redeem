@@ -15,7 +15,7 @@ import java.util.Collection;
 
 public interface PurchaseService {
 
-    void accomplishPurchase(Long employeeId, Collection<ArrayList<Long>> productsAndQuantities, Long purchaseValue)
+    void accomplishPurchase(Long employeeId, String productsAndQuantities, Long purchaseValue)
             throws UserNotFoundException,ProductNotFoundException, InsufficientStockException, InsufficientBalanceException;
     SortedList<EmpDto> getEmployeePurchases(Employee employee, SortedList<EmpDto> sortedList);
     SortedList<AdminDto> getAdminPurchases(long nit, SortedList<AdminDto> sortedList);
