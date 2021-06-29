@@ -84,7 +84,7 @@ public class MembersController {
         }catch (EmailAlreadyRegisteredException e){
             return "redirect:/admin/members?error&emailAlreadyRegistered";
         }catch (OnlyAdminRemainingException onlyAdminRemainingException) {
-            return "redirect:/admin/members?error&onlyAdminRemaining";
+            return "redirect:/admin/members?error&uniqueAdmin";
         }
         return "redirect:/admin/members?edit&success";
 

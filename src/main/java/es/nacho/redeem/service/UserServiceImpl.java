@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService{
         if(areaName.equals("gerencia")) employeeObject.setRol("administrador");
         else {
             //TODO: test
-            if(isTheLastAdmin(nit, memberDto.getId())) throw new OnlyAdminRemainingException();
+            if(employeeObject.getRol().equals("administrador") && isTheLastAdmin(nit, memberDto.getId())) throw new OnlyAdminRemainingException();
             employeeObject.setRol("empleado");
         }
 
