@@ -30,6 +30,7 @@ function editModal(id, name, lastName, email, cellphone, area, birthday) {
   document.getElementById("id").value = id;
   document.getElementById("name").value = name;
   document.getElementById("lastName").value = lastName;
+  document.getElementById("old-email").value = email;
   document.getElementById("email").value = email;
   document.getElementById("tel").value = cellphone;
   document.getElementById("date").value = birthday;

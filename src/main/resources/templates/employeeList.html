@@ -132,6 +132,7 @@
                     </h3>
                     <form th:action="@{/admin/members/edit}" method="post" id="edit-form" name="edit-form"
                         th:object="${member}">
+                        <input type="text" style="display: none;" id="old-email" th:field="*{oldEmail}" readonly>
                         <div class="id-form-group">
                             <label for="id">ID</label>
                             <input id="id" class="id-field" value="123" th:field="*{id}" required readonly />
