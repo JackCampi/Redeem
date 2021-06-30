@@ -10,13 +10,11 @@ import java.util.Objects;
 public interface ProductMapper {
     static ProductDto toProductDto(Product product){
         return new ProductDto(
+                product.getId(),
                 product.getName(),
                 product.getPrice(),
-                product.getType(),
                 product.getStock(),
-                product.getAvailable(),
-                product.getImageUrl(),
-                product.getDetails());
+                product.getImageUrl());
     }
     static Product toProduct(ProductWithDetailsDto product, Company company){
         return new Product(
@@ -29,7 +27,7 @@ public interface ProductMapper {
                 company,
                 true);
     }
-    static Product toProductToUpdate(Product product, ProductWithDetailsDto productDto){
+    static Product toProductToUpdate(Product product, ProductWithDetailsDto productDto, Company company){
         product.setName(productDto.getName());
         product.setPrice(productDto.getPrice());
         product.setType(productDto.getType());

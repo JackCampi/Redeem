@@ -51,16 +51,16 @@ public class MarketplaceController {
         try {
             purchaseService.accomplishPurchase(purchaseDto.getEmployeeId(),purchaseDto.getProductsAndQuantities(),purchaseDto.getValue());
         } catch (UserNotFoundException e) {
-            return WebPageNames.EMPLOYEE_CART + "?userNotFound";
+            return "redirect:/emp/marketplace/cart?userNotFound";
         } catch (ProductNotFoundException e) {
-            return WebPageNames.EMPLOYEE_CART + "?productNotFound";
+            return "redirect:/emp/marketplace/cart?productNotFound";
         } catch (InsufficientStockException e) {
-            return WebPageNames.EMPLOYEE_CART + "?insufficientStock";
+            return "redirect:/emp/marketplace/cart?insufficientStock";
         } catch (InsufficientBalanceException e) {
-            return WebPageNames.EMPLOYEE_CART + "?insufficientBalance";
+            return "redirect:/emp/marketplace/cart?insufficientBalance";
         }
 
-        return WebPageNames.EMPLOYEE_CART + "?successfulPurchase";
+        return "redirect:/emp/marketplace/cart?successfulPurchase";
     }
 
     @ModelAttribute("purchase")

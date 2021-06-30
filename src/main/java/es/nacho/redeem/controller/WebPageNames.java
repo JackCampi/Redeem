@@ -12,7 +12,7 @@ public interface WebPageNames {
     String ADMIN_ALLOCATION = "employeeAllocation";
     String ADMIN_ALLOCATION_EMPLOYEE = "employeeAllocation";
     String ADMIN_ALLOCATION_COMPANY = "companyAllocation";
-    String ADMIN_SHIPPING = "adminShipping";
+    String ADMIN_SHIPPING = "adminConfirmShipping";
     String ADMIN_ALLOCATION_AREA = "areaAllocation";
     String ADMIN_HISTORY = "adminTransHistory";
     String EMP_HISTORY = "employeeTransHistory";
@@ -22,6 +22,6 @@ public interface WebPageNames {
     String PRODUCTS_LIST = "adminProductList";
     String PRODUCT_DETAILS = "adminProductDetails";
     String MARKETPLACE = "employeeMarketplace";
-    String EMPLOYEE_CART = "employeeCart";
+    String EMPLOYEE_CART = "shoppingCart";
     String ADMIN_STATISTICS = "adminStatistics";
 }

@@ -27,8 +27,6 @@ function loadElement(element){
 function closeModal(){
     detailsModalElement.style.display = "none";
     addOneModalElement.style.display = "none";
-    document.getElementById("add-error-1").style.display = "none";
-    document.getElementById("add-error-2").style.display = "none";
     return false;
 }
   
