@@ -194,6 +194,11 @@
 
   </main>
 </div>
+<script th:inline="javascript">
+  if ([[${param.successfulPurchase}]]) {
+    window.localStorage.clear()
+  }
+</script>
 <script src="/scripts/employeeDashboardLogic.js"></script>
 <script src="/scripts/shoppingCartLogic.js"></script>
 <script src="../static/scripts/employeeDashboardLogic.js"></script>
