@@ -182,6 +182,12 @@
         <th class="empty-cart-message" colspan="5"> ¡El carrito está vacío! Añade productos y empieza a redimir tus puntos</th>
       </tr>
       </tfoot>
+      <div th:if="${param.insufficientBalance}" class="error-message-class">Balance Insuficiente</div>
+      <div th:if="${param.userNotFound}" class="error-message-class">Usuario no encontrado</div>
+      <div th:if="${param.insufficientStock}" class="error-message-class">Stock insuficiente</div>
+      <div th:if="${param.productNotFound}" class="error-message-class">Producto no encontrado</div>
+      <div th:if="${param.successfulPurchase}" class="success-message-class">Compra realizada con éxito!</div>
+
 
 
     </table>

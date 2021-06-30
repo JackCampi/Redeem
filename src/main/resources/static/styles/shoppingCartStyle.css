@@ -116,3 +116,13 @@ h2 {
 .delete-element:hover {
     color: lightgrey;
 }
+
+.error-message-class {
+    color: firebrick;
+    font-weight: bold;
+}
+
+.success-message-class {
+    color: forestgreen;
+    font-weight: bold;
+}
