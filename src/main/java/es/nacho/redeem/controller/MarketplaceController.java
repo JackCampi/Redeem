@@ -49,23 +49,6 @@ public class MarketplaceController {
     public String buyCart(@ModelAttribute("purchase") PurchaseDto purchaseDto){
 
         try {
-            if(purchaseDto.getEmployeeId()==null) {
-                System.out.println("ID NULO");
-            ///    throw new UserNotFoundException();
-            }else{
-                System.out.println(purchaseDto.getEmployeeId());
-            }
-            if(purchaseDto.getProductsAndQuantities()==null) {
-                System.out.println("P&Q NULO");
-            }else{
-                System.out.println(purchaseDto.getProductsAndQuantities());
-            }
-            if(purchaseDto.getValue()==null) {
-                System.out.println("valor NULO");
-            }else{
-                System.out.println(purchaseDto.getValue());
-            }
-
             purchaseService.accomplishPurchase(purchaseDto.getEmployeeId(),purchaseDto.getProductsAndQuantities(),purchaseDto.getValue());
         } catch (UserNotFoundException e) {
             return "redirect:/emp/marketplace/cart?userNotFound";
