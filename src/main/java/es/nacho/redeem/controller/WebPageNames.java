@@ -22,6 +22,6 @@ public interface WebPageNames {
     String PRODUCTS_LIST = "adminProductList";
     String PRODUCT_DETAILS = "adminProductDetails";
     String MARKETPLACE = "employeeMarketplace";
-    String EMPLOYEE_CART = "employeeCart";
+    String EMPLOYEE_CART = "shoppingCart";
     String ADMIN_STATISTICS = "adminStatistics";
 }
