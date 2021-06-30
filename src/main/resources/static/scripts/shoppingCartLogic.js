@@ -124,6 +124,7 @@ function btnAction(e) {
     createNewJSON()
     createArrayfromJSON()
     showCartElements()
+    asignValuestoSend()
 }
 
 function createNewJSON() {
@@ -145,15 +146,9 @@ function createArrayfromJSON() {
 
 function asignValuestoSend() {
     let inputEmployeeIdSource = document.getElementById('employeeIdSource').innerText
-    let inputEmployeeId = document.getElementById('employeeId').value
-    let inputValue = document.getElementById('value').value
-    let inputProductsAndQuantities = document.getElementById('productsAndQuantities').value
+    document.getElementById('employeeId').value = parseInt(inputEmployeeIdSource)
+    document.getElementById('value').value = value
+    document.getElementById('productsAndQuantities').value = productsAndQuantities
 
-    inputEmployeeId = parseInt(inputEmployeeIdSource)
-    inputValue = value
-    inputProductsAndQuantities = productsAndQuantities
-    console.log(inputEmployeeId)
-    console.log(inputValue)
-    console.log(inputProductsAndQuantities)
 
 }

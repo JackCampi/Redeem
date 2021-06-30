@@ -175,9 +175,9 @@
 
         if ([[${mostPurchasedProductByMe}]] != null) {
             noInfoStats1.innerHTML = '' +
-                '<img class="img-products" th:src="*{mostPurchasedProductByMe.imageUrl}">\n' +
+                '<img class="img-products" th:src="${mostPurchasedProductByMe.imageUrl}">\n' +
                 '                        <div>\n' +
-                '                            <h6 th:text="*{mostPurchasedProductByMe.name}" class="h6-v4"></h6>\n' +
+                '                            <h6 th:text="${mostPurchasedProductByMe.name}" class="h6-v4"></h6>\n' +
                 '                            <h6 th:text="\'Unidades compradas: \' +  ${mostPurchasedProductByMe.amount}"></h6>\n' +
                 '                        </div>'
         } else {

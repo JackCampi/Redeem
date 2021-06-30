@@ -146,9 +146,9 @@
       <td>
         <form method="post" th:object="${purchase}" th:action="@{/emp/marketplace/cart}">
           <div style="display: none" th:text="${session.id}" id="employeeIdSource"></div>
-          <input style="display: none;" th:field="*{employeeId}" name="employeeId" type="number" id="employeeId">
-          <input style="display: none;" th:field="*{value}" name="value" type="number" id="value">
-          <input style="display: none;" th:field="*{productsAndQuantities}" name="productsAndQuantities" type="text" id="productsAndQuantities">
+          <input style="display: none" th:field="*{employeeId}" name="employeeId" type="number" id="employeeId">
+          <input style="display: none" th:field="*{value}" name="value" type="number" id="value">
+          <input style="display: none" th:field="*{productsAndQuantities}" name="productsAndQuantities" type="text" id="productsAndQuantities">
           <button type="submit" class="btn btn-confirm-purchase" id="confirm-button">Confirmar compra</button>
         </form>
       </td>
@@ -185,6 +185,7 @@
 
 
     </table>
+
   </main>
 </div>
 <script src="/scripts/employeeDashboardLogic.js"></script>
