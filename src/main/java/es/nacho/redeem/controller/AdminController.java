@@ -140,7 +140,8 @@ public class AdminController {
             areaNames.add("areas not found");
             return WebPageNames.ERROR_PAGE;
         }
-
+        String adminArea = "Gerencia (Admin)";
+        areaNames.remove(adminArea);
         model.addAttribute("areaNames", areaNames);
         return WebPageNames.ADMIN_ALLOCATION;
     }
