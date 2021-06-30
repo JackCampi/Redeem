@@ -24,6 +24,7 @@ let productsAndQuantities = ""
 document.addEventListener('DOMContentLoaded', e => {
     refreshData(window.localStorage.getItem('cart'));
     createArrayfromJSON()
+    asignValuestoSend()
     // refreshData("{}")
 })
 
@@ -143,7 +144,6 @@ function createArrayfromJSON() {
 }
 
 function asignValuestoSend() {
-    alert("Confirmando compra...")
     let inputEmployeeIdSource = document.getElementById('employeeIdSource').innerText
     let inputEmployeeId = document.getElementById('employeeId').value
     let inputValue = document.getElementById('value').value
@@ -155,6 +155,5 @@ function asignValuestoSend() {
     console.log(inputEmployeeId)
     console.log(inputValue)
     console.log(inputProductsAndQuantities)
-    alert("Compra exitosa!")
 
 }

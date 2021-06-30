@@ -197,6 +197,8 @@
                 <div  th:if="${param.success}" id="param-success-label">
                     <div id="param-success" class="param-success">Consignación realizada con éxito. </div>
                 </div>
+                <div th:if="${param.insufficient}" class="error-message-class">Cantidad insuficiente de dinero</div>
+
                 </div>
 
                 <div class="column1">
