@@ -79,7 +79,7 @@
       </li>
 
       <li>
-        <a th:href="@{/logout}">
+        <a th:href="@{/logout}" onclick="window.localStorage.clear();">
           <span class="material-icons">power_settings_new</span>
           <p>Cerrar sesión</p>
         </a>
@@ -149,7 +149,7 @@
           <input style="display: none;" th:field="*{employeeId}" name="employeeId" type="number" id="employeeId">
           <input style="display: none;" th:field="*{value}" name="value" type="number" id="value">
           <input style="display: none;" th:field="*{productsAndQuantities}" name="productsAndQuantities" type="text" id="productsAndQuantities">
-          <button type="submit" onclick="asignValuestoSend();" class="btn btn-confirm-purchase" id="confirm-button">Confirmar compra</button>
+          <button type="submit" class="btn btn-confirm-purchase" id="confirm-button">Confirmar compra</button>
         </form>
       </td>
     </template>
