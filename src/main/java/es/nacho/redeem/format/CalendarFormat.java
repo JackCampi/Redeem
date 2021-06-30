@@ -11,10 +11,13 @@ public class CalendarFormat {
 
     public static String getStringFromCalendar(Calendar calendar){
 
-        String month = "" + calendar.get(Calendar.MONTH);
+        String month = "" + (calendar.get(Calendar.MONTH)+1);
         if(month.length() < 2) month = "0" + month;
+        String day = "" +calendar.get(Calendar.DAY_OF_MONTH);
+        if(day.length() < 2) day = "0" + day;
 
-        return calendar.get(Calendar.YEAR) + "-" + month + "-" + calendar.get(Calendar.DAY_OF_MONTH);
+
+        return calendar.get(Calendar.YEAR) + "-" + month + "-" + day;
 
     }
 
