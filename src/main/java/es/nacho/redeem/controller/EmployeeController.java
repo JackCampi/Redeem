@@ -1,16 +1,19 @@
 package es.nacho.redeem.controller;
 
+import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.InsufficientBalanceException;
 import es.nacho.redeem.exception.UserNotFoundException;
-import es.nacho.redeem.service.CompanyService;
-import es.nacho.redeem.service.TransferService;
-import es.nacho.redeem.service.UserService;
+import es.nacho.redeem.model.Employee;
+import es.nacho.redeem.repository.EmployeeRepository;
+import es.nacho.redeem.service.*;
+import es.nacho.redeem.service.api.ReportService;
 import es.nacho.redeem.transaction.BalanceTransaction;
 import es.nacho.redeem.web.dto.EmployeeDashboardInfoDto;
 import es.nacho.redeem.web.dto.employee.ChangePasswordDto;
 import es.nacho.redeem.web.dto.employee.MemberDto;
+import es.nacho.redeem.web.dto.report.ProductDto;
 import es.nacho.redeem.web.dto.transfer.TransferDto;
-import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
+import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -22,10 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/emp")
 public class EmployeeController {
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     private UserService userService;
@@ -39,11 +46,21 @@ public class EmployeeController {
     @Autowired
     private TransferService transferService;
 
+    @Autowired
+    private AllocationService allocationService;
+
+    @Autowired
+    private PurchaseService purchaseService;
+
+    @Autowired
+    ReportService reportService;
+
     @GetMapping
     public String dashboard(Model model, HttpSession session){
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         long nit = (long)  session.getAttribute("nit");
+        long id = (long) session.getAttribute("id");
 
         EmployeeDashboardInfoDto employeeDashboardInfoDto = new EmployeeDashboardInfoDto();
 
@@ -56,7 +73,22 @@ public class EmployeeController {
             return WebPageNames.ERROR_PAGE;
         }
 
+        ProductDto mostPurchasedProductByMe =  reportService.getMostPurchasedProductByMe(id);
+        ProductDto mostPurchasedProduct;
+        try {
+            mostPurchasedProduct = (ProductDto) reportService.getCompanyMostPurchasedProducts(nit, 1).toArray()[0];
+        }catch (Exception e){
+            mostPurchasedProduct = null;
+        }
+        Collection<ProductDto> lastPurchases = reportService.getLastPurchases(id);
+        ProductDto mostPurchasedProductLastMonth = reportService.getCompanyMostPurchasedProductsLastMonth(nit);
+
         model.addAttribute("employeeDashboardInfo", employeeDashboardInfoDto);
+        model.addAttribute("mostPurchasedProductByMe", mostPurchasedProductByMe);
+        model.addAttribute("mostPurchasedProduct", mostPurchasedProduct);
+        model.addAttribute("lastPurchases", lastPurchases);
+        model.addAttribute("mostPurchasedProductLastMonth", mostPurchasedProductLastMonth);
+
 
         return WebPageNames.EMPLOYEE_DASHBOARD;
     }
@@ -84,9 +116,17 @@ public class EmployeeController {
 
         long id = (long) httpSession.getAttribute("id");
 
-        Collection<TransferHistoryMessageDto> transferMessages = transferService.getTransferMessages(id);
-        model.addAttribute("transferMessages", transferMessages);
+        Optional<Employee> employee = employeeRepository.findById(id);
+        if(!employee.isPresent()) return WebPageNames.ERROR_PAGE;
+        Employee employeeObject = employee.get();
 
+        SortedList<EmpDto> sortedList = new SortedList<>();
+
+        sortedList = transferService.getEmployeeTransMessages(employeeObject, sortedList);
+        sortedList = allocationService.getEmployeeAllocations(employeeObject, sortedList);
+        sortedList = purchaseService.getEmployeePurchases(employeeObject, sortedList);
+
+        model.addAttribute("transferMessages", sortedList);
         return WebPageNames.EMP_HISTORY;
     }
 

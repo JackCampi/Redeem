@@ -198,4 +198,12 @@ public class Employee {
     public void setIncomingAllocations(Collection<Allocation> incomingAllocations) {
         this.incomingAllocations= incomingAllocations;
     }
+
+    public Collection<Purchase> getPurchases() {
+        return purchases;
+    }
+
+    public void setPurchases(Collection<Purchase> purchases) {
+        this.purchases = purchases;
+    }
 }

@@ -34,7 +34,7 @@
         <div class="principal-sidebar-menu">
             <ul>
                 <li>
-                    <a id="dash-button" th:href="@{/admin}">
+                    <a id="dash-button" th:href="@{/admin/}">
                         <span class="material-icons sidebar-icon">analytics</span>
                         <p>Dashboard</p>
                     </a>
@@ -56,25 +56,25 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                        <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
-                    <a th:href="@{/admin/members}" class="selected" id="empl-list-button">
+                    <a class="selected" th:href="@{/admin/members}" id="empl-list-button">
                         <span class="material-icons">groups</span>
                         <p>Ver empleados</p>
                     </a>
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/members}" id="comp-statistics">
+                    <a th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
                         <span class="material-icons">trending_up</span>
                         <p>Estadísticas</p>
                     </a>
@@ -90,13 +90,11 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>
                 </li>
-
-
             </ul>
         </div>
     </div>
@@ -134,6 +132,7 @@
                     </h3>
                     <form th:action="@{/admin/members/edit}" method="post" id="edit-form" name="edit-form"
                         th:object="${member}">
+                        <input type="text" style="display: none;" id="old-email" th:field="*{oldEmail}" readonly>
                         <div class="id-form-group">
                             <label for="id">ID</label>
                             <input id="id" class="id-field" value="123" th:field="*{id}" required readonly />
@@ -206,7 +205,7 @@
 
                 <h3>Empleados de <span th:text="${adminDashboardInfo.companyName}"></span></h3><br>
 
-                <div class="message-box success" th:if="${param.success}">
+                <div class="message-box success" id="success-message" th:if="${param.success}">
                     <div th:if="${param.edit}">
                         <span>Se editó el empleado exitosamente.</span>
                     </div>
@@ -215,7 +214,7 @@
                     </div>
                 </div>
 
-                <div class="message-box error" th:if="${param.error}">
+                <div class="message-box error" id="error-message" th:if="${param.error}">
                     <div th:if="${param.emailAlreadyRegistered}">
                         <span>No se pudo editar el empleado, el correo introducido ya existe.</span>
                     </div>
@@ -223,6 +222,13 @@
                         <span>No se puede realizar la operación, al menos una persona debe tener los privilegios del administrador.</span>
                     </div>
                 </div>
+
+                <a th:href="@{/admin/addemp}" class="add-employee-button">
+                    <span class="material-icons add-employee">person_add</span>
+                    <span>
+                        Añadir empleado
+                    </span>
+                </a>
 
                 <div class="table-responsive">
                     <table class="table">

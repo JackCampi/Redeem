@@ -29,48 +29,65 @@
         <hr class="solid">
 
         <div class="principal-sidebar-menu">
-                <ul>
-                    <li>
-                        <!-- El href vacío hace que se redireccione al dashboard -->
-                        <a th:href="@{/emp/}" id="dash-button">
-                            <span class="material-icons sidebar-icon">analytics</span>
-                            <p>Dashboard</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a th:href="@{/emp/history}" id="trans-hist-button">
-                            <span class="material-icons">history_edu</span>
-                            <p>Historial transacciones</p>
-                        </a>
-                    </li>
+            <ul>
+                <li>
+                    <!-- El href vacío hace que se redireccione al dashboard -->
+                    <a th:href="@{/emp/}" id="dash-button">
+                        <span class="material-icons sidebar-icon">analytics</span>
+                        <p>Dashboard</p> 
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/emp/history}" id="trans-hist-button">
+                        <span class="material-icons">history_edu</span>
+                        <p>Historial transacciones</p> 
+                    </a>
+                </li>
 
-                    <hr class="solid">
+                <hr class="solid">
 
-                    <li>
-                        <a th:href="@{/emp/transfer}" id="transfer-button">
-                            <span class="material-icons">connect_without_contact</span>
-                            <p>Transferir</p>
-                        </a>
-                    </li>
+                <li>
+                    <a th:href="@{/emp/transfer}" id="transfer-button">
+                        <span class="material-icons">connect_without_contact</span>
+                        <p>Transferir</p> 
+                    </a>
+                </li>
 
-                    <hr class="solid">
+                <li>
+                    <a th:href="@{/emp/marketplace}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Marketplace</p>
+                        </span>
+                    </a>
+                </li>
 
-                    <li>
-                        <a th:href="@{/admin/profile}" class="selected" id="admin-profile">
-                            <span class="material-icons">perm_identity</span>
-                            <p>Ver perfil</p>
-                        </a>
-                    </li>
+                <hr class="solid">
 
-                    <li>
-                        <a th:href="@{/logout}">
-                            <span class="material-icons">power_settings_new</span>
-                            <p>Cerrar sesión</p>
-                        </a>
-                    </li>
+                <li>
+                    <a th:href="@{/emp/marketplace/cart}" id="emp-cart">
+                        <span class="material-icons">shopping_cart</span>
+                        <p>Ir al carrito</p>
+                    </a>
+                </li>
 
+                <li>
+                    <a class="selected" th:href="@{/emp/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
 
-                </ul>
+                <li>
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
+                        <span class="material-icons">power_settings_new</span>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+
+            </ul>
         </div>
     </div>
 

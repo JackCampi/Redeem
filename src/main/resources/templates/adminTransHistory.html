@@ -9,8 +9,9 @@
 
     <!-- Style -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/transhistoryStyle.css">
+    <link rel="stylesheet" href="/css/transHistoryStyle.css">
     <link rel="stylesheet" href="../static/styles/transHistoryStyle.css">
+
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
@@ -29,13 +30,13 @@
     <div class="principal-sidebar-menu">
         <ul>
             <li>
-                <a id="dash-button"   th:href="@{/admin/}">
+                <a id="dash-button" th:href="@{/admin/}">
                     <span class="material-icons sidebar-icon">analytics</span>
                     <p>Dashboard</p>
                 </a>
             </li>
             <li>
-                <a th:href="@{/admin/history}"  class="selected" id="trans-hist-button">
+                <a class="selected" th:href="@{/admin/history}" id="trans-hist-button">
                     <span class="material-icons">history_edu</span>
                     <p>Historial transacciones</p>
                 </a>
@@ -51,17 +52,6 @@
             </li>
 
             <li>
-                <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                    <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                </a>
-            </li>
-
-            <li>
                 <a th:href="@{/admin/members}" id="empl-list-button">
                     <span class="material-icons">groups</span>
                     <p>Ver empleados</p>
@@ -69,7 +59,18 @@
             </li>
 
             <li>
-                <a th:href="@{/admin/members}" id="comp-statistics">
+                <a th:href="@{/admin/products}">
+                    <span class="material-icons sidebar-icon">
+                        store
+                    </span>
+                    <span>
+                        <p>Lista de productos</p>
+                    </span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/statistics}" id="comp-statistics">
                     <span class="material-icons">trending_up</span>
                     <p>Estadísticas</p>
                 </a>
@@ -85,13 +86,11 @@
             </li>
 
             <li>
-                <a th:href="@{/logout}">
+                <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                     <span class="material-icons">power_settings_new</span>
                     <p>Cerrar sesión</p>
                 </a>
             </li>
-
-
         </ul>
     </div>
 </div>
@@ -126,7 +125,8 @@
                     <td>
                         <div class="row-container" th:object="${transaction}">
                             <div class="user-date">
-                                <p class="name"></p>
+                                <p class="type"></p>
+                                <p class="general-message"></p>
                                 <p class="date"></p>
                             </div>
                             <p class="amount"></p>
@@ -146,29 +146,74 @@
 </div>
 
 <script th:inline="javascript">
-    var registros = document.getElementsByClassName("row-container");
-    var nombres = document.getElementsByClassName("name");
-    var fechas = document.getElementsByClassName("date");
-    var cantidades = document.getElementsByClassName("amount");
-    let listado =  [[${transferMessages}]];
-    var valores;
-    var pos, inverse;
-    for(var i=listado.length-1;i>=0;i--){
-        inverse = listado.length-1-i;
-        valores = listado[inverse];
-        pos = Object.values(valores);
-        fechas[i].innerHTML = dateFormat(pos[1]);
-        cantidades[i].innerHTML = "$" + pos[2]+",00";
-        if(pos[3] == 0){
-            registros[i].style.marginLeft = "40%";
-            nombres[i].innerHTML = "Para: "+ pos[0];
-            nombres[i].style.color = "#85342A";
-            cantidades[i].style.color = "#85342A";
-        }else{
-            nombres[i].innerHTML = "De: "+pos[0];
-            nombres[i].style.color = "#36852A";
-            cantidades[i].style.color = "#36852A";
+    let rows = document.getElementsByClassName("row-container");
+    let types = document.getElementsByClassName("type");
+    let generalMessages = document.getElementsByClassName("general-message");
+    let dates = document.getElementsByClassName("date");
+    let amounts = document.getElementsByClassName("amount");
+    let transferMessages =  [[${transferMessages}]];
+    let transContainer = document.getElementsByClassName("trans-container")[0];
+    if(transferMessages.length==0){
+        transContainer.innerHTML = "No hay elementos para mostrar";
+    }
+    let rowsValues;
+    let posValues, inversePosition;
+    for(var i=transferMessages.length-1;i>=0;i--){
+        inversePosition = transferMessages.length-1-i;
+        rowsValues = transferMessages[inversePosition];
+        posValues = Object.values(rowsValues);
+        if(posValues[0]=="AAllocation"){
+            allocationType(i);
+        }else if(posValues[0]=="APurchases"){
+            purchaseType(i);
         }
+
+    }
+
+
+    function allocationType(i){
+        types[i].innerHTML = "Depósito";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        amounts[i].innerHTML = "$" + posValues[1]+",00";
+        generalMessages[i].innerHTML = "Para: "+posValues[3]+"<br\>"+ "De: "+posValues[4];
+
+        amounts[i].style.color = "#85342A";
+        rows[i].style.marginLeft = "40%";
+    }
+
+    function purchaseType(i){
+
+        types[i].innerHTML = "Compra<br\>Hecha por "+posValues[4];
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        var generalMessagesText="Producto     Cantidad     Precio ", buyedProduct;
+        for(var j=0; j<posValues[3].length; j++){
+            buyedProduct = Object.values(posValues[3][j]);
+            generalMessagesText+= tab(buyedProduct);
+        }
+        generalMessages[i].innerHTML = generalMessagesText+ "Total:........."+posValues[1];
+    }
+
+
+    function allocationType(i){
+        types[i].innerHTML = "Depósito";
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        amounts[i].innerHTML = "$" + posValues[1]+",00";
+        generalMessages[i].innerHTML = "Para: "+posValues[3]+"<br\>"+ "De: "+posValues[4];
+
+        amounts[i].style.color = "#85342A";
+        rows[i].style.marginLeft = "40%";
+    }
+
+    function purchaseType(i){
+
+        types[i].innerHTML = "Compra<br\>Hecha por "+posValues[4];
+        dates[i].innerHTML = dateFormat(posValues[2]);
+        var generalMessagesText="Producto     Cantidad     Precio ", buyedProduct;
+        for(var j=0; j<posValues[3].length; j++){
+            buyedProduct = Object.values(posValues[3][j]);
+            generalMessagesText+= tab(buyedProduct);
+        }
+        generalMessages[i].innerHTML = generalMessagesText+ "Total:........."+posValues[1];
     }
 
     function dateFormat(date){
@@ -187,6 +232,19 @@
         if(hour.length==1){hour="0"+hour;}
         newDate += hour+":"+date.slice(14,16)+" "+dayPart;
         return newDate ;
+    }
+
+    function tab(purchase){
+        return purchase[0]+Concatenar_String(".",15-purchase[0].length)+purchase[1]+Concatenar_String(".",10-purchase[1].toString().length)+purchase[2]+"<br\>";
+    }
+
+    function Concatenar_String(A_Repetir, Num_Veces){
+        var valorFinal="";
+        for(var k = 0; k < Num_Veces; k ++)
+        {
+            valorFinal += A_Repetir;
+        }
+        return valorFinal;
     }
 
 </script>

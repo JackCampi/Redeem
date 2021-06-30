@@ -22,7 +22,47 @@ public class PurchaseHasProduct {
     Product product;
 
     @Column(name = "php_quantity", nullable = false)
-    private Long quantity;
+    private int quantity;
 
+    public PurchaseHasProduct(PurchaseHasProductKey id, Purchase purchase, Product product, int quantity) {
+        this.id = id;
+        this.purchase = purchase;
+        this.product = product;
+        this.quantity = quantity;
+    }
 
+    public PurchaseHasProduct() {
+    }
+
+    public PurchaseHasProductKey getId() {
+        return id;
+    }
+
+    public void setId(PurchaseHasProductKey id) {
+        this.id = id;
+    }
+
+    public Purchase getPurchase() {
+        return purchase;
+    }
+
+    public void setPurchase(Purchase purchase) {
+        this.purchase = purchase;
+    }
+
+    public Product getProduct() {
+        return product;
+    }
+
+    public void setProduct(Product product) {
+        this.product = product;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 }

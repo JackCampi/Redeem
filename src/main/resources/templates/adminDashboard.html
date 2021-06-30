@@ -15,6 +15,7 @@
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.js"></script>
 </head>
 <body>
     <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
@@ -51,17 +52,6 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/addemp}">
-                        <span class="material-icons sidebar-icon">
-                            person_add_alt
-                        </span>
-                        <span>
-                            <p>Añadir empleado</p>
-                        </span>
-                    </a>
-                </li>
-
-                <li>
                     <a th:href="@{/admin/members}" id="empl-list-button">
                         <span class="material-icons">groups</span>
                         <p>Ver empleados</p>
@@ -69,7 +59,18 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/admin/history}" id="comp-statistics">
+                    <a th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
                         <span class="material-icons">trending_up</span>
                         <p>Estadísticas</p>
                     </a>
@@ -85,7 +86,7 @@
                 </li>
 
                 <li>
-                    <a th:href="@{/logout}">
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                         <span class="material-icons">power_settings_new</span>
                         <p>Cerrar sesión</p>
                     </a>
@@ -128,45 +129,47 @@
             </div>
             <div class="admin-lists">
                 <h3>Pendientes por envío</h3>
+                <div id="NoShippment"></div>
                 <ul>
-                   <li class="shippment-list">
+                   <li class="shippment-list" th:each="pendingPurchase : ${pendingToSend}">
                        <div class="shippment-card">
-
+                           <div class="dataText" th:text="'Para: '+${pendingPurchase.name}"></div>
+                           <div class="dataText" th:text="'Código de compra: '+${pendingPurchase.purchaseId}"></div>
+                           <div class="dataText" th:text="'Total: '+${pendingPurchase.totalCost}"></div>
                        </div>
                    </li>
                 </ul>
             </div>
             <div class="products-container">
                 <h3>Productos mas comprados</h3>
+                <div id="noProduct"></div>
                 <ul>
-                    <li class="buyed-products">
+                    <li class="buyed-products" th:each="mostProduct : ${mostPurchasedProducts}">
                         <div class="buyed-card">
                             <div class="inside-image">
-
+                                <img class="product-image" th:src="${mostProduct.imageUrl}">
                             </div>
-                            <h4>1. Arroz roa</h4>
+                            <div class="dataText" th:text="${mostProduct.name}"></div>
+                            <div class="dataText" th:text="'Cantidad: '+${mostProduct.amount}"></div>
                         </div>
-                    </li><li class="buyed-products">
-                    <div class="buyed-card">
-                        <div class="inside-image">
-
-                        </div>
-                        <h4>1. Arroz roa</h4>
-                    </div>
-                </li>
+                    </li>
                 </ul>
             </div>
             <div class="day-graph">
                 <h3>Productos vendidos diariamente</h3>
-                <canvas>
+                <canvas id="dash-canvas">
 
                 </canvas>
             </div>
-            <div class="admin-lists" id="div-canvas">
+            <div class="admin-lists">
                 <h3>Empleados que mas compraron</h3>
+                <div id="noEmployee"></div>
                 <ul>
-                    <li class="shippment-list">
+                    <li class="shippment-list" th:each="bestBuyer : ${bestBuyers}">
                         <div class="shippment-card">
+                            <div class="dataText" th:text="'Nombre: '+${bestBuyer.name}"></div>
+                            <div class="dataText" th:text="'Dinero gastado: '+${bestBuyer.amount}"></div>
+                            <div class="dataText" th:text="'Productos comprados: '+${bestBuyer.purchasedProductsAmount}"></div>
 
                         </div>
                     </li>
@@ -174,7 +177,37 @@
             </div>
         </main>
     </div>
-    <script src="../static/scripts/adminDashboardLogic.js"></script>
-    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script th:inline="javascript">
+
+        if([[${pendingToSend}]].length==0){
+            var pendingEmpty = document.getElementById("NoShippment");
+            pendingEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        if([[${mostPurchasedProducts}]].length==0){
+            var productEmpty = document.getElementById("noProduct");
+            productEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        if([[${bestBuyers}]].length==0){
+            var employeeEmpty = document.getElementById("noEmployee");
+            employeeEmpty.innerHTML = "No hay elementos para mostrar";
+        }
+        let days = [[${days}]];
+        let productsCount = [[${productsCount}]];
+        let productsCountCanvas = document.getElementById("dash-canvas").getContext("2d");
+        let chartProductsCount = new Chart(productsCountCanvas,{
+            type:"bar",
+            data:{
+                labels: days,
+                datasets:[
+                    {
+                        label:"",
+                        data: productsCount,
+                        backgroundColor: "#C496D7"
+                    }
+                ]
+            }
+        })
+    </script>
+
 </body>
 </html>

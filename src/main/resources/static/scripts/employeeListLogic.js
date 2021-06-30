@@ -4,6 +4,11 @@ const form = document.getElementById('edit-form');
 const error = document.getElementById("email-error");
 const email = document.getElementById("email");
 
+setTimeout(function() { 
+  document.getElementById("success-message").style.display = "none";
+  document.getElementById("error-message").style.display = "none";
+}, 4500);
+
 form.addEventListener( 'submit', (event) => {
   
   if (!(/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(email.value))){
@@ -25,6 +30,7 @@ function editModal(id, name, lastName, email, cellphone, area, birthday) {
   document.getElementById("id").value = id;
   document.getElementById("name").value = name;
   document.getElementById("lastName").value = lastName;
+  document.getElementById("old-email").value = email;
   document.getElementById("email").value = email;
   document.getElementById("tel").value = cellphone;
   document.getElementById("date").value = birthday;

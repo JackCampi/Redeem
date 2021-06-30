@@ -235,11 +235,38 @@ input::-webkit-inner-spin-button {
     display: none;
 }
 
+/* Add employee button */
+
+.add-employee-button{
+    padding: 10px 15px;
+    margin-bottom: 30px;
+    max-width: 190px;
+    border-radius: 15px;
+    background-color: var(--main-color);
+    color: white;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.add-employee-button:hover{
+    cursor: pointer;
+    background-color: #6f3488;
+}
+
+.add-employee-button span{
+    color: white;
+}
+
 /* Messages */
 
 .message-box {
-    margin: 0 0 3% 3%;
-    width: 60%;
+    position: fixed;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    margin: 30px;
     padding: 1rem;
     border-radius: 10px;
 }

@@ -1,11 +1,15 @@
 package es.nacho.redeem.service;
 
+import es.nacho.redeem.data.SortedList;
 import es.nacho.redeem.exception.UserNotFoundException;
+import es.nacho.redeem.format.CalendarFormat;
 import es.nacho.redeem.model.Employee;
 import es.nacho.redeem.model.Transfer;
 import es.nacho.redeem.repository.EmployeeRepository;
 import es.nacho.redeem.repository.TransferRepository;
 import es.nacho.redeem.web.dto.transfer.TransferHistoryMessageDto;
+import es.nacho.redeem.web.dto.transfer.history.ETransfer;
+import es.nacho.redeem.web.dto.transfer.history.EmpDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -65,6 +69,32 @@ public class TransferServiceImpl implements TransferService{
 
         return transferHistoryMessageDtos;
 
+    }
+
+    @Override
+    public SortedList<EmpDto> getEmployeeTransMessages(Employee employee, SortedList<EmpDto> sortedList) {
+
+        employee.getOutgoingTransfers().forEach(transfer -> {
+            sortedList.add(new ETransfer(
+                    "ETransfer",
+                    transfer.getAmount(),
+                    CalendarFormat.formatLocalDateTime(transfer.getDatetime()),
+                    (byte) 0,
+                    transfer.getEmployeeTo().getName()
+                    ));
+        });
+
+        employee.getIncomingTransfers().forEach(transfer -> {
+            sortedList.add(new ETransfer(
+                    "ETransfer",
+               transfer.getAmount(),
+               CalendarFormat.formatLocalDateTime(transfer.getDatetime()),
+                    (byte) 1,
+                    transfer.getEmployeeFrom().getName()
+            ));
+        });
+
+        return sortedList;
     }
 
     private String formatLocalDateTime(LocalDateTime localDateTime){

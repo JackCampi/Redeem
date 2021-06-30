@@ -52,17 +52,33 @@
                         </a>
                     </li>
 
+                    <li>
+                        <a th:href="@{/emp/marketplace}">
+                            <span class="material-icons sidebar-icon">
+                                store
+                            </span>
+                            <p>Marketplace</p>
+                        </a>
+                    </li>
+
                     <hr class="solid">
 
                     <li>
-                        <a th:href="@{/emp/profile}" id="admin-profile">
+                        <a th:href="@{/emp/marketplace/cart}" id="emp-cart">
+                            <span class="material-icons">shopping_cart</span>
+                            <p>Ir al carrito</p>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:href="@{/emp/profile}" id="emp-profile">
                             <span class="material-icons">perm_identity</span>
                             <p>Ver perfil</p>
                         </a>
                     </li>
 
                     <li>
-                        <a th:href="@{/logout}">
+                        <a th:href="@{/logout}" onclick="window.localStorage.clear();">
                             <span class="material-icons">power_settings_new</span>
                             <p>Cerrar sesión</p>
                         </a>
@@ -95,6 +111,7 @@
         </header>
 
         <main id="main-content">
+
             <div class="custom-cards">
                 <div class="custom-card company">
                     <h3 th:text="${employeeDashboardInfo.companyName}"></h3>
@@ -105,10 +122,118 @@
                     <h3>$<span th:text="${employeeDashboardInfo.balance}"></span></h3>
                 </div>
             </div>
+
+
+            <!--  NEW STUFF ADDED BY SANTIAGO -->
+            <hr class="dashed">
+
+            <div class="custom-cards1">
+                <a th:href="@{/emp/history}" class="custom-card user">
+                    <h4 class="h4-v1">Mis compras</h4>
+                </a>
+                <div class="custom-card user1">
+                    <h6 class="h6-v2">Producto más Comprado</h6>
+                    <div id="noInfoStats1"></div>
+                </div>
+
+                <div class="custom-card user2">
+                    <h6 class="h6-v2">Comprado recientemente</h6>
+                    <div id="noInfoStats2"></div>
+
+                </div>
+
+
+            </div>
+
+            <hr class="dashed">
+
+            <div class="custom-cards2">
+                <div class="custom-card enterprise1">
+                    <h6 class="h6-v3">Producto más Comprado</h6>
+                    <div id="noInfoStats3"></div>
+
+                </div>
+                <div class="custom-card enterprise2">
+                    <h6 class="h6-v3">Producto más comprado (último mes)</h6>
+                    <div id="noInfoStats4"></div>
+                </div>
+                <div class="custom-card enterprise">
+                    <h4 class="h4-v1">Empresa</h4>
+                </div>
+            </div>
+
         </main>
     </div>
 
     <script src="/scripts/employeeDashboardLogic.js"></script>
+    <script th:inline="javascript">
+
+        let noInfoStats1 = document.getElementById('noInfoStats1')
+        let noInfoStats2 = document.getElementById('noInfoStats2')
+        let noInfoStats3 = document.getElementById('noInfoStats3')
+        let noInfoStats4 = document.getElementById('noInfoStats4')
+
+        if ([[${mostPurchasedProductByMe}]] != null) {
+            noInfoStats1.innerHTML = '' +
+                '<img class="img-products" th:src="${mostPurchasedProductByMe.imageUrl}">\n' +
+                '                        <div>\n' +
+                '                            <h6 th:text="${mostPurchasedProductByMe.name}" class="h6-v4"></h6>\n' +
+                '                            <h6 th:text="\'Unidades compradas: \' +  ${mostPurchasedProductByMe.amount}"></h6>\n' +
+                '                        </div>'
+        } else {
+            noInfoStats1.innerHTML = 'No hay productos para mostrar'
+        }
+
+        if ([[${lastPurchases}]].length != 0){
+            noInfoStats2.innerHTML = '' +
+                '<div class="custom-cards1">\n' +
+                '                            <div class="mini-items">\n' +
+                '                                <img class="img-products1" th:src="${lastPurchases[0].imageUrl}" >\n' +
+                '                                <h6 th:src="${lastPurchases[0].name}" class="h6-v4"></h6>\n' +
+                '                                <h6 th:text="\'Unidades compradas: \' + ${lastPurchases[0].amount}"></h6>\n' +
+                '                            </div>\n' +
+                '                            <div class="mini-items">\n' +
+                '                                <img class="img-products1" th:src="${lastPurchases[1].imageUrl}" >\n' +
+                '                                <h6 th:src="${lastPurchases[1].name}" class="h6-v4"></h6>\n' +
+                '                                <h6 th:text="\'Unidades compradas: \' + ${lastPurchases[1].amount}"></h6>\n' +
+                '                            </div>\n' +
+                '                        </div>\n' +
+                '\n' +
+                '                        <div class="custom-cards1">\n' +
+                '                            <div class="mini-items">\n' +
+                '                                <img class="img-products1" th:src="${lastPurchases[2].imageUrl}" >\n' +
+                '                                <h6 th:src="${lastPurchases[2].name}" class="h6-v4"></h6>\n' +
+                '                                <h6 th:text="\'Unidades compradas: \' + ${lastPurchases[2].amount}"></h6>\n' +
+                '                            </div>\n' +
+                '                            <div class="mini-items">\n' +
+                '                                <img class="img-products1" th:src="${lastPurchases[3].imageUrl}" >\n' +
+                '                                <h6 th:src="${lastPurchases[3].name}" class="h6-v4"></h6>\n' +
+                '                                <h6 th:text="\'Unidades compradas: \' + ${lastPurchases[3].amount}"></h6>\n' +
+                '                            </div>\n' +
+                '                        </div>'
+
+        } else {
+            noInfoStats2.innerHTML = 'No hay productos para mostrar'
+        }
+
+        if ([[${mostPurchasedProduct}]] != null) {
+            noInfoStats3.innerHTML = '' +
+                '<img class="img-products" th:src="${mostPurchasedProduct.imageUrl}">\n' +
+                '                        <h6 th:text="${mostPurchasedProduct.name}" class="h6-v4"></h6>\n' +
+                '                        <h6 th:text="\'Unidades vendidas: \' + ${mostPurchasedProduct.amount}"></h6>'
+        } else {
+            noInfoStats3.innerHTML = 'No hay productos para mostrar'
+        }
+
+        if ([[${mostPurchasedProductLastMonth}]] != null) {
+            noInfoStats4.innerHTML = '' +
+                '<img class="img-products" th:src="${mostPurchasedProductLastMonth.imageUrl}">\n' +
+                '                        <h6 class="h6-v4" th:text="${mostPurchasedProductLastMonth.name}"></h6>\n' +
+                '                        <h6 th:text="\'Unidades vendidas: \' + ${mostPurchasedProductLastMonth.amount}"></h6>'
+        } else {
+            noInfoStats4.innerHTML = 'No hay productos para mostrar'
+        }
+    </script>
     
 </body>
 </html>

@@ -207,8 +207,6 @@ public class UserServiceImpl implements UserService{
         //TODO: check if it works :)
         if(!memberDto.getEmail().equals(memberDto.getOldEmail()) && checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
 
-        if(checkIfEmailExists(memberDto.getEmail())) throw new EmailAlreadyRegisteredException();
-
         Employee employeeObject = employee.get();
         employeeObject.setEmail(memberDto.getEmail());
         employeeObject.setName(memberDto.getName());
@@ -232,7 +230,7 @@ public class UserServiceImpl implements UserService{
         if(areaName.equals("gerencia")) employeeObject.setRol("administrador");
         else {
             //TODO: test
-            if(isTheLastAdmin(nit, memberDto.getId())) throw new OnlyAdminRemainingException();
+            if(employeeObject.getRol().equals("administrador") && isTheLastAdmin(nit, memberDto.getId())) throw new OnlyAdminRemainingException();
             employeeObject.setRol("empleado");
         }
 
@@ -260,8 +258,7 @@ public class UserServiceImpl implements UserService{
     private boolean isTheLastAdmin(long nit, long id){
 
         Collection<Employee> admins = employeeRepository.findAllByCompanyAndRol(nit, "administrador");
-        if(admins.size() <= 1) return true;
-        return false;
+        return admins.size() <= 1;
     }
 
     private boolean calendarAsStringIsValid(String date){

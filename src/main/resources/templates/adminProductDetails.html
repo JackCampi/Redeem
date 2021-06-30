@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Detalles producto</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="/css/adminProductDetailsStyle.css">
+    <link rel="stylesheet" href="../static/styles/adminProductDetailsStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+            <ul>
+                <li>
+                    <a id="dash-button" th:href="@{/admin/}">
+                        <span class="material-icons sidebar-icon">analytics</span>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/history}" id="trans-hist-button">
+                        <span class="material-icons">history_edu</span>
+                        <p>Historial transacciones</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/admin/allocation}" id="allocate-button">
+                        <span class="material-icons">attach_money</span>
+                        <p>Consignar a empleados</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/members}" id="empl-list-button">
+                        <span class="material-icons">groups</span>
+                        <p>Ver empleados</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a  class="selected" th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/admin/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
+                        <span class="material-icons">power_settings_new</span>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+            </ul>  
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h4 id="title">Detalles de</h4></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h4 th:text="${session.name}"></h4>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+
+            <!-- Edit modal -->
+            <div id="editModal" class="myModal">
+                <div class="modal-content edit-modal">
+                    <h3>Añadir un producto</h3>
+                    <form th:action="@{/admin/products/details/edit}" method="POST" th:object="${productWithDetails}">
+                        <div class="form-column1">
+                            <input th:value="${productWithDetails.id}" th:field="*{id}" style="display: none" readonly>
+                            <div class="form-img">
+                                <img class="prod-img" id="prod-img" th:src="${productWithDetails.imageUrl}" alt="">
+                                <label for="image">URL de la imagen</label>
+                                <input type="text" id="image" th:value="${productWithDetails.imageUrl}" th:field="*{imageUrl}" autocomplete="off" onchange="readURL(this);" required>
+                            </div>
+                            <div class="add-options">
+                                <input type="submit" value="Guardar cambios" class="add-button">
+                                <button type="button" class="cancel-button" onclick="closeModal()">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="form-column2">
+                            <div class="form-label-input">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" th:field="*{name}" th:value="${productWithDetails.name}" required>
+                            </div>
+                            <div class="form-label-input">
+                                <label for="price">Precio</label>
+                                <input type="number" id="price" th:field="*{price}" th:value="${productWithDetails.price}" required>
+                            </div>
+                            <div class="form-label-input">
+                                <label for="quantity">Cantidad</label>
+                                <input type="number" id="quantity" value="0" th:field="*{stock}" th:value="${productWithDetails.stock}" required>
+                            </div>
+                            <div class="form-label-input">
+                                <label for="type">Categoría</label>
+                                <select name="type" id="type" th:field="*{type}" th:value="${productWithDetails.type}" required>
+                                    <option value="Vehículos">Vehículos</option>
+                                    <option value="Supermercado">Supermercado</option>
+                                    <option value="Tecnología">Tecnología</option>
+                                    <option value="Electrodomésticos">Electrodomésticos</option>
+                                    <option value="Hogar y muebles">Hogar y muebles</option>
+                                    <option value="Deportes y Fitness">Deportes y Fitness</option>
+                                    <option value="Belleza y cuidado personal">Belleza y cuidado personal</option>
+                                    <option value="Herramientas">Herramientas</option>
+                                    <option value="Construcción">Construcción</option>
+                                    <option value="Inmuebles">Inmuebles</option>
+                                    <option value="Moda">Moda</option>
+                                    <option value="Juegos y juguetes">Juegos y juguetes</option>
+                                    <option value="Bebés">Bebés</option>
+                                    <option value="Productos sustentables">Productos sustentables</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Industrias y oficinas">Industrias y oficinas</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Otros" selected>Otros</option>
+                                  </select>
+                            </div>
+                            <div class="form-textarea">
+                                <label for="description">Descripción</label>
+                                <textarea name="description" id="description" th:field="*{details}" th:value="${productWithDetails.details}" cols="30" rows="10" maxlength="250" required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Remove modal -->
+            <div id="removeModal" class="myModal">
+                <div class="modal-content remove-modal">
+                    <h3>Eliminar producto</h3>
+                    <br>
+                    <h6 class="removeMessage">¿Desea <span id="desactivar">eliminar</span> el producto "<span
+                            th:text="${productWithDetails.name}"></span>" de la tienda de <span id="company">tu empresa</span>?</h6>
+                    <form th:action="@{/admin/products/details/disable}" class="remove-buttons" method="post" id="remove-form" name="remove-form">
+                        <input class="remove-id-field" id="removeId" th:value="${productWithDetails.id}" name="productId" required readonly />
+                        <div class="remove-btn cancel-remove" onclick="return closeModal()">Cancelar</div>
+                        <input type="submit" class="remove-btn save-remove" value="Sí, eliminar">
+                    </form>
+                </div>
+            </div>
+
+
+           <div>
+               <button class="go-back-button" onclick="productList()">
+                <span class="material-icons">arrow_back</span>
+                <h5>Volver atrás</h5>
+               </button>
+           </div>
+           <div class="product-info">
+               <div class="info1">
+                    <img th:src="${productWithDetails.imageUrl}" alt="">
+                    <h3><span th:text="${productWithDetails.name}"></span></h3>
+                    <h5><span th:text="${productWithDetails.type}"></span></h5>
+                    <h5 class="price">$<span th:text="${productWithDetails.price}"></span></h5>
+                    <h6><span th:text="${productWithDetails.stock}"></span> unidades disponibles</h6>
+               </div>
+
+               <div class="info2"> 
+                   
+                   <p><span th:text="${productWithDetails.details}"></span></p>
+
+                   <h6 th:if="${param.success}" class="success-msg">Se ha editado exitosamente</h6>
+                   <h6 th:if="${param.error}" class="error-msg">No se pudo editar el producto</h6>
+                   <button onclick="editModal()">
+                    <span class="material-icons">edit</span>
+                    <h5>Editar</h5>
+                   </button>
+                   <button onclick="removeModal()">
+                    <span class="material-icons">close</span>
+                    <h5>Eliminar</h5>
+                   </button>
+               </div>
+           </div>
+
+
+        </main>
+    </div>
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/adminProductDetails.js"></script>
+    <script src="/scripts/adminProductDetails.js"></script>
+</body>
+</html>

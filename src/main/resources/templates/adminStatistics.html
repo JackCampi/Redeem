@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Statistics - Admin</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/adminStatisticsStyle.css">
+    <link rel="stylesheet" href="../static/styles/adminStatisticsStyle.css">
+    <link rel="script" href="https://cdn.jsdelivr.net/">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.4.0/chart.js"></script>
+
+</head>
+<body>
+<input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+<div class="custom-sidebar">
+    <div class="sidebar-brand">
+        <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+        <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+    </div>
+
+    <hr class="solid">
+
+    <div class="principal-sidebar-menu">
+        <ul>
+            <li>
+                <a id="dash-button" th:href="@{/admin/}">
+                    <span class="material-icons sidebar-icon">analytics</span>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/history}" id="trans-hist-button">
+                    <span class="material-icons">history_edu</span>
+                    <p>Historial transacciones</p>
+                </a>
+            </li>
+
+            <hr class="solid">
+
+            <li>
+                <a th:href="@{/admin/allocation}" id="allocate-button">
+                    <span class="material-icons">attach_money</span>
+                    <p>Consignar a empleados</p>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/members}" id="empl-list-button">
+                    <span class="material-icons">groups</span>
+                    <p>Ver empleados</p>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                    <span>
+                            <p>Lista de productos</p>
+                        </span>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/admin/statistics}" class="selected" id="comp-statistics">
+                    <span class="material-icons">trending_up</span>
+                    <p>Estadísticas</p>
+                </a>
+            </li>
+
+            <hr class="solid">
+
+            <li>
+                <a th:href="@{/admin/profile}" id="admin-profile">
+                    <span class="material-icons">perm_identity</span>
+                    <p>Ver perfil</p>
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/logout}">
+                    <span class="material-icons">power_settings_new</span>
+                    <p>Cerrar sesión</p>
+                </a>
+            </li>
+
+
+        </ul>
+    </div>
+</div>
+
+<div class="main-content">
+    <header>
+        <div class="menu-info">
+            <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+            </label>
+            <div class="current-page"><h4 id="title">Dashboard</h4></div>
+
+        </div>
+
+        <div class="user-info">
+            <div class="name-rol">
+                <h4 th:text="${session.name}"></h4>
+                <small>Administrador</small>
+            </div>
+            <div><span class="material-icons">account_circle</span></div>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <div class="show-container">
+            <div class="media-retorned">
+                <h1>Media de dinero retornado:</h1>
+                <p class="money-amount" th:text="${incomingBudgetMean}"></p>
+            </div>
+
+            <div class="media-given">
+                <h1>Media de dinero dado a empleados:</h1>
+                <p class="money-amount" th:text="${outgoingBudgetMean}"></p>
+            </div>
+        </div>
+
+
+        <div class="categories">
+            <h1>Categorías mas compradas:</h1>
+            <ul>
+                <li class="categories-list" th:each="mostCategorie : ${mostPurchasedCategories}">
+                    <div class="categories-card">
+                        <div class="dataText" th:text="'Categoría: '+${mostCategorie.name}"></div>
+                        <div class="dataText" th:text="'Cantidad comprada: '+${mostCategorie.amount}"></div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="show-container">
+            <div class="money-admin">
+                <h1>Dinero consignado por admin:</h1>
+                <canvas id="moneyAdmin"></canvas>
+            </div>
+
+            <div class="employees-area">
+                <h1>Empleados por area:</h1>
+                <canvas id="empArea"></canvas>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script th:inline="javascript">
+    let adminNames =  [[${adminNames}]];
+
+    let adminAllocationCount =  [[${adminAllocationCount}]];
+    let adminAllocationCanvas = document.getElementById("moneyAdmin").getContext("2d");
+    let chartAdminAllocationCount = new Chart(adminAllocationCanvas,{
+        type:"bar",
+        data:{
+            labels:adminNames,
+            datasets:[
+                {
+                    label:"",
+                    data: adminAllocationCount,
+                    backgroundColor: "#C496D7"
+                }
+            ]
+        }
+    })
+    let areaNames = [[${areaNames}]];
+    let employeeCount = [[${employeeCount}]];
+    let employeeCountCanvas = document.getElementById("empArea").getContext("2d");
+    let chartEmployeeCount = new Chart(employeeCountCanvas,{
+        type:"bar",
+        data:{
+            labels:areaNames,
+            datasets:[
+                {
+                    label:"",
+                    data: employeeCount,
+                    backgroundColor: "#C496D7"
+                }
+            ]
+        }
+    })
+</script>
+
+</body>
+
+
+
+
+</html>

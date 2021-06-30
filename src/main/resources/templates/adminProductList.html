@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="img/RedeemIcon.ico">
+    <title>Lista de productos</title>
+
+    <!-- Style -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/css/dashboardStyle.css">
+    <link rel="stylesheet" href="../static/styles/dashboardStyle.css">
+    <link rel="stylesheet" href="/css/adminProductListStyle.css">
+    <link rel="stylesheet" href="../static/styles/adminProductListStyle.css">
+
+    <!-- icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-button">
+    <div class="custom-sidebar">
+        <div class="sidebar-brand">
+            <img src="/img/redeemMiniIcon.svg" alt="logo" class="mini-logo">
+            <!--h4 class="redeem-name">Redeem</h4--><img src="/img/redeemLogoWithe.png" alt="redeem-text" class="redeem-text">
+        </div>
+
+        <hr class="solid">
+
+        <div class="principal-sidebar-menu">
+            <ul>
+                <li>
+                    <a id="dash-button" th:href="@{/admin/}">
+                        <span class="material-icons sidebar-icon">analytics</span>
+                        <p>Dashboard</p>
+                    </a>
+                </li>
+                <li>
+                    <a th:href="@{/admin/history}" id="trans-hist-button">
+                        <span class="material-icons">history_edu</span>
+                        <p>Historial transacciones</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/admin/allocation}" id="allocate-button">
+                        <span class="material-icons">attach_money</span>
+                        <p>Consignar a empleados</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/members}" id="empl-list-button">
+                        <span class="material-icons">groups</span>
+                        <p>Ver empleados</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a class="selected" th:href="@{/admin/products}">
+                        <span class="material-icons sidebar-icon">
+                            store
+                        </span>
+                        <span>
+                            <p>Lista de productos</p>
+                        </span>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/admin/statistics}" id="comp-statistics">
+                        <span class="material-icons">trending_up</span>
+                        <p>Estadísticas</p>
+                    </a>
+                </li>
+
+                <hr class="solid">
+
+                <li>
+                    <a th:href="@{/admin/profile}" id="admin-profile">
+                        <span class="material-icons">perm_identity</span>
+                        <p>Ver perfil</p>
+                    </a>
+                </li>
+
+                <li>
+                    <a th:href="@{/logout}" onclick="window.localStorage.clear();">
+                        <span class="material-icons">power_settings_new</span>
+                        <p>Cerrar sesión</p>
+                    </a>
+                </li>
+            </ul>  
+        </div>
+    </div>
+
+    <div class="main-content">
+        <header>
+            <div class="menu-info">
+                <label for="nav-toggle">
+                    <span class="material-icons header-icon">
+                        menu
+                    </span>
+                </label>
+                <div class="current-page"><h4 id="title">Lista de productos</h4></div>
+                
+            </div>
+            
+            <div class="user-info">
+                <div class="name-rol">
+                    <h4 th:text="${session.name}"></h4>
+                    <small>Administrador</small>
+                </div>
+                <div><span class="material-icons">account_circle</span></div>
+            </div>
+        </header>
+
+        <main id="main-content">
+            
+            <!-- New product modal -->
+            <div id="addProductModal" class="myModal">
+                <div class="modal-content add-modal">
+                    <h3>Añadir un producto</h3>
+                    <form th:action="@{/admin/products/addprod}" method="post" name="add-product-form" th:object="${productWithDetails}">
+                        <div class="form-column1">
+                            <div class="form-img">
+                                <img class="new-prod-img" id="new-prod-img" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAARMAAAC3CAMAAAAGjUrGAAAAA1BMVEXk5OSU5FUvAAAAR0lEQVR4nO3BAQ0AAADCoPdPbQ8HFAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPBgxUwAAU+n3sIAAAAASUVORK5CYII=" alt="">
+                                <label for="image">URL de la imagen</label>
+                                <input type="text" id="image" onchange="readURL(this);" autocomplete="off" th:field="*{imageUrl}" required>
+                            </div>
+                            <div class="add-options">
+                                <input type="submit" value="Agregar" class="add-button">
+                                <button type="button" class="cancel-button" onclick="closeModal()">Cancelar</button>
+                            </div>
+                        </div>
+                        <div class="form-column2">
+                            <div class="form-label-input">
+                                <label for="name">Nombre</label>
+                                <input type="text" id="name" th:field="*{name}" required>
+                            </div>
+                            <div class="form-label-input">
+                                <label for="price" pattern="\d*">Precio</label>
+                                <input type="number" id="price" th:field="*{price}" required>
+                            </div>
+                            <div class="form-label-input quantity-label-input">
+                                <label for="quantity" pattern="\d*">Cantidad</label>
+                                <button type="button" class="quantity-button" onclick="decrease()">
+                                    <span class="material-icons">remove</span>
+                                </button>
+                                <input type="number" id="quantity" th:field="*{stock}" pattern="\d*" value="0" required>
+                                <button type="button" id="product-limit" class="quantity-button" onclick="increase()">
+                                    <span class="material-icons">add</span>
+                                </button>
+                            </div>
+                            <div class="form-label-input">
+                                <label for="type">Categoría</label>
+                                <select name="type" id="type" th:field="*{type}" required>
+                                    <option value="Vehículos">Vehículos</option>
+                                    <option value="Supermercado">Supermercado</option>
+                                    <option value="Tecnología">Tecnología</option>
+                                    <option value="Electrodomésticos">Electrodomésticos</option>
+                                    <option value="Hogar y muebles">Hogar y muebles</option>
+                                    <option value="Deportes y Fitness">Deportes y Fitness</option>
+                                    <option value="Belleza y cuidado personal">Belleza y cuidado personal</option>
+                                    <option value="Herramientas">Herramientas</option>
+                                    <option value="Construcción">Construcción</option>
+                                    <option value="Inmuebles">Inmuebles</option>
+                                    <option value="Moda">Moda</option>
+                                    <option value="Juegos y juguetes">Juegos y juguetes</option>
+                                    <option value="Bebés">Bebés</option>
+                                    <option value="Productos sustentables">Productos sustentables</option>
+                                    <option value="Salud">Salud</option>
+                                    <option value="Industrias y oficinas">Industrias y oficinas</option>
+                                    <option value="Servicios">Servicios</option>
+                                    <option value="Otros" selected>Otros</option>
+                                  </select>
+                            </div>
+                            <div class="form-textarea">
+                                <label for="description">Descripción</label>
+                                <textarea name="description" id="description" cols="30" rows="10" maxlength="250" th:field="*{details}" required></textarea>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div>
+                <div class="first-info">
+                    <button class="add-btn" type="button" onclick="addModal()">
+                        <span class="material-icons">add</span>
+                        <span>Añadir producto</span>
+                    </button>
+                    <h5 th:if="${param.success}" class="success-msg">Se ha añadido el producto</h5>
+                    <h5 th:if="${param.error}" class="error-msg">No se ha añadido el producto</h5>
+                    <h5 th:if="${param.successDelete}" class="success-msg">Se ha borrado el producto</h5>
+                    <h5 th:if="${param.errorDelete}" class="error-msg">No se pudo borrar el producto</h5>
+                </div>
+                
+
+                <!-- form id="edit-form" th:action="@{/admin/products/details}" method="get"-->
+                    <input type="hidden" id="product-id" name="id" readonly>
+                    <div class="product-cards">
+
+                        <!-- Foreach -->
+                        <div th:each="product : ${productList}">
+                            <button class="product-card" 
+                                    th:product-id="${product.id}"
+                                    onclick="selectProduct(this)">
+                                <img class="prod-img" th:src="${product.imageUrl}" alt="prueba">
+                                <div class="prod-info">
+                                    <div class="prod-name">
+                                        <h5><span th:text="${product.name}"></span></h5>
+                                    </div>
+                                    <h6><span th:text="${product.stock}"></span> unidades</h6>
+                                    <h6>$<span th:text="${product.price}"></span></h6>
+                                </div>
+                            </button>
+                        </div>
+                        
+                    </div>
+                <!--/form-->
+
+            </div>
+
+        </main>
+    </div>
+    <script src="../static/scripts/adminDashboardLogic.js"></script>
+    <script src="/scripts/adminDashboardLogic.js"></script>
+    <script src="../static/scripts/adminProductListLogic.js"></script>
+    <script src="/scripts/adminProductListLogic.js"></script>
+</body>
+</html>

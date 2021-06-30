@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
@@ -38,8 +37,8 @@ public class MembersController {
         long nit = (long)  session.getAttribute("nit");
 
         AdminDashboardInfoDto adminDashboardInfoDto = new AdminDashboardInfoDto();
-        Collection<MemberDto> employees = new ArrayList<>();
-        Collection<String> areaNames = new ArrayList<>();
+        Collection<MemberDto> employees;
+        Collection<String> areaNames;
 
 
         try{
@@ -68,7 +67,7 @@ public class MembersController {
 
         long amount = companyService.disableEmployee(id);
         try{
-            balanceTransaction.returnDisabledUserBalanceToCompany(nit, id, amount);
+            balanceTransaction.returnBalanceToCompany(nit, id, amount);
         }catch (InsufficientBalanceException e){
             return "redirect:/error";
         }
@@ -85,7 +84,7 @@ public class MembersController {
         }catch (EmailAlreadyRegisteredException e){
             return "redirect:/admin/members?error&emailAlreadyRegistered";
         }catch (OnlyAdminRemainingException onlyAdminRemainingException) {
-            return "redirect:/admin/members?error&onlyAdminRemaining";
+            return "redirect:/admin/members?error&uniqueAdmin";
         }
         return "redirect:/admin/members?edit&success";
 
